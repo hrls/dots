@@ -1,0 +1,11 @@
+--- slate.vim	2014-03-01 02:52:42.000000000 +0300
++++ slate_bak.vim	2014-03-01 02:56:16.000000000 +0300
+@@ -34,7 +34,7 @@
+ :hi Special guifg=darkkhaki ctermfg=brown
+ :hi Identifier guifg=salmon ctermfg=red
+ :hi Include guifg=red ctermfg=red
+-:hi PreProc guifg=red ctermfg=red
++:hi PreProc guifg=red guibg=White ctermfg=red
+ :hi Operator guifg=Red ctermfg=Red
+ :hi Define guifg=gold gui=bold ctermfg=yellow
+ :hi Type guifg=CornflowerBlue ctermfg=2
