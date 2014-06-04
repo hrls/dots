@@ -1,0 +1,9 @@
+[user]
+	name = hrls
+	email = viktor.kharitonovich@gmail.com
+[core]
+	editor = vim
+	excludesfile = ~/.global_ignore
+	autocrlf = input
+[merge]
+	tool = vimdiff
