@@ -1,4 +1,3 @@
-" pathogen
 execute pathogen#infect()
 syntax on
 filetype plugin indent on
@@ -8,6 +7,18 @@ set encoding=utf-8
 
 " todo: http://studiostyl.es/schemes/nightfall
 color slate
+
+" Menlo:12 Apple font based on Bitstream Vera and Deja Vu
+" http://blog.fnurl.se/2011/06/22/comparison-bitstream-vs-dejavu-vs-menlo/
+"
+" Monaco:12 Apple font default in iTerm2
+"
+" Inconsolata:14 Open source font by Raph Levien
+" http://www.fontsquirrel.com/fonts/Inconsolata
+
+set guifont=Menlo:h12
+
+
 " line numbers
 set nu
 set showcmd
@@ -30,6 +41,8 @@ set wildmenu
 
 set ttyfast
 
+set vb " no fucking beep
+set go+=c " kill popup dialogs
 
 " highlights search
 set hlsearch
@@ -46,22 +59,7 @@ vnoremap * y :execute ":let @/=@\""<cr> :execute "set hlsearch"<cr>
 nnoremap <c-f8> :nohlsearch<cr>
 
 
-
-
-" no fucking beep
-set vb
-" todo: need uniq prefix for my commands
-" ========== temp section ==========
-" open .vimrc for edit
-" map ,vv :vsp $MYVIMRC<cr>
-" reload config
-" map ,vr :so $MYVIMRC<cr>
-" ========== temp section ==========
-
-
-
-" ========== mapping ==========
-" turn off all arrows =)
+" turn off all arrows
 nnoremap <up> <nop>
 nnoremap <down> <nop>
 nnoremap <left> <nop>
@@ -73,7 +71,7 @@ inoremap <right> <nop>
 nnoremap j gj
 nnoremap k gk
 
-"map! ii <Esc> " map ii to Esc
+" map! ii <Esc> " map ii to Esc
 " tabs
 nnoremap <c-tab> :tabnext<cr>
 nnoremap <c-s-tab> :tabprevious<cr>
@@ -92,9 +90,5 @@ map <c-n> :NERDTreeToggle<cr>
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 
 
-" Haskell mode
-" use ghc functionality for haskell files
-au Bufenter *.hs compiler ghc
-" configure browser for haskell_doc.vim
-let g:haddock_browser = "open"
-let g:haddock_browser_callformat = "%s %s"
+" golang
+" set rtp+=/usr/local/go/misc/vim
