@@ -1,10 +1,10 @@
-function add_scala() {
-    export SCALA_HOME=$HOME/bin/scala-2.10.3
-    export PATH=$SCALA_HOME/bin:$PATH
-}
-
 function add_heroku() {
     export PATH=/usr/local/heroku/bin:$PATH
+}
+
+function add_scala() {
+    export SCALA_HOME=$HOME/bin/scala-2.11.1
+    export PATH=$SCALA_HOME/bin:$PATH
 }
 
 function add_pgs() {
@@ -12,13 +12,13 @@ function add_pgs() {
 }
 
 function add_maven() {
-    export M2_HOME=$HOME/bin/apache-maven-3.2.1
+    export M2_HOME=$HOME/bin/apache-maven-3.2.2
     export PATH=$M2_HOME/bin:$PATH
 }
 
-function add_go() {
-    export GOHOME="/usr/local/go"
-    export PATH=$GOHOME/bin:$PATH
+function add_gradle() {
+    export GRADLE_HOME=$HOME/bin/gradle-2.0
+    export PATH=$GRADLE_HOME/bin:$PATH
 }
 
 

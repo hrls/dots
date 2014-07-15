@@ -8,6 +8,7 @@ alias md5sum='md5 -r'
 
 alias java6='export JAVA_HOME=$(/usr/libexec/java_home -v 1.6)'
 alias java7='export JAVA_HOME=$(/usr/libexec/java_home -v 1.7)'
+alias java8='export JAVA_HOME=$(/usr/libexec/java_home -v 1.8)'
 
 autoload -U colors && colors
 
@@ -25,8 +26,12 @@ autoload -U add_env && add_env
 # pkgsrc path
 export PATH=/usr/pkg/sbin:/usr/pkg/bin:$PATH
 
-# plan9 env
-export PLAN9=/usr/local/plan9
-export PATH=$PATH:$PLAN9/bin
+add_heroku
+
+java8
+add_pgs
+add_gradle
+add_maven
+add_scala
 
 export PATH=$PATH:$HOME/bin
