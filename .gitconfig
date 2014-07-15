@@ -2,8 +2,20 @@
 	name = hrls
 	email = viktor.kharitonovich@gmail.com
 [core]
-	editor = vim
+	editor = mvim
 	excludesfile = ~/.global_ignore
 	autocrlf = input
+[alias]
+    df = !git diff | mvim -
+
+# http://gitguru.com/2009/02/22/integrating-git-with-a-visual-merge-tool/
 [merge]
-	tool = vimdiff
+	tool = mvimdiff
+[mergetool]
+    prompt = false
+[mergetool "mvimdiff"]
+    cmd = mvim -f -d \"$LOCAL\" \"$REMOTE\"
+[diff]
+    tool = mvimdiff
+[difftool "mvimdiff"]
+    cmd = mvim -f -d \"$LOCAL\" \"$REMOTE\"
