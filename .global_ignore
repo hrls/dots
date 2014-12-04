@@ -34,3 +34,6 @@ Thumbs.db
 # IntelliJ IDEA
 .idea
 *.iml
+
+# vim
+*.swp

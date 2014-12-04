@@ -1,10 +1,12 @@
 alias cls='clear'
+alias del='rm'
 alias ll='ls -lAGh'
 alias la='ls -A'
 alias e='mvim'
 alias pc='rsync -P'
 alias py='python'
 alias md5sum='md5 -r'
+alias df='df -H'
 
 alias java6='export JAVA_HOME=$(/usr/libexec/java_home -v 1.6)'
 alias java7='export JAVA_HOME=$(/usr/libexec/java_home -v 1.7)'
@@ -24,14 +26,21 @@ autoload -U misc && misc
 autoload -U add_env && add_env
 
 # pkgsrc path
-export PATH=/usr/pkg/sbin:/usr/pkg/bin:$PATH
+# export PATH=/usr/pkg/sbin:/usr/pkg/bin:$PATH
 
 add_heroku
 
+# JVM
 java8
+add_clj
+# add_gradle
+# add_maven
+# add_scala
+
+# db
 add_pgs
-add_gradle
-add_maven
-add_scala
+
+# export GEM_HOME=$HOME/.gems
+# export PATH=$GEM_HOME/bin:$PATH
 
 export PATH=$PATH:$HOME/bin
