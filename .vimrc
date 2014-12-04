@@ -1,8 +1,22 @@
-execute pathogen#infect()
-syntax on
+set nocompatible
+filetype off
+
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+
+Plugin 'gmarik/Vundle.vim'
+Plugin 'scrooloose/nerdtree'
+Plugin 'bling/vim-airline'
+
+call vundle#end()
 filetype plugin indent on
 
-set nocompatible
+" :PluginList       - lists configured plugins
+" :PluginInstall    - installs plugins; append `!` to update or just :PluginUpdate
+" :PluginSearch foo - searches for foo; append `!` to refresh local cache
+" :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
+
+
 set encoding=utf-8
 
 " todo: http://studiostyl.es/schemes/nightfall
@@ -15,7 +29,6 @@ color slate
 "
 " Inconsolata:14 Open source font by Raph Levien
 " http://www.fontsquirrel.com/fonts/Inconsolata
-
 set guifont=Menlo:h12
 
 " vim-airline
@@ -26,7 +39,6 @@ set nu
 set showcmd
 set showmode
 set ruler
-" set relativenumber
 
 set autoindent
 set smartindent
@@ -85,6 +97,7 @@ nnoremap <c-tab> :tabnext<cr>
 nnoremap <c-s-tab> :tabprevious<cr>
 nnoremap <tab> <c-W>w
 nnoremap <s-tab> <c-W>W
+
 " tab reordering (not for osx)
 " nnoremap <silent> <a-left> :execute 'silent! tabmove ' . (tabpagenr()-2)<cr>
 " nnoremap <silent> <a-right> :execute 'silent! tabmove ' . tabpagenr()<cr>
@@ -102,12 +115,12 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTree
 " set rtp+=/usr/local/go/misc/vim
 
 
-" MacVim fixes {{{
+" MacVim fixes {{
 
 au BufNewFile,BufRead *.md setf markdown
 
 " https://github.com/b4winckler/macvim/pull/42
 au BufNewFile,BufRead *.gradle setf groovy
 
-" }}}
+" }}
 
