@@ -1,5 +1,3 @@
-# hg pattern
-syntax: glob
 
 # compiled
 *.class
