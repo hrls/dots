@@ -18,6 +18,8 @@ color slate
 
 set guifont=Menlo:h12
 
+" vim-airline
+set laststatus=2
 
 " line numbers
 set nu
@@ -59,6 +61,12 @@ vnoremap * y :execute ":let @/=@\""<cr> :execute "set hlsearch"<cr>
 nnoremap <c-f8> :nohlsearch<cr>
 
 
+" FOLDing
+" v{select}zf - collapse
+" za - expand
+set foldmethod=manual
+
+
 " turn off all arrows
 nnoremap <up> <nop>
 nnoremap <down> <nop>
@@ -92,3 +100,14 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTree
 
 " golang
 " set rtp+=/usr/local/go/misc/vim
+
+
+" MacVim fixes {{{
+
+au BufNewFile,BufRead *.md setf markdown
+
+" https://github.com/b4winckler/macvim/pull/42
+au BufNewFile,BufRead *.gradle setf groovy
+
+" }}}
+
