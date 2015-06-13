@@ -1,2 +1,2 @@
-ln -hf .gitconfig .global_ignore .hgrc .vimrc .zshrc $HOME
+ln -hf .gitconfig .global_ignore .vimrc .zshrc $HOME
 rsync -rP .zsh $HOME

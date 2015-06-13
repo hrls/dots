@@ -7,6 +7,7 @@ call vundle#begin()
 Plugin 'gmarik/Vundle.vim'
 Plugin 'scrooloose/nerdtree'
 Plugin 'bling/vim-airline'
+Plugin 'tpope/vim-fireplace'
 
 call vundle#end()
 filetype plugin indent on
@@ -111,8 +112,12 @@ map <c-n> :NERDTreeToggle<cr>
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 
 
+" :Man
+source $VIMRUNTIME/ftplugin/man.vim
+
 " golang
 " set rtp+=/usr/local/go/misc/vim
+
 
 
 " MacVim fixes {{

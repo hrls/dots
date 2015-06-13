@@ -40,6 +40,8 @@ add_clj
 # db
 add_pgs
 
+export PATH="$HOME/Library/Haskell/bin:$PATH"
+
 # export GEM_HOME=$HOME/.gems
 # export PATH=$GEM_HOME/bin:$PATH
 
