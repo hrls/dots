@@ -19,6 +19,10 @@ autoload -U colors && colors
 PROMPT=$'%{\e[38;5;255m%}[%{\e[38;5;193m%}%n%{\e[38;5;75m%}@%{\e[38;5;193m%}%m %{\e[38;5;190m%}%~%{\e[38;5;255m%}]%{\e[38;5;178m%}$%{\e[0m%}'
 
 
+# GitHub API access token
+# https://github.com/settings/tokens
+export HOMEBREW_GITHUB_API_TOKEN=2049ddff3e08cd1b02ec997cb604d66cbd1ca93f
+
 export LC_CTYPE=en_US.UTF-8
 
 fpath=( ~/.zsh "${fpath[@]}" )
