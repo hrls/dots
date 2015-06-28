@@ -8,9 +8,9 @@ alias py='python'
 alias md5sum='md5 -r'
 alias df='df -H'
 
-alias java6='export JAVA_HOME=$(/usr/libexec/java_home -v 1.6)'
-alias java7='export JAVA_HOME=$(/usr/libexec/java_home -v 1.7)'
-alias java8='export JAVA_HOME=$(/usr/libexec/java_home -v 1.8)'
+#alias java6='export JAVA_HOME=$(/usr/libexec/java_home -v 1.6)'
+#alias java7='export JAVA_HOME=$(/usr/libexec/java_home -v 1.7)'
+#alias java8='export JAVA_HOME=$(/usr/libexec/java_home -v 1.8)'
 
 autoload -U colors && colors
 
@@ -32,21 +32,23 @@ autoload -U add_env && add_env
 # pkgsrc path
 # export PATH=/usr/pkg/sbin:/usr/pkg/bin:$PATH
 
-add_heroku
+# add_heroku
 
 # JVM
-java8
-add_clj
+# java8
+# add_clj
 # add_gradle
 # add_maven
 # add_scala
 
 # db
-add_pgs
+# add_pgs
 
-export PATH="$HOME/Library/Haskell/bin:$PATH"
+# Haskell
+# export PATH="$HOME/Library/Haskell/bin:$PATH"
 
 # export GEM_HOME=$HOME/.gems
 # export PATH=$GEM_HOME/bin:$PATH
 
 export PATH=$PATH:$HOME/bin
+
