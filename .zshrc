@@ -3,7 +3,7 @@ alias del='rm'
 alias ll='ls -lAGh'
 alias la='ls -A'
 alias e='mvim'
-alias pc='rsync -P'
+alias pc='rsync -Ph' # -P same as --partial --progress
 alias py='python'
 alias md5sum='md5 -r'
 alias df='df -H'
@@ -19,9 +19,8 @@ autoload -U colors && colors
 PROMPT=$'%{\e[38;5;255m%}[%{\e[38;5;193m%}%n%{\e[38;5;75m%}@%{\e[38;5;193m%}%m %{\e[38;5;190m%}%~%{\e[38;5;255m%}]%{\e[38;5;178m%}$%{\e[0m%}'
 
 
-# GitHub API access token
-# https://github.com/settings/tokens
-export HOMEBREW_GITHUB_API_TOKEN=2049ddff3e08cd1b02ec997cb604d66cbd1ca93f
+export HOMEBREW_GITHUB_API_TOKEN=6d8c7c5a4234ef31d7466a00e9a187cd84acd30e
+
 
 export LC_CTYPE=en_US.UTF-8
 
@@ -51,4 +50,3 @@ autoload -U add_env && add_env
 # export PATH=$GEM_HOME/bin:$PATH
 
 export PATH=$PATH:$HOME/bin
-
