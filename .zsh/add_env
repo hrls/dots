@@ -1,31 +1,4 @@
-function add_heroku() {
-    export PATH=/usr/local/heroku/bin:$PATH
-}
-
-function add_clj() {
-    export CLJV=1.6.0
-    export CLJ_HOME=$HOME/bin/clojure-$CLJV
-    alias clj='java -cp $CLJ_HOME/clojure-$CLJV.jar clojure.main'
-}
-
 function add_pgs() {
-    export PATH=/Applications/Postgres.app/Contents/Versions/9.3/bin:$PATH
+    export PATH=/Applications/Postgres.app/Contents/Versions/9.4/bin:$PATH
 }
-
-
-function add_maven() {
-    export M2_HOME=$HOME/bin/apache-maven-3.2.2
-    export PATH=$M2_HOME/bin:$PATH
-}
-
-function add_gradle() {
-    export GRADLE_HOME=$HOME/bin/gradle-2.0
-    export PATH=$GRADLE_HOME/bin:$PATH
-}
-
-function add_scala() {
-    export SCALA_HOME=$HOME/bin/scala-2.11.1
-    export PATH=$SCALA_HOME/bin:$PATH
-}
-
 
