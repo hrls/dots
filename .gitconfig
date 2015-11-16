@@ -7,6 +7,9 @@
 	autocrlf = input
 [alias]
     df = !git diff | mvim -
+	cd = checkout
+	ss = status
+    sub = submodule
 
 # http://gitguru.com/2009/02/22/integrating-git-with-a-visual-merge-tool/
 [merge]
