@@ -102,14 +102,3 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTree
 source $VIMRUNTIME/ftplugin/man.vim
 
 
-" MacVim fixes {{
-
-" todo: override default Modula syn
-" :setfiletype markdown
-au BufNewFile,BufRead *.md setf markdown
-
-" https://github.com/b4winckler/macvim/pull/42
-au BufNewFile,BufRead *.gradle setf groovy
-
-" }}
-
