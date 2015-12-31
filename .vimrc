@@ -7,7 +7,11 @@ filetype plugin indent on
 set encoding=utf-8
 
 " todo: http://studiostyl.es/schemes/nightfall
-color slate
+color bullfinch
+
+" todo: NERD_Tree aliases
+"  - `e/q $file` explore in read only  
+"  - optional: sync zhs e/w aliases with 
 
 " Menlo:12 Apple font based on Bitstream Vera and Deja Vu
 " http://blog.fnurl.se/2011/06/22/comparison-bitstream-vs-dejavu-vs-menlo/

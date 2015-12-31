@@ -9,7 +9,9 @@ alias py='python'
 
 alias pc='rsync -Ph' # -P same as --partial --progress
 alias md5sum='md5 -r'
-alias btli="btcli list | grep -e '[LI]\.\s'"
+alias btli="btcli list | grep -e '[LI+]\.\s'"
+# alias ww="qlmanage -p $@ >& /dev/null"
+alias q='mvim -R'
 
 #alias java8='export JAVA_HOME=$(/usr/libexec/java_home -v 1.8)'
 

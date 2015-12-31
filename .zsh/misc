@@ -1,4 +1,7 @@
+# cal SetSyn("zsh")
+
 function getacolors {
+# fold
 	for COLOR in $(seq 0 255)
 	do
 		for STYLE in "38;5"
@@ -9,4 +12,11 @@ function getacolors {
 		done
 		echo
 	done
+# foldn
 }
+
+
+function reload {
+    print "foobar"
+}
+
