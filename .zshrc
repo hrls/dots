@@ -3,7 +3,10 @@ alias del='rm'
 alias ll='ls -lAGh'
 alias la='ls -A'
 alias df='df -H'
+alias which='which -a'
 
+alias ips='ifconfig | grep inet'
+alias top='top -o cpu'
 alias e='mvim'
 alias py='python'
 
@@ -11,9 +14,9 @@ alias pc='rsync -Ph' # -P same as --partial --progress
 alias md5sum='md5 -r'
 alias btli="btcli list | grep -e '[LI+]\.\s'"
 # alias ww="qlmanage -p $@ >& /dev/null"
-alias q='mvim -R'
+alias ww='mvim -R'
 
-#alias java8='export JAVA_HOME=$(/usr/libexec/java_home -v 1.8)'
+# alias java9='export JAVA_HOME=$(/usr/libexec/java_home -v 1.9)'
 
 autoload -U colors && colors
 

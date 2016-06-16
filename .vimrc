@@ -7,7 +7,8 @@ filetype plugin indent on
 set encoding=utf-8
 
 " todo: http://studiostyl.es/schemes/nightfall
-color bullfinch
+" color bullfinch
+color peachpuff
 
 " todo: NERD_Tree aliases
 "  - `e/q $file` explore in read only  
