@@ -9,6 +9,7 @@ alias ips='ifconfig | grep inet'
 alias top='top -o cpu'
 alias e='mvim'
 alias py='python'
+alias repl='stack ghci'
 
 alias pc='rsync -Ph' # -P same as --partial --progress
 alias md5sum='md5 -r'
