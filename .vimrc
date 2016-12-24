@@ -25,25 +25,25 @@ set guifont=Menlo:h12
 
 " vim-airline
 set laststatus=2
+set ruler
+set wildmenu
+" set wildmode=list:longest
+set showcmd
+set showmode
 
 " line numbers
 set nu
-set showcmd
-set showmode
-set ruler
 
 set autoindent
 set smartindent
 set smarttab
 set ts=4 sw=4 et
 
+set incsearch
 set ignorecase
 set smartcase
 " set replace global by default, just use :s/foo/bar/ instead of :s/foo/bar/g
 set gdefault
-
-set wildmenu
-" set wildmode=list:longest
 
 set ttyfast
 
