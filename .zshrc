@@ -12,6 +12,7 @@ alias py='python'
 alias sr='stack ghci'
 alias sc='stack clean'
 alias sb='stack build'
+alias se='stack exec'
 
 alias pc='rsync -Ph' # -P same as --partial --progress
 alias md5sum='md5 -r'
@@ -42,10 +43,10 @@ autoload -U add_env && add_env
 # add_clj
 
 # db
-# add_pgs
+add_pgs
 
 # export GEM_HOME=$HOME/.gems
 # export PATH=$GEM_HOME/bin:$PATH
 
-export PATH=$PATH:$HOME/bin:$HOME/.local/bin
+export PATH=$PATH:$HOME/.local/bin
 
