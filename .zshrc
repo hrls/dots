@@ -50,3 +50,4 @@ add_pgs
 
 export PATH=$PATH:$HOME/.local/bin
 
+export EDITOR='mvim -f --nomru -c "au VimLeave * !open -a iTerm"'
