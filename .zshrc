@@ -1,7 +1,7 @@
 alias cls='clear'
 alias del='rm'
-alias ll='ls -lAGh'
-alias la='ls -A'
+alias ll='ls -lAFGHh'
+alias la='ls -AFG'
 alias df='df -H'
 alias which='which -a'
 
@@ -23,6 +23,10 @@ alias ww='mvim -R'
 # alias java9='export JAVA_HOME=$(/usr/libexec/java_home -v 1.9)'
 
 autoload -U colors && colors
+export LSCOLORS='Hxfxcxdxbxegedabagacad' # replace ANSI by supported xterm-256color
+export CLICOLOR_FORCE=true
+alias less='less -r'
+alias more='more -r'
 
 # [hrls@probe /bin]$ default prompt
 # [root@probe /var]# root prompt todo

@@ -106,4 +106,6 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTree
 " :Man
 source $VIMRUNTIME/ftplugin/man.vim
 
-
+" todo;
+" NERD_tree hidden files
+" <c-n> replace empty buffer (as 'e folder')
