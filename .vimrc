@@ -71,6 +71,8 @@ nnoremap <c-f8> :nohlsearch<cr>
 set foldmethod=manual
 
 
+map ; :
+
 " turn off all arrows
 nnoremap <up> <nop>
 nnoremap <down> <nop>

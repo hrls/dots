@@ -17,8 +17,8 @@ alias se='stack exec'
 alias pc='rsync -Ph' # -P same as --partial --progress
 alias md5sum='md5 -r'
 alias btli="btcli list | grep -e '[LI+]\.\s'"
-# alias ww="qlmanage -p $@ >& /dev/null"
-alias ww='mvim -R'
+alias ww="qlmanage -p $@ >& /dev/null"
+# alias ww='mvim -R'
 
 # alias java9='export JAVA_HOME=$(/usr/libexec/java_home -v 1.9)'
 
@@ -35,7 +35,7 @@ PROMPT=$'%{\e[38;5;255m%}[%{\e[38;5;193m%}%n%{\e[38;5;75m%}@%{\e[38;5;193m%}%m %
 
 export LC_CTYPE=en_US.UTF-8
 
-fpath=( ~/.zsh "${fpath[@]}" )
+fpath=( ~/.etc/zsh "${fpath[@]}" )
 autoload -U misc && misc
 autoload -U add_env && add_env
 
