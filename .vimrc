@@ -96,6 +96,15 @@ nnoremap <s-tab> <c-W>W
 " nnoremap <silent> <a-left> :execute 'silent! tabmove ' . (tabpagenr()-2)<cr>
 " nnoremap <silent> <a-right> :execute 'silent! tabmove ' . tabpagenr()<cr>
 
+" Plugins
+
+" https://github.com/vim-scripts/restore_view.vim
+set viewoptions=cursor,folds,slash,unix
+" let g:skipview_files = ['*\.vim']
+
+" https://github.com/scrooloose/nerdcommenter
+let g:NERDSpaceDelims = 1
+
 " NERDTree
 " open NERDTree automatically when vim starts up if no files were specified
 " autocmd vimenter * if !argc() | NERDTree | endif

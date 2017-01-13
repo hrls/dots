@@ -23,7 +23,7 @@ alias ww="qlmanage -p $@ >& /dev/null"
 # alias java9='export JAVA_HOME=$(/usr/libexec/java_home -v 1.9)'
 
 autoload -U colors && colors
-export LSCOLORS='Hxfxcxdxbxegedabagacad' # replace ANSI by supported xterm-256color
+export LSCOLORS='Exfxcxdxbxegedabagacad' # replace ANSI by supported xterm-256color
 export CLICOLOR_FORCE=true
 alias less='less -r'
 alias more='more -r'
@@ -32,6 +32,7 @@ alias more='more -r'
 # [root@probe /var]# root prompt todo
 PROMPT=$'%{\e[38;5;255m%}[%{\e[38;5;193m%}%n%{\e[38;5;75m%}@%{\e[38;5;193m%}%m %{\e[38;5;190m%}%~%{\e[38;5;255m%}]%{\e[38;5;178m%}$%{\e[0m%}'
 
+export src=$HOME/src
 
 export LC_CTYPE=en_US.UTF-8
 
