@@ -1,8 +1,8 @@
 # cw=`pwd`
 
-ln -sf src/dotfiles/.gitconfig      $HOME
-ln -sf src/dotfiles/.global_ignore  $HOME
-ln -sf src/dotfiles/.vimrc          $HOME
-ln -sf src/dotfiles/.zshrc          $HOME
-ln -sf src/dotfiles/.etc/           $HOME
+ln -sf src/dots/.gitconfig  $HOME
+ln -sf src/dots/.gitignore  $HOME
+ln -sf src/dots/.vimrc      $HOME
+ln -sf src/dots/.zshrc      $HOME
+ln -sf src/dots/.etc/       $HOME
 

@@ -2,7 +2,7 @@
 	name = hrls
 	email = viktor.kharitonovich@gmail.com
 [core]
-	excludesfile = ~/.global_ignore
+	excludesfile = ~/.gitignore
 	autocrlf = input
 [alias]
     df = !git diff | mvim -
