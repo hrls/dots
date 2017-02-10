@@ -120,3 +120,7 @@ source $VIMRUNTIME/ftplugin/man.vim
 " todo;
 " NERD_tree hidden files
 " <c-n> replace empty buffer (as 'e folder')
+
+" Haskell
+autocmd BufWritePost package.yaml silent !hpack --silent
+
