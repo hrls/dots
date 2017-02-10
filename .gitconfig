@@ -5,23 +5,33 @@
 	excludesfile = ~/.gitignore
 	autocrlf = input
 [alias]
-    df = !git diff | mvim -
-	cd = checkout
-	ss = status
+    cd  = checkout
+    ss  = status
     sub = submodule
 
-# http://gitguru.com/2009/02/22/integrating-git-with-a-visual-merge-tool/
+    df      = diff
+    dt      = difftool
+    vdf     = !git diff | mvim -
+    dft     = difftool
+    vdft    = difftool -t mvimdiff
+
+[push]
+    default = matching
+
+
+[diff]
+    tool = mvimdiff
+[difftool "mvimdiff"]
+    # todo: open in tabs
+    cmd = mvim -f -d  \"$LOCAL\" \"$REMOTE\"
+[difftool "opendiff"]
+    cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+[difftool "pargs"]
+    cmd = pargs \"$LOCAL\" \"$REMOTE\"
+    
 [merge]
 	tool = mvimdiff
 [mergetool]
     prompt = false
 [mergetool "mvimdiff"]
     cmd = mvim -f -d \"$LOCAL\" \"$REMOTE\"
-[diff]
-    tool = mvimdiff
-[difftool "mvimdiff"]
-    cmd = mvim -f -d \"$LOCAL\" \"$REMOTE\"
-[push]
-    default = matching
-
-    
