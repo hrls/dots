@@ -37,21 +37,31 @@ set nu
 set autoindent
 set smartindent
 set smarttab
-set ts=4 sw=4 et
+set expandtab
+set tabstop=4
+set shiftwidth=4
 
 set incsearch
+set hlsearch
 set ignorecase
 set smartcase
 " set replace global by default, just use :s/foo/bar/ instead of :s/foo/bar/g
 set gdefault
+
+set showmatch " hl [{()}]
 
 set ttyfast
 
 set vb " no fucking beep
 set go+=c " kill popup dialogs
 
-" highlights search
-set hlsearch
+set guioptions-=m " menu
+set guioptions-=T " toolbar
+set guioptions-=L " left scrollbar
+
+set splitbelow
+set splitright
+
 
 " highlights w/o jump to the next occurrence
 nnoremap * *N
@@ -82,13 +92,11 @@ inoremap <up> <nop>
 inoremap <down> <nop>
 inoremap <left> <nop>
 inoremap <right> <nop>
+" navigate around wrapped text
 nnoremap j gj
 nnoremap k gk
 
-" map! ii <Esc> " map ii to Esc
-" tabs
-nnoremap <c-tab> :tabnext<cr>
-nnoremap <c-s-tab> :tabprevious<cr>
+" map! ii <Esc>
 nnoremap <tab> <c-W>w
 nnoremap <s-tab> <c-W>W
 
@@ -110,6 +118,8 @@ let g:NERDSpaceDelims = 1
 " autocmd vimenter * if !argc() | NERDTree | endif
 " open NERDTree
 map <c-n> :NERDTreeToggle<cr>
+let g:NERDTreeShowHidden = 1
+let g:NERDTreeShowBookmarks = 1
 " close vim if the only window left is a NERDTree
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 
