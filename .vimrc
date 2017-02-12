@@ -6,9 +6,7 @@ filetype plugin indent on
 
 set encoding=utf-8
 
-" todo: http://studiostyl.es/schemes/nightfall
-" color bullfinch
-color peachpuff
+color bullfinch
 
 " todo: NERD_Tree aliases
 "  - `e/q $file` explore in read only  
@@ -33,6 +31,7 @@ set showmode
 
 " line numbers
 set nu
+set cul
 
 set autoindent
 set smartindent
@@ -48,7 +47,7 @@ set smartcase
 " set replace global by default, just use :s/foo/bar/ instead of :s/foo/bar/g
 set gdefault
 
-set showmatch " hl [{()}]
+" set showmatch " hl [{()}]
 
 set ttyfast
 
@@ -131,6 +130,11 @@ source $VIMRUNTIME/ftplugin/man.vim
 " NERD_tree hidden files
 " <c-n> replace empty buffer (as 'e folder')
 
+" VimL
+nnoremap <leader>s :so $VIMRUNTIME/syntax/hitest.vim<cr>
+
 " Haskell
 autocmd BufWritePost package.yaml silent !hpack --silent
+
+" Rust
 

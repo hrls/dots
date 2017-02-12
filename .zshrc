@@ -35,6 +35,7 @@ alias more='more -r'
 PROMPT=$'%{\e[38;5;255m%}[%{\e[38;5;193m%}%n%{\e[38;5;75m%}@%{\e[38;5;193m%}%m %{\e[38;5;190m%}%~%{\e[38;5;255m%}]%{\e[38;5;178m%}$%{\e[0m%}'
 
 export src=$HOME/src
+export tmp=$HOME/tmp
 
 export LC_CTYPE=en_US.UTF-8
 
