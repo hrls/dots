@@ -1,5 +1,5 @@
-bindkey -v
-export KEYTIMEOUT=10
+export LC_CTYPE=en_US.UTF-8
+
 
 alias p=print
 alias cls='clear'
@@ -45,27 +45,31 @@ alias more='more -r'
 # [root@probe /var]# root prompt todo
 PROMPT=$'%{\e[38;5;255m%}[%{\e[38;5;193m%}%n%{\e[38;5;75m%}@%{\e[38;5;193m%}%m %{\e[38;5;190m%}%~%{\e[38;5;255m%}]%{\e[38;5;178m%}$%{\e[0m%}'
 
-export src=$HOME/src
-export tmp=$HOME/tmp
+bindkey -v
+export KEYTIMEOUT=10
 
-export LC_CTYPE=en_US.UTF-8
+function zle-line-init zle-keymap-select {
+    VIM_PROMPT="%{$fg_bold[yellow]%} [% NORMAL]% %{$reset_color%}"
+    RPS1="${${KEYMAP/vicmd/$VIM_PROMPT}/(main|viins)/} $EPS1"
+    zle reset-prompt
+}
+zle -N zle-line-init
+zle -N zle-keymap-select
+
+bindkey '^P' up-history
+bindkey '^N' down-history
+bindkey '^?' backward-delete-char
+bindkey '^h' backward-delete-char
 
 fpath=( ~/.etc/zsh "${fpath[@]}" )
 autoload -U misc && misc
 autoload -U add_env && add_env
 
-# pkgsrc path
-# export PATH=/usr/pkg/sbin:/usr/pkg/bin:$PATH
-
-# JVM
-# java8
-# add_clj
+export src=$HOME/src
+export tmp=$HOME/tmp
 
 # db
 add_pgs
-
-# export GEM_HOME=$HOME/.gems
-# export PATH=$GEM_HOME/bin:$PATH
 
 export PATH=$PATH:$HOME/.local/bin
 
