@@ -70,15 +70,15 @@ vnoremap * y :execute ":let @/=@\""<cr> :execute "set hlsearch"<cr>
 
 " just highlight, select in vmode, then replace :'<,'>s//bar/g
 
-" disable highlighting by ctrl+f8
-nnoremap <c-f8> :nohlsearch<cr>
+" turn off searh highlight
+nnoremap <leader>8 :nohlsearch<cr>
 
 
-" FOLDing
-" v{select}zf - collapse
-" za - expand
-set foldmethod=manual
-
+" folds
+set foldenable
+set foldmethod=indent
+set foldlevelstart=10
+set foldnestmax=10
 
 map ; :
 
