@@ -1,20 +1,31 @@
+bindkey -v
+export KEYTIMEOUT=10
+
+alias p=print
 alias cls='clear'
 alias del='rm'
+alias which='which -a'
 alias ll='ls -lAFGHh'
 alias la='ls -AFG'
 alias df='df -H'
-alias which='which -a'
 
-alias ips='ifconfig | grep inet'
-alias top='top -o cpu'
 alias e='mvim -np --'
 alias ra='ranger'
+alias top='top -o cpu'
+alias ips='ifconfig | grep inet'
+
+# python
 alias py='python3'
 alias pip='pip3'
+
+# stack
 alias sr='stack ghci'
 alias sc='stack clean'
 alias sb='stack build'
 alias se='stack exec'
+
+# tmux
+alias q='tmux attach || tmux new'
 
 alias pc='rsync -Ph' # -P same as --partial --progress
 alias md5sum='md5 -r'
@@ -59,3 +70,10 @@ add_pgs
 export PATH=$PATH:$HOME/.local/bin
 
 export EDITOR='mvim -f --nomru -c "au VimLeave * !open -a iTerm"'
+
+[ -f /usr/local/etc/profile.d/autojump.sh ] && . /usr/local/etc/profile.d/autojump.sh
+
+# if [[ $TERM != "screen" ]] then
+    # ( (tmux has-session -t remote && tmux attach-session -t remote) || (tmux new-session -s remote) ) && exit 0
+    # echo "error: tmux failed to start"
+# fi
