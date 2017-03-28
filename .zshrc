@@ -49,12 +49,13 @@ bindkey -v
 export KEYTIMEOUT=10
 
 function zle-line-init zle-keymap-select {
-    VIM_PROMPT="%{$fg_bold[yellow]%} [% NORMAL]% %{$reset_color%}"
+    VIM_PROMPT="%{$fg_bold[yellow]%} . %{$reset_color%}"
     RPS1="${${KEYMAP/vicmd/$VIM_PROMPT}/(main|viins)/} $EPS1"
     zle reset-prompt
 }
 zle -N zle-line-init
 zle -N zle-keymap-select
+# todo mode prompt doesnt work in new shell
 
 bindkey '^P' up-history
 bindkey '^N' down-history
