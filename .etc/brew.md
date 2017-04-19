@@ -36,3 +36,17 @@ slack
 telegram
 vlc
 xld
+# vim
+VimFStar
+bullfinch
+ctrlp.vim
+nerdcommenter
+nerdtree
+purescript-vim
+restore_view.vim
+rust.vim
+vim-airline
+vim-fugitive
+vim-glsl
+vim-markdown
+
