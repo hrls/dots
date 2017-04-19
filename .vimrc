@@ -61,6 +61,8 @@ set guioptions-=L " left scrollbar
 set splitbelow
 set splitright
 
+let mapleader = ";"
+nmap \ <leader>
 
 " highlights w/o jump to the next occurrence
 nnoremap * *N
@@ -79,8 +81,6 @@ set foldenable
 set foldmethod=indent
 set foldlevelstart=10
 set foldnestmax=10
-
-map ; :
 
 " turn off all arrows
 nnoremap <up> <nop>
