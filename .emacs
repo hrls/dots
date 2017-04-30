@@ -4,12 +4,18 @@
 ;; (package-initialize)
 
 (add-to-list 'load-path "~/.emacs.d/use-package")
-
 (require 'use-package)
 ;; (use-package markdown-mode
 ;;   :ensure t)
 ;; (use-package haskell-mode
 ;;   :ensure t)
+
+;;; erlang section
+(add-to-list 'load-path "/usr/local/opt/erlang/lib/erlang/lib/tools-2.9.1/emacs")
+(use-package erlang-start
+  :init
+  (setq erlang-root-dir "/usr/local/opt/erlang/lib/erlang")
+  (add-to-list 'exec-path (concat erlang-root-dir "/bin")))
 
 (setq make-backup-files nil)
 
