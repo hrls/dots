@@ -33,5 +33,8 @@
 (require 'ido)
 (ido-mode t)
 
+(add-to-list 'load-path "~/.etc")
+(load "hrls")
+
 ;;; srv-mode
 (server-start)
