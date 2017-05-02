@@ -62,6 +62,8 @@ export PATH=$PATH:$HOME/.local/bin
 # todo: replace by emacs
 export EDITOR='mvim -f --nomru -c "au VimLeave * !open -a iTerm"'
 
+# batteries
+eval "$(thefuck --alias)"
 [ -f /usr/local/etc/profile.d/autojump.sh ] && . /usr/local/etc/profile.d/autojump.sh
 
 # if [[ $TERM != "screen" ]] then
