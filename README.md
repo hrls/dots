@@ -1,11 +1,6 @@
 # ~/.\*
-clone and infect  
-or just  
 ```sh
-cd
-git init
-git remote add origin https://github.com/hrls/dots
-git fetch
-git checkout -f master
+mkdir $HOME/src; cd $HOME/src
+git clone https://github.com/hrls/dots; cd dots
+python infect.py
 ```
-
