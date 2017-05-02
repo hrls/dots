@@ -1,4 +1,5 @@
 (global-set-key "\C-x\C-b" 'bs-show)
+(global-set-key "\C-i" 'hippie-expand)
 (global-set-key (kbd "<C-return>") 'new-next-line)
 (global-set-key (kbd "<S-return>") 'new-prev-line)
 
