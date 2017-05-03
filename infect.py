@@ -1,27 +1,27 @@
-import sys, os
-etc = os.path.abspath('.etc')
+import sys, os, os.path as path
+etc = path.abspath('.etc')
 sys.path.append(etc)
 from sh import *
 
 vss = [
-    # '.etc/'
+    '.etc',
     '.gitconfig',
     '.gitignore',
     '.emacs',
+    '.vimrc',
     '.zshrc',
 ]
+
+pre_rm = True
 
 # home/.*
 def link_dots():
     cwd = pwd()
     for e in vss:
-        # if os.path.isfile(src):
-        # if os.path.isfile(dst):
-        #     os.remove(dst)
-        os.symlink(p(fork_in_the_road(cwd, home), e), p(home, e))
-        # elif os.path.isdir(src):
-        # print('dir {}'.format(fpath))
-        # os.symlink(e, '~', target_is_directory=
+        target = p(home, e)
+        if pre_rm and is_there(target):
+            rm(target)
+        os.symlink(p(rel(cwd, home), e), target)
 
 # home/.emacs.d/
 @restore_cwd
@@ -46,5 +46,5 @@ def install_emacs_pkgs():
 if __name__ == '__main__':
     ensure_dir(home)
     link_dots()
-    install_emacs_pkgs()
+    # install_emacs_pkgs()
 

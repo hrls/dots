@@ -1,44 +1,29 @@
 # import sys    
 # sys.modules[__name__] = Sh(...)
-import os
-from itertools import zip_longest, dropwhile
+import os, os.path as path
 
-home = os.path.expanduser('~/tmp/newhome')
+home = path.expanduser('~')
 pwd = lambda: os.getcwd()
 cd = lambda d: os.chdir(d)
+is_there = lambda f: path.islink(f) or path.isfile(f)
+def rm(f):
+    if path.islink(f):
+        os.unlink(f)
+    elif path.isfile(f):
+        os.remove(f)
 git_clone = lambda repo: os.system('git clone {}'.format(repo))
 shell = lambda s: os.system(s)
 
 def p(*ls):
-    return os.path.sep.join(ls)
+    return path.sep.join(ls)
 
 def ensure_dir(d):
-    if not os.path.isdir(d):
+    if not path.isdir(d):
         os.makedirs(d)
 
-def fork_in_the_road(src, dst):
-    """
-    rel path offset:
-    /Users/foo/bar/baz /Users/foo/bar => baz
-    /Users/foo/bar/baz /Users/foo/qux => ../baz
-    """
-
-    splitter = lambda dir_path: list(filter(lambda s: len(s) != 0, dir_path.split(os.path.sep)))
-    src = splitter(src)
-    dst = splitter(dst)
-
-    comps = zip_longest(src, dst)
-    undup = dropwhile(lambda t: t[0] == t[1], comps)
-    by_comp = list(zip(*undup))
-    none_filter = lambda it: filter(lambda v: v != None, it)
-    downward = os.path.sep.join(none_filter(by_comp[0]))
-    upward = os.path.sep.join(map(lambda _: '..', none_filter(by_comp[1])))
-    if len(upward) == 0:
-        return downward
-    elif len(downward) == 0:
-        return upward
-    else:
-        return p(upward, downward)
+def rel(base, tdir):
+    return path.relpath(path.expanduser(base),
+                        path.expanduser(tdir))
 
 def restore_cwd(f):
     def wrap():
