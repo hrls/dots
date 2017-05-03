@@ -1,6 +1,5 @@
 export LC_CTYPE=en_US.UTF-8
 
-
 alias p=print
 alias cls='clear'
 alias del='rm'
@@ -9,7 +8,8 @@ alias ll='ls -lAFGHh'
 alias la='ls -AFG'
 alias df='df -H'
 
-alias e='emacsclient --create-frame --no-wait'
+alias e='emacsclient --no-wait'
+alias ef='e --create-frame'
 alias ra='ranger'
 alias top='top -o cpu'
 alias ips='ifconfig | grep inet'

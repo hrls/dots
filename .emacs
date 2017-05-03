@@ -1,12 +1,18 @@
+;; (setq os (if (memq window-system '(ns mac)) 'macos 'unix))
 ;; (require 'package)
 ;; (add-to-list 'package-archives
-;; 	     '("melpa" . "https://melpa.org/packages/"))
+;;  	     '("melpa" . "https://melpa.org/packages/"))
 ;; (package-initialize)
 
 (add-to-list 'load-path "~/.emacs.d/use-package")
 (require 'use-package)
-;; (use-package markdown-mode
-;;   :ensure t)
+
+(use-package markdown-mode
+  :commands (markdown-mode gfm-mode)
+  :mode (("README\\.md\\'" . gfm-mode)
+	 ("\\.md\\'" . markdown-mode)
+	 ("\\.markdown\\'" . markdown-mode))
+  :init (setq markdown-command "multimarkdown"))
 
 ;;; erlang section
 (add-to-list 'load-path "/usr/local/opt/erlang/lib/erlang/lib/tools-2.9.1/emacs")
@@ -29,16 +35,20 @@
 (setq ring-bell-function 'ignore)
 
 (tool-bar-mode -1)
-(menu-bar-mode 0)
+(menu-bar-mode -1)
 (scroll-bar-mode -1)
 
 (blink-cursor-mode -1)
+(set-default 'cursor-type 'hbar)
+(set-default 'cursor-in-non-selected-windows 'bar)
 
-(require 'ido)
-(ido-mode t)
+(use-package ido
+  :config
+  (ido-mode t))
+(use-package url)
 
 (add-to-list 'load-path "~/.etc")
-(load "hrls")
+(load "binds")
+(load "suwayyah")
 
-;;; srv-mode
 (server-start)
