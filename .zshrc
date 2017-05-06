@@ -6,17 +6,16 @@ alias del='rm'
 alias which='which -a'
 alias ll='ls -lAFGHh'
 alias la='ls -AFG'
-alias df='df -H'
 
 alias e='emacsclient --no-wait'
-alias ef='e --create-frame'
-alias ra='ranger'
-alias top='top -o cpu'
-alias ips='ifconfig | grep inet'
+alias ee='e --create-frame'
 
 # python
 alias py='python3'
 alias pip='pip3'
+
+# erlang
+alias erlich='erl -man'
 
 # stack
 alias sr='stack ghci'
@@ -24,11 +23,13 @@ alias sc='stack clean'
 alias sb='stack build'
 alias se='stack exec'
 
-# tmux
+alias df='df -H'
 alias q='tmux attach || tmux new'
-
+alias top='top -o cpu'
+alias ips='ifconfig | grep inet'
 alias pc='rsync -Ph' # -P same as --partial --progress
 alias md5sum='md5 -r'
+alias ra='ranger'
 alias btli="btcli list | grep -e '[LI+]\.\s'"
 alias ww="qlmanage -p $@ >& /dev/null"
 
@@ -60,7 +61,7 @@ add_pgs
 export PATH=$PATH:$HOME/.local/bin
 
 # todo: replace by emacs
-export EDITOR='mvim -f --nomru -c "au VimLeave * !open -a iTerm"'
+# export EDITOR='mvim -f --nomru -c "au VimLeave * !open -a iTerm"'
 
 # batteries
 eval "$(thefuck --alias)"
