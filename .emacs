@@ -7,6 +7,7 @@
 (add-to-list 'load-path "~/.emacs.d/use-package")
 (require 'use-package)
 
+(add-to-list 'load-path "~/.emacs.d/markdown-mode")
 (use-package markdown-mode
   :commands (markdown-mode gfm-mode)
   :mode (("README\\.md\\'" . gfm-mode)
@@ -25,7 +26,13 @@
 (add-to-list 'load-path "~/.emacs.d/haskell-mode")
 (use-package haskell-mode-autoloads
   :init
-  (add-to-list 'Info-default-directory-list "~/.emacs.d/haskell-mode"))
+  (add-to-list 'Info-default-directory-list "~/.emacs.d/haskell-mode")
+  :config
+  (setq haskell-indent-offset 4
+	haskell-indent-spaces 4
+	haskell-indentation-left-offset 4
+	haskell-indentation-layout-offset 4
+	haskell-indentation-starter-offset 4))
 
 (setq make-backup-files nil)
 
