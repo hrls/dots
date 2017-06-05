@@ -77,8 +77,7 @@ alias ejmd='ej modules_installed'
 alias ejup='ej module_upgrade'
 alias ejlogs='cd $EJABBERD_HOME/var/log/ejabberd'
 
-# todo: replace by emacs
-# export EDITOR='mvim -f --nomru -c "au VimLeave * !open -a iTerm"'
+export EDITOR='emacsclient'
 
 # batteries
 eval "$(thefuck --alias)"
