@@ -15,7 +15,6 @@ function getacolors {
 # foldn
 }
 
-
 function reload {
     print "foobar"
 }

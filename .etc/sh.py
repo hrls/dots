@@ -5,7 +5,7 @@ from functools import update_wrapper
 
 home = path.expanduser('~')
 pwd = lambda: os.getcwd()
-cd = lambda d: os.chdir(d)
+cd = lambda d: os.chdir(path.expanduser(d))
 is_there = lambda f: path.islink(f) or path.isfile(f)
 shell = lambda s: os.system(s)
 
@@ -48,3 +48,8 @@ def github(repo):
         git.pull()
     else:
         git.clone('https://github.com/{}'.format(repo))
+
+if __name__ == '__main__':
+    from importlib import reload
+    import sh
+    from sh import *

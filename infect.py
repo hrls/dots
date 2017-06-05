@@ -32,6 +32,7 @@ def install_emacs_pkgs():
 
     use_package = lambda: github('jwiegley/use-package')
     markdown_mode = lambda: github('jrblevin/markdown-mode')
+    yaml_mode = lambda: github('yoshiki/yaml-mode')
 
     @restore_cwd
     def haskell_mode():

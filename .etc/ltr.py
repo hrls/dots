@@ -28,6 +28,6 @@ else:
 print('torrent file: {}'.format(torrent_file))
 rc = os.system('btcli add {} -d {}'.format(torrent_file, into_dir))
 if rc == 0:
-    log('successful, rm')
+    # log('successful, rm')
     os.remove(torrent_file)
     
