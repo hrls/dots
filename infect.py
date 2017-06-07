@@ -43,7 +43,12 @@ def install_emacs_pkgs():
 
     use_package()
     markdown_mode()
+    yaml_mode()
     haskell_mode()
+    # erlang-mode comes from erlang/otp package
+    # todo: install elixir-mode <https://github.com/elixir-lang/emacs-elixir>
+    #       +++ check: Package-Requires
+
 
 if __name__ == '__main__':
     ensure_dir(home)

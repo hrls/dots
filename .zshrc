@@ -1,11 +1,12 @@
 export LC_CTYPE=en_US.UTF-8
 
-alias p=print
+alias p=echo
 alias cls='clear'
 alias del='rm'
 alias which='which -a'
 alias ll='ls -lAFGHh'
 alias la='ls -AFG'
+alias cp='cp -a'
 
 alias e='emacsclient --no-wait'
 alias ee='e --create-frame'
@@ -59,8 +60,8 @@ export src=$HOME/src
 export tmp=$HOME/tmp
 export sdr=/Volumes/rttr
 
-# db
-# add_pgs
+# db*
+add_postgres
 
 export PATH=$PATH:$HOME/.local/bin
 
