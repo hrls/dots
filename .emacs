@@ -4,25 +4,24 @@
 ;;  	     '("melpa" . "https://melpa.org/packages/"))
 ;; (package-initialize)
 
-
 (add-to-list 'load-path "~/.emacs.d/use-package")
 (require 'use-package)
 
-(add-to-list 'load-path "~/.emacs.d/markdown-mode")
 (use-package markdown-mode
+  :load-path "markdown-mode"
   :commands (markdown-mode gfm-mode)
   :mode (("README\\.md\\'" . gfm-mode)
 		 ("\\.md\\'" . markdown-mode)
 		 ("\\.markdown\\'" . markdown-mode))
   :init (setq markdown-command "multimarkdown"))
 
-(add-to-list 'load-path "~/.emacs.d/yaml-mode")
 (use-package yaml-mode
+  :load-path "yaml-mode"
   :mode ("\\.yml\\'" . yaml-mode))
 
 ;;; erlang section
-(add-to-list 'load-path "/usr/local/opt/erlang/lib/erlang/lib/tools-2.9.1/emacs")
 (use-package erlang-start
+  :load-path "/usr/local/opt/erlang/lib/erlang/lib/tools-2.9.1/emacs"
   :init
   (setq erlang-root-dir "/usr/local/opt/erlang/lib/erlang")
   (add-to-list 'exec-path (concat erlang-root-dir "/bin"))
@@ -31,8 +30,8 @@
   )
 
 ;;; haskell section
-(add-to-list 'load-path "~/.emacs.d/haskell-mode")
 (use-package haskell-mode-autoloads
+  :load-path "haskell-mode"
   :init
   (add-to-list 'Info-default-directory-list "~/.emacs.d/haskell-mode")
   :config
@@ -78,16 +77,16 @@
 
 (server-start)
 
-(defun set-frame-startup-size-and-position ()
-  (interactive)
-  (if window-system
-	  (progn
-		(if (= (x-display-pixel-width) 1280)
-			(progn
-			  (add-to-list 'default-frame-alist (cons 'width 100))
-			  (add-to-list 'default-frame-alist (cons 'height 49))
-			  (add-to-list 'default-frame-alist (cons 'top 20))
-			  (add-to-list 'default-frame-alist (cons 'left 300)))))))
+;; (defun set-frame-startup-size-and-position ()
+;;   (interactive)
+;;   (if window-system
+;; 	  (progn
+;; 		(if (= (x-display-pixel-width) 1280)
+;; 			(progn
+;; 			  (add-to-list 'default-frame-alist (cons 'width 100))
+;; 			  (add-to-list 'default-frame-alist (cons 'height 49))
+;; 			  (add-to-list 'default-frame-alist (cons 'top 20))
+;; 			  (add-to-list 'default-frame-alist (cons 'left 300)))))))
 
-(set-frame-startup-size-and-position)
-(add-hook 'emacs-startup-hook 'delete-other-windows) ; fixme
+;; (set-frame-startup-size-and-position)
+;; (add-hook 'emacs-startup-hook 'delete-other-windows) ; fixme
