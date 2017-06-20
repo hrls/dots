@@ -17,7 +17,8 @@
 
 (use-package yaml-mode
   :load-path "yaml-mode"
-  :mode ("\\.yml\\'" . yaml-mode))
+  :mode (("\\.yml\\'" . yaml-mode)
+		 ("\\.yaml\\'" . yaml-mode)))
 
 ;;; erlang section
 (use-package erlang-start
@@ -63,6 +64,10 @@
 (blink-cursor-mode -1)
 (set-default 'cursor-type 'hbar)
 (set-default 'cursor-in-non-selected-windows 'bar)
+
+;; http://emacs-fu.blogspot.com.by/2009/01/balancing-your-parentheses.html
+(show-paren-mode t)
+(setq show-paren-style 'mixed)
 
 (use-package ido
   :config
