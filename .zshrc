@@ -1,4 +1,4 @@
-export LC_CTYPE=en_US.UTF-8
+LC_CTYPE=en_US.UTF-8
 
 alias p=echo
 alias cls='clear'
@@ -8,8 +8,19 @@ alias ll='ls -lAFGHh'
 alias la='ls -AFG'
 alias cp='cp -a'
 
-alias e='emacsclient --no-wait'
-alias ee='e --create-frame'
+alias g=git
+mvim_args='-np'
+alias e='mvim ${mvim_args} --'
+alias er='mvim ${mvim_args} -R --'
+
+alias grep='grep --color=auto -E'			# egrep
+# -Hn file:lineno
+# grep_find: find . -type f -exec grep  -nH -e  {} +
+grey() {
+	find . -type f -name $1 -exec egrep -Hn -e $2 {} + # todo
+}
+	
+# alias grey='grep -Er --include=\*.{h,e}rl "record" .'
 
 # python
 alias py='python3 -B'
@@ -17,7 +28,9 @@ alias pyre='py -i'
 alias pip='pip3'
 
 # erlang
+PATH="/usr/local/opt/erlang@18/bin:$PATH"
 alias erlich='erl -man'
+alias erl_tags='find . -type f -iname "*.[he]rl" | etags -'
 
 # stack
 alias sr='stack ghci'
@@ -26,7 +39,6 @@ alias sb='stack build'
 alias se='stack exec'
 
 alias df='df -H'
-alias q='tmux attach || tmux new'
 alias top='top -o cpu'
 alias ips='ifconfig | grep inet'
 alias pc='rsync -Ph' # -P same as --partial --progress
@@ -36,11 +48,9 @@ alias btli="btcli list | grep -e '[LI+]\.\s'"
 alias ltr="py ~/.etc/ltr.py"
 alias ww="qlmanage -p $@ >& /dev/null"
 
-# alias java9='export JAVA_HOME=$(/usr/libexec/java_home -v 1.9)'
-
 autoload -U colors && colors
 # todo: replace ANSI by supported xterm-256color
-export LSCOLORS='Exfxcxdxbxegedabagacad'
+LSCOLORS='Exfxcxdxbxegedabagacad'
 export CLICOLOR_FORCE=true
 alias less='less -r'
 alias more='more -r'
@@ -48,47 +58,35 @@ alias more='more -r'
 # [hrls@probe /bin]$ default prompt
 # [root@probe /var]# root prompt todo
 # user @ machine  ~ λ
-PROMPT=$'%{\e[38;5;255m%}[%{\e[38;5;193m%}%n%{\e[38;5;75m%}@%{\e[38;5;193m%}%m %{\e[38;5;190m%}%~%{\e[38;5;255m%}]%{\e[38;5;178m%}$%{\e[0m%}'
+# todo [[ $SHELL -ne 'dumb' ]]
+if [[ $TERM != 'dumb' ]] then
+    PROMPT=$'%{\e[38;5;255m%}[%{\e[38;5;193m%}%n%{\e[38;5;75m%}@%{\e[38;5;193m%}%m %{\e[38;5;190m%}%~%{\e[38;5;255m%}]%{\e[38;5;178m%}$%{\e[0m%}'
+fi
 
-bindkey -e # emacs
+bindkey -v # vim
+# todo: zle vim mode
+# https://github.com/hrls/dots/commit/c4453bc987d388d233ec5af597cffea580c3f71e#diff-ec20fb240e117fea7b0049c21edf1ef3
 
-fpath=( ~/.etc/zsh "${fpath[@]}" )
+fpath=( ~/.etc/zsh '${fpath[@]}' )
 autoload -U misc && misc
 autoload -U add_env && add_env
+autoload -U haskell && haskell
+autoload -U ejabberd && ejabberd
+[ -f ~/.etc/zsh/tmux ] && source ~/.etc/zsh/tmux
 
-export src=$HOME/src
-export tmp=$HOME/tmp
-export sdr=/Volumes/rttr
+src=$HOME/src
+tmp=$HOME/tmp
+sdr=/Volumes/rttr
 
 # db*
 add_postgres
 
-export PATH=$PATH:$HOME/.local/bin
+PATH=$PATH:$HOME/.local/bin
 
-# ejabberd
-export EJABBERD_HOME=$HOME/.local/ejabberd
-export PATH=$EJABBERD_HOME/sbin:$PATH
-alias ej=ejabberdctl
-alias ejss='ej status'
-alias ejmc='ej module_check'
-alias ejma='ej modules_available'
-alias ejmi='ej module_install'
-alias ejmu='ej module_uninstall'
-alias ejmd='ej modules_installed'
-alias ejup='ej module_upgrade'
-alias ejlogs='cd $EJABBERD_HOME/var/log/ejabberd'
-
-export EDITOR='emacsclient'
+EDITOR='mvim -f --nomru -c "au VimLeave * !open -a iTerm"'
 
 # batteries
 eval "$(thefuck --alias)"
 [ -f /usr/local/etc/profile.d/autojump.sh ] && . /usr/local/etc/profile.d/autojump.sh
 
-# if [[ $TERM != "screen" ]] then
-    # ( (tmux has-session -t remote && tmux attach-session -t remote) || (tmux new-session -s remote) ) && exit 0
-    # echo "error: tmux failed to start"
-# fi
-
-if [ -f ~/.private ]; then
-	source ~/.private
-fi
+[ -f ~/.private ] && source ~/.private

@@ -1,5 +1,19 @@
 # cal SetSyn("zsh")
 
+function topall() {
+    print "not implented yet"
+    tpids=`ps ax | grep "$1"`
+    print $tpids
+}
+
+function shsh() {
+    if [[ $SHELL == '/bin/zsh' ]] then
+        print 'oh your zsh!!'
+    else
+        print 'ur dumb…'
+    fi
+}
+
 function getacolors {
 # fold
 	for COLOR in $(seq 0 255)
