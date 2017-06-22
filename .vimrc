@@ -29,9 +29,10 @@ set wildmenu
 set showcmd
 set showmode
 
-" line numbers
-set nu
-set cul
+set number
+set cursorline
+
+set nowrap
 
 set autoindent
 set smartindent
@@ -51,9 +52,8 @@ set gdefault
 
 set ttyfast
 
-set vb " no fucking beep
-set go+=c " kill popup dialogs
-
+set visualbell " no fucking beeps; macvim dont flashes
+set guioptions+=c " kill popup dialogs
 set guioptions-=m " menu
 set guioptions-=T " toolbar
 set guioptions-=L " left scrollbar
@@ -63,6 +63,18 @@ set splitright
 
 let mapleader = ";"
 nmap \ <leader>
+
+" todo: bypass warning - E16: Invalid range
+noremap <D-1> :1tabnext<CR>
+noremap <D-2> :2tabnext<CR>
+noremap <D-3> :3tabnext<CR>
+noremap <D-4> :4tabnext<CR>
+noremap <D-5> :5tabnext<CR>
+inoremap <D-1> <Esc>:1tabnext<CR>
+inoremap <D-2> <Esc>:2tabnext<CR>
+inoremap <D-3> <Esc>:3tabnext<CR>
+inoremap <D-4> <Esc>:4tabnext<CR>
+inoremap <D-5> <Esc>:5tabnext<CR>
 
 " highlights w/o jump to the next occurrence
 nnoremap * *N
@@ -118,13 +130,13 @@ let g:NERDSpaceDelims = 1
 " open NERDTree
 map <c-n> :NERDTreeToggle<cr>
 let g:NERDTreeShowHidden = 1
-let g:NERDTreeShowBookmarks = 1
+" let g:NERDTreeShowBookmarks = 1
 " close vim if the only window left is a NERDTree
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 
 
-" :Man
-source $VIMRUNTIME/ftplugin/man.vim
+" batteries
+source $VIMRUNTIME/ftplugin/man.vim " :Man
 
 " todo;
 " NERD_tree hidden files
@@ -136,5 +148,5 @@ nnoremap <leader>s :so $VIMRUNTIME/syntax/hitest.vim<cr>
 " Haskell
 autocmd BufWritePost package.yaml silent !hpack --silent
 
-" Rust
-
+" etc...
+" todo: term ≈ !open -a iTerm :pwd
