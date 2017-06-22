@@ -8,7 +8,7 @@ vss = [
     '.gitconfig',
     '.gitignore',
     '.vimrc',
-    '.zshrc',
+    '.zshenv',
 ]
 
 pre_rm = True
