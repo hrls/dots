@@ -1,2 +1,3 @@
+# vim: set ft=zsh:
 stack_args=(new build clean path exec ghci repl)
 compctl -k stack_args stack

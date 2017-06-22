@@ -1,3 +1,4 @@
+# vim: set ft=zsh:
 # if [[ $TERM != "screen" ]] then
     # ( (tmux has-session -t remote && tmux attach-session -t remote) || (tmux new-session -s remote) ) && exit 0
     # echo "error: tmux failed to start"

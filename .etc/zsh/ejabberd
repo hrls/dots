@@ -1,3 +1,4 @@
+# vim: set ft=zsh:
 ejabberdctl_args=(
     start debug iexdebug live iexlive foreground
     status
