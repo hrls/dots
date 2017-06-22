@@ -1,12 +1,15 @@
 [user]
-	name = hrls
-	email = viktor.kharitonovich@gmail.com
+    name = hrls
+    email = viktor.kharitonovich@gmail.com
 [core]
-	excludesfile = ~/.gitignore
-	autocrlf = input
+    excludesfile = ~/.gitignore
+    autocrlf = input
 [alias]
     cd  = checkout
-    ss  = status
+    b   = branch
+    s   = status
+    sl  = stash list
+    ss  = stash show
     sub = submodule
 
     df      = diff
