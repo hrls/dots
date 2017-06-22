@@ -38,6 +38,7 @@ def install_vim_pkgs():
     github('tpope/vim-markdown')
     github('elixir-lang/vim-elixir')
     github('vim-airline/vim-airline')
+    github('vim-scripts/restore_view.vim')
     # github('tikhomirov/vim-glsl')
 
 if __name__ == '__main__':
