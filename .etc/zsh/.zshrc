@@ -9,9 +9,8 @@ alias la='ls -AFG'
 alias cp='cp -a'
 
 alias g=git
-mvim_args='-np'
-alias e='mvim ${mvim_args} --'
-alias er='mvim ${mvim_args} -R --'
+alias e="mvim ${mvim_args} --"
+alias er="mvim ${mvim_args} -R --"
 
 alias grep='grep --color=auto -E'			# egrep
 # -Hn file:lineno
@@ -28,7 +27,6 @@ alias pyre='py -i'
 alias pip='pip3'
 
 # erlang
-PATH="/usr/local/opt/erlang@18/bin:$PATH"
 alias erlich='erl -man'
 alias erl_tags='find . -type f -iname "*.[he]rl" | etags -'
 
@@ -74,19 +72,12 @@ autoload -U haskell && haskell
 autoload -U ejabberd && ejabberd
 [ -f ~/.etc/zsh/tmux ] && source ~/.etc/zsh/tmux
 
-src=$HOME/src
-tmp=$HOME/tmp
-sdr=/Volumes/rttr
 
 # db*
 add_postgres
 
-PATH=$PATH:$HOME/.local/bin
-
-EDITOR='mvim -f --nomru -c "au VimLeave * !open -a iTerm"'
-
 # batteries
 eval "$(thefuck --alias)"
-[ -f /usr/local/etc/profile.d/autojump.sh ] && . /usr/local/etc/profile.d/autojump.sh
+[[ -f /usr/local/etc/profile.d/autojump.sh ]] && . /usr/local/etc/profile.d/autojump.sh
 
-[ -f ~/.private ] && source ~/.private
+[[ -f ~/.private ]] && source ~/.private
