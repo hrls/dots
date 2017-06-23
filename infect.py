@@ -9,6 +9,7 @@ vss = [
     '.gitignore',
     '.vimrc',
     '.zshenv',
+    '.psqrc',
 ]
 
 pre_rm = True
@@ -42,6 +43,8 @@ def install_vim_pkgs():
     # github('tikhomirov/vim-glsl')
 
 if __name__ == '__main__':
-    ensure_dir(home)
+    # ['~', ['.local', ['bin', 'var']]]
+    ensure_dir(p(home, '.local', 'bin'))
+    ensure_dir(p(home, '.local', 'var'))
     link_dots()
     install_vim_pkgs()

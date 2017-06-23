@@ -4,3 +4,4 @@
 \set HISTFILE ~/.local/var/psql/.psql_history- :DBNAME
 \set HISTCONTROL ignoredups
 \set QUIET 0
+
