@@ -111,10 +111,6 @@ nnoremap k gk
 nnoremap <tab> <c-W>w
 nnoremap <s-tab> <c-W>W
 
-" tab reordering (not for osx)
-" nnoremap <silent> <a-left> :execute 'silent! tabmove ' . (tabpagenr()-2)<cr>
-" nnoremap <silent> <a-right> :execute 'silent! tabmove ' . tabpagenr()<cr>
-
 " Plugins
 
 " https://github.com/vim-scripts/restore_view.vim
@@ -124,29 +120,33 @@ set viewoptions=cursor,folds,slash,unix
 " https://github.com/scrooloose/nerdcommenter
 let g:NERDSpaceDelims = 1
 
-" NERDTree
-" open NERDTree automatically when vim starts up if no files were specified
+" https://github.com/scrooloose/nerdtree
 " autocmd vimenter * if !argc() | NERDTree | endif
-" open NERDTree
 map <c-n> :NERDTreeToggle<cr>
 let g:NERDTreeShowHidden = 1
 " let g:NERDTreeShowBookmarks = 1
+" <c-n> replace empty buffer (as ':e folder')
 " close vim if the only window left is a NERDTree
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 
+" https://github.com/ctrlpvim/ctrlp.vim
+set wildignore+=*/.git/*
+let g:ctrlp_show_hidden = 1
+" let g:ctrlp_user_command = 'find %s -type f'
 
 " batteries
 source $VIMRUNTIME/ftplugin/man.vim " :Man
-
-" todo;
-" NERD_tree hidden files
-" <c-n> replace empty buffer (as 'e folder')
 
 " VimL
 nnoremap <leader>s :so $VIMRUNTIME/syntax/hitest.vim<cr>
 
 " Haskell
+set wildignore+=*/.stack-work/*
 autocmd BufWritePost package.yaml silent !hpack --silent
+
+" Erlang
+set wildignore+=*.beam
 
 " etc...
 " todo: term ≈ !open -a iTerm :pwd
+" todo: autocomple function: fb<tab> -> FooBar .hs, foo_bar .erl
