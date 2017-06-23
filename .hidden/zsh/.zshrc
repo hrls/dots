@@ -65,13 +65,19 @@ bindkey -v # vim
 # todo: zle vim mode
 # https://github.com/hrls/dots/commit/c4453bc987d388d233ec5af597cffea580c3f71e#diff-ec20fb240e117fea7b0049c21edf1ef3
 
-fpath=( ~/.hidden/zsh '${fpath[@]}' )
-autoload -U misc && misc
-autoload -U add_env && add_env
-autoload -U haskell && haskell
-autoload -U ejabberd && ejabberd
-[ -f ~/.hidden/zsh/tmux ] && source ~/.hidden/zsh/tmux
+function load() {
+    absp="$HOME/.hidden/zsh/$1"
+    [[ -f ${absp} ]] && source ${absp}
+}
 
+load misc
+load add_env
+load haskell
+load ejabberd
+load tmux
+
+# fpath+=~/.hidden/zsh
+# todo: fpath / autoload / source
 
 # db*
 add_postgres
