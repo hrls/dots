@@ -43,7 +43,7 @@ alias pc='rsync -Ph' # -P same as --partial --progress
 alias md5sum='md5 -r'
 alias ra='ranger'
 alias btli="btcli list | grep -e '[LI+]\.\s'"
-alias ltr="py ~/.etc/ltr.py"
+alias ltr="py ~/.hidden/ltr.py"
 alias ww="qlmanage -p $@ >& /dev/null"
 
 autoload -U colors && colors
@@ -65,12 +65,12 @@ bindkey -v # vim
 # todo: zle vim mode
 # https://github.com/hrls/dots/commit/c4453bc987d388d233ec5af597cffea580c3f71e#diff-ec20fb240e117fea7b0049c21edf1ef3
 
-fpath=( ~/.etc/zsh '${fpath[@]}' )
+fpath=( ~/.hidden/zsh '${fpath[@]}' )
 autoload -U misc && misc
 autoload -U add_env && add_env
 autoload -U haskell && haskell
 autoload -U ejabberd && ejabberd
-[ -f ~/.etc/zsh/tmux ] && source ~/.etc/zsh/tmux
+[ -f ~/.hidden/zsh/tmux ] && source ~/.hidden/zsh/tmux
 
 
 # db*

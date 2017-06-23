@@ -1,10 +1,10 @@
 import sys, os, os.path as path
-etc = path.abspath('.etc')
-sys.path.append(etc)
+hidden = path.abspath('.hidden')
+sys.path.append(hidden)
 from sh import *
 
 vss = [
-    '.etc',
+    '.hidden',
     '.gitconfig',
     '.gitignore',
     '.vimrc',

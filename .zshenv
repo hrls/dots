@@ -1,4 +1,4 @@
-ZDOTDIR=$HOME/.etc/zsh
+ZDOTDIR=$HOME/.hidden/zsh
 
 LESSHISTFILE=$HOME/.local/var/.less_history
 
