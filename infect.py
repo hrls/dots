@@ -34,11 +34,12 @@ def install_vim_pkgs():
     ensure_dir(bundle_dir)
     cd(bundle_dir)
     github('hrls/bullfinch')
+    github('vim-airline/vim-airline')
+    github('majutsushi/tagbar')
     github('ctrlpvim/ctrlp.vim')
     github('scrooloose/nerdtree')
     github('tpope/vim-markdown')
     github('elixir-lang/vim-elixir')
-    github('vim-airline/vim-airline')
     github('vim-scripts/restore_view.vim')
     # github('tikhomirov/vim-glsl')
 

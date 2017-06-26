@@ -1,3 +1,10 @@
+" todo:
+" NERD_Tree: aliases 'e[r] $file' edit / RO
+" zsh :!aliases
+"
+"
+"
+
 set nocompatible
 set viminfo+=n~/.local/var/viminfo
 
@@ -9,26 +16,20 @@ set encoding=utf-8
 
 color bullfinch
 
-" todo: NERD_Tree aliases
-"  - `e/q $file` explore in read only  
-"  - optional: sync zhs e/w aliases with 
-
 " Menlo:12 Apple font based on Bitstream Vera and Deja Vu
-" http://blog.fnurl.se/2011/06/22/comparison-bitstream-vs-dejavu-vs-menlo/
-"
 " Monaco:12 Apple font default in iTerm2
-"
 " Inconsolata:14 Open source font by Raph Levien
+" http://blog.fnurl.se/2011/06/22/comparison-bitstream-vs-dejavu-vs-menlo/
 " http://www.fontsquirrel.com/fonts/Inconsolata
 set guifont=Menlo:h12
 
-" vim-airline
-set laststatus=2
+set shortmess=atI
+
+set laststatus=2    " vim-airline
+set noshowmode      " try shm+=s
 set ruler
-set wildmenu
-" set wildmode=list:longest
+set wildmenu        " =list:longest
 set showcmd
-set showmode
 
 set number
 set cursorline
@@ -80,20 +81,23 @@ inoremap <right> <nop>
 nnoremap j gj
 nnoremap k gk
 
-nnoremap <tab> <c-W>w
-nnoremap <s-tab> <c-W>W
+nnoremap <tab> <c-w>w
+nnoremap <s-tab> <c-w>W
 
 " todo: bypass warning - E16: Invalid range
-noremap <D-1> :1tabnext<CR>
-noremap <D-2> :2tabnext<CR>
-noremap <D-3> :3tabnext<CR>
-noremap <D-4> :4tabnext<CR>
-noremap <D-5> :5tabnext<CR>
-inoremap <D-1> <Esc>:1tabnext<CR>
-inoremap <D-2> <Esc>:2tabnext<CR>
-inoremap <D-3> <Esc>:3tabnext<CR>
-inoremap <D-4> <Esc>:4tabnext<CR>
-inoremap <D-5> <Esc>:5tabnext<CR>
+noremap <D-1> :1tabnext<cr>
+noremap <D-2> :2tabnext<cr>
+noremap <D-3> :3tabnext<cr>
+noremap <D-4> :4tabnext<cr>
+noremap <D-5> :5tabnext<cr>
+inoremap <D-1> <Esc>:1tabnext<cr>
+inoremap <D-2> <Esc>:2tabnext<cr>
+inoremap <D-3> <Esc>:3tabnext<cr>
+inoremap <D-4> <Esc>:4tabnext<cr>
+inoremap <D-5> <Esc>:5tabnext<cr>
+
+vnoremap < <gv
+vnoremap > >gv
 
 " highlights w/o jump to the next occurrence
 nnoremap * *N
@@ -110,6 +114,12 @@ set foldlevelstart=10
 set foldnestmax=10
 
 " Plugins
+
+" airline
+" let g:airline_left_sep = '>'
+
+" tagbar
+nmap <f8> :TagbarToggle<cr>
 
 " https://github.com/vim-scripts/restore_view.vim
 set viewoptions=cursor,folds,slash,unix
