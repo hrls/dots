@@ -1,4 +1,5 @@
 set nocompatible
+set viminfo+=n~/.local/var/viminfo
 
 execute pathogen#infect()
 syntax on
@@ -41,6 +42,7 @@ set expandtab
 set tabstop=4
 set shiftwidth=4
 
+
 set incsearch
 set hlsearch
 set ignorecase
@@ -64,6 +66,23 @@ set splitright
 let mapleader = ";"
 nmap \ <leader>
 
+" binds
+nnoremap <up> <nop>
+nnoremap <down> <nop>
+nnoremap <left> <nop>
+nnoremap <right> <nop>
+inoremap <up> <nop>
+inoremap <down> <nop>
+inoremap <left> <nop>
+inoremap <right> <nop>
+
+" navigate around wrapped text
+nnoremap j gj
+nnoremap k gk
+
+nnoremap <tab> <c-W>w
+nnoremap <s-tab> <c-W>W
+
 " todo: bypass warning - E16: Invalid range
 noremap <D-1> :1tabnext<CR>
 noremap <D-2> :2tabnext<CR>
@@ -78,38 +97,17 @@ inoremap <D-5> <Esc>:5tabnext<CR>
 
 " highlights w/o jump to the next occurrence
 nnoremap * *N
-
 " highlights selected in vmode
-vnoremap * y :execute ":let @/=@\""<cr> :execute "set hlsearch"<cr>
-
 " just highlight, select in vmode, then replace :'<,'>s//bar/g
-
+vnoremap * y :execute ":let @/=@\""<cr> :execute "set hlsearch"<cr>
 " turn off searh highlight
 nnoremap <leader>8 :nohlsearch<cr>
-
 
 " folds
 set foldenable
 set foldmethod=indent
 set foldlevelstart=10
 set foldnestmax=10
-
-" turn off all arrows
-nnoremap <up> <nop>
-nnoremap <down> <nop>
-nnoremap <left> <nop>
-nnoremap <right> <nop>
-inoremap <up> <nop>
-inoremap <down> <nop>
-inoremap <left> <nop>
-inoremap <right> <nop>
-" navigate around wrapped text
-nnoremap j gj
-nnoremap k gk
-
-" map! ii <Esc>
-nnoremap <tab> <c-W>w
-nnoremap <s-tab> <c-W>W
 
 " Plugins
 
@@ -150,3 +148,6 @@ set wildignore+=*.beam
 " etc...
 " todo: term ≈ !open -a iTerm :pwd
 " todo: autocomple function: fb<tab> -> FooBar .hs, foo_bar .erl
+
+set runtimepath+=~/.hidden
+runtime suwayyah.vim
