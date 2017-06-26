@@ -1,4 +1,11 @@
 # vim: set ft=zsh:
+
+function erl18() {
+    PATH="/usr/local/opt/erlang@18/bin:$PATH"
+}
+export MANPATH=/usr/local/opt/erlang/lib/erlang/man
+
+
 ejabberdctl_args=(
     start debug iexdebug live iexlive foreground
     status

@@ -1,4 +1,9 @@
 LC_CTYPE=en_US.UTF-8
+HISTSIZE=80
+HISTFILE=$HOME/.local/var/.zsh_history
+SAVEHIST=$HISTSIZE
+setopt hist_ignore_all_dups
+setopt hist_ignore_space
 
 alias p=echo
 alias cls='clear'
@@ -9,8 +14,8 @@ alias la='ls -AFG'
 alias cp='cp -a'
 
 alias g=git
-alias e="mvim ${mvim_args} --"
-alias er="mvim ${mvim_args} -R --"
+alias e="mvim ${mvim_args}"
+alias er="mvim ${mvim_args} -R"
 
 alias grep='grep --color=auto -E'			# egrep
 # -Hn file:lineno
@@ -28,7 +33,8 @@ alias pip='pip3'
 
 # erlang
 alias erlich='erl -man'
-alias erl_tags='find . -type f -iname "*.[he]rl" | etags -'
+alias erl_tags="ctags -R ./src ./deps/*/src"
+# alias erl_tags='find . -type f -iname "*.[he]rl" | etags -'
 
 # stack
 alias sr='stack ghci'
@@ -60,6 +66,14 @@ alias more='more -r'
 if [[ $TERM != 'dumb' ]] then
     PROMPT=$'%{\e[38;5;255m%}[%{\e[38;5;193m%}%n%{\e[38;5;75m%}@%{\e[38;5;193m%}%m %{\e[38;5;190m%}%~%{\e[38;5;255m%}]%{\e[38;5;178m%}$%{\e[0m%}'
 fi
+#
+git_rprompt() {
+    ref_head=`git symbolic-ref HEAD 2>/dev/null | cut -d / -f 3`
+    if [[ "$ref_head" != '' ]]; then echo $ref_head; fi
+}
+setopt prompt_subst
+RPROMPT='$(git_rprompt)' # todo: remove rprompt; zle accept-line
+                         # http://www.howtobuildsoftware.com/index.php/how-do/1Em/zsh-zsh-behavior-on-enter
 
 bindkey -v # vim
 # todo: zle vim mode
@@ -73,7 +87,7 @@ function load() {
 load misc
 load add_env
 load haskell
-load ejabberd
+load erlang
 load tmux
 
 # fpath+=~/.hidden/zsh
@@ -83,6 +97,10 @@ load tmux
 add_postgres
 
 # batteries
+# autoload -U compinit && compinit
+# zstyle ':completion:*descriptions' format '%U%B%d%b%u' # todo: tweak
+# zstyle ':completion:*warnings' format 'no matches: %d%b'
+# autoload -U promptinit && promptinit # todo: prompt -l
 eval "$(thefuck --alias)"
 [[ -f /usr/local/etc/profile.d/autojump.sh ]] && . /usr/local/etc/profile.d/autojump.sh
 
