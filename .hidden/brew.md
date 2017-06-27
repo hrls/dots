@@ -1,52 +1,40 @@
 # core
-autojump
-bitlbee
-btpd
-carthage
-cmake
-doxygen
-glew
-glslang
-haskell-stack
-httpie
-irssi
-markdown
-mktorrent
-ncdu
-nmap
-node
-purescript
-python3
-ranger
-redis
-rust
-screenfetch
-tmux
+autojump  
+thefuck  
+tmux  
+ranger ncdu  
+bitlbee irssi  
+btpd mktorrent  
+
+ctags  
+python3  
+erlang rebar3  
+haskell-stack  
+
+multimarkdown  
+nmap  
+node purescript  
+rust redis  
+
+cmake  
+doxygen  
+glew  
+glslang  
+
+# cocoa
+carthage  
+
 # cask
-appcleaner
-burn
-emacs
-google-drive
-macdjview
-mactracker
-mplayerx
-postgres
-skype
-slack
-telegram
-vlc
-xld
-# vim
-VimFStar
-bullfinch
-ctrlp.vim
-nerdcommenter
-nerdtree
-purescript-vim
-restore_view.vim
-rust.vim
-vim-airline
-vim-fugitive
-vim-glsl
-vim-markdown
+appcleaner  
+burn  
+google-drive  
+macdjview  
+macvim  
+mplayerx  
+postgres  
+skype  
+slack  
+telegram  
+vlc  
+xld  
 
