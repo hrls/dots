@@ -31,6 +31,8 @@ alias py='python3 -B'
 alias pyre='py -i'
 alias pip='pip3'
 
+alias tags='ctags -R'
+
 # erlang
 alias erlich='erl -man'
 alias erl_tags="ctags -R ./src ./deps/*/src"
@@ -59,26 +61,47 @@ export CLICOLOR_FORCE=true
 alias less='less -r'
 alias more='more -r'
 
+setopt nobeep
+# setopt menucomplete
+# zstyle ':completion:*' menu select=1 _complete _ignored _approximate
+
 wrap_pre() { return 'todo: prepend space before function call' }
 git_head() {
     ref_head=`git symbolic-ref HEAD 2>/dev/null | cut -d / -f 3`
     if [[ "$ref_head" != '' ]]; then echo " $ref_head"; fi
 }
 if [[ $TERM != 'dumb' ]] then
+    bindkey -v
     # todo: custom root prompt
     # todo: prepend or rprompt user@host %{\e[38;5;249m%}%n%{\e[38;5;75m%}@%{\e[38;5;249m%}%m
     setopt prompt_subst
     PROMPT=$'%{\e[38;5;249m%}local %{\e[38;5;195m%}%~%{\e[38;5;222m%}$(git_head) %{\e[38;5;176m%}λ %{\e[0m%}'
 
-    # RPROMPT='$(git_rprompt)'
+    # http://pawelgoscicki.com/archives/2012/09/vi-mode-indicator-in-zsh-prompt/
+    vim_ins_mode="%{$fg[cyan]%}~%{$reset_color%}"
+    vim_cmd_mode="%{$fg[green]%}≈%{$reset_color%}"
+    vim_mode=$vim_ins_mode
+
+    function zle-keymap-select {
+      vim_mode="${${KEYMAP/vicmd/${vim_cmd_mode}}/(main|viins)/${vim_ins_mode}}"
+      zle reset-prompt
+    }
+    zle -N zle-keymap-select
+
+    function zle-line-finish {
+      vim_mode=$vim_ins_mode
+    }
+    zle -N zle-line-finish
+
+    function TRAPINT() {
+      vim_mode=$vim_ins_mode
+      return $(( 128 + $1 ))
+    }
+
+    RPROMPT='${vim_mode}'
     # todo: remove rprompt; zle accept-line
     # http://www.howtobuildsoftware.com/index.php/how-do/1Em/zsh-zsh-behavior-on-enter
 fi
-#
-
-bindkey -v # vim
-# todo: zle vim mode
-# https://github.com/hrls/dots/commit/c4453bc987d388d233ec5af597cffea580c3f71e#diff-ec20fb240e117fea7b0049c21edf1ef3
 
 function load() {
     absp="$HOME/.hidden/zsh/$1"
