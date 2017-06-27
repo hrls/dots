@@ -5,11 +5,7 @@ function! OmniTab()
     else
         return "\<c-p>"
     endif
-    " echo "cl: " . cl
-    " check if cl match any char except tabs or spaces
-    " then autocomplete
-    " else tab
-    " return "\<tab>"
+    " expand fb to FooBar (? tagbar ext)
 endfunction
 
 function! BsSTab()
@@ -18,5 +14,5 @@ endfunction
 
 " s-tab for navigate back on men
 " s-tab on empty should works as backspace
-inoremap <tab> <c-r>=OmniTab()<cr>
-inoremap <s-tab> <c-r>=BsSTab()<cr>
+inoremap <silent> <tab> <c-r>=OmniTab()<cr>
+inoremap <silent> <s-tab> <c-r>=BsSTab()<cr>
