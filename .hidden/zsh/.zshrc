@@ -59,21 +59,22 @@ export CLICOLOR_FORCE=true
 alias less='less -r'
 alias more='more -r'
 
-# [hrls@probe /bin]$ default prompt
-# [root@probe /var]# root prompt todo
-# user @ machine  ~ λ
-# todo [[ $SHELL -ne 'dumb' ]]
+wrap_pre() { return 'todo: prepend space before function call' }
+git_head() {
+    ref_head=`git symbolic-ref HEAD 2>/dev/null | cut -d / -f 3`
+    if [[ "$ref_head" != '' ]]; then echo " $ref_head"; fi
+}
 if [[ $TERM != 'dumb' ]] then
-    PROMPT=$'%{\e[38;5;255m%}[%{\e[38;5;193m%}%n%{\e[38;5;75m%}@%{\e[38;5;193m%}%m %{\e[38;5;190m%}%~%{\e[38;5;255m%}]%{\e[38;5;178m%}$%{\e[0m%}'
+    # todo: custom root prompt
+    # todo: prepend or rprompt user@host %{\e[38;5;249m%}%n%{\e[38;5;75m%}@%{\e[38;5;249m%}%m
+    setopt prompt_subst
+    PROMPT=$'%{\e[38;5;249m%}local %{\e[38;5;195m%}%~%{\e[38;5;222m%}$(git_head) %{\e[38;5;176m%}λ %{\e[0m%}'
+
+    # RPROMPT='$(git_rprompt)'
+    # todo: remove rprompt; zle accept-line
+    # http://www.howtobuildsoftware.com/index.php/how-do/1Em/zsh-zsh-behavior-on-enter
 fi
 #
-git_rprompt() {
-    ref_head=`git symbolic-ref HEAD 2>/dev/null | cut -d / -f 3`
-    if [[ "$ref_head" != '' ]]; then echo $ref_head; fi
-}
-setopt prompt_subst
-RPROMPT='$(git_rprompt)' # todo: remove rprompt; zle accept-line
-                         # http://www.howtobuildsoftware.com/index.php/how-do/1Em/zsh-zsh-behavior-on-enter
 
 bindkey -v # vim
 # todo: zle vim mode
