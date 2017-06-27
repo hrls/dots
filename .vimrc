@@ -116,10 +116,13 @@ set foldnestmax=10
 " Plugins
 
 " airline
-" let g:airline_left_sep = '>'
+silent! call airline#extensions#whitespace#disable()
 
 " tagbar
-nmap <f8> :TagbarToggle<cr>
+let g:tagbar_compact = 1
+let g:tagbar_show_linenumbers = 0
+let g:tagbar_autofocus = 1
+noremap <silent> <f8> :TagbarToggle<cr>
 
 " https://github.com/vim-scripts/restore_view.vim
 set viewoptions=cursor,folds,slash,unix
