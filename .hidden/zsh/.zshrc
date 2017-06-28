@@ -66,6 +66,7 @@ setopt nobeep
 # zstyle ':completion:*' menu select=1 _complete _ignored _approximate
 
 wrap_pre() { return 'todo: prepend space before function call' }
+# todo: fix detached HEAD
 git_head() {
     ref_head=`git symbolic-ref HEAD 2>/dev/null | cut -d / -f 3`
     if [[ "$ref_head" != '' ]]; then echo " $ref_head"; fi
@@ -98,7 +99,7 @@ if [[ $TERM != 'dumb' ]] then
       return $(( 128 + $1 ))
     }
 
-    RPROMPT='${vim_mode}'
+    # RPROMPT='${vim_mode}'
     # todo: remove rprompt; zle accept-line
     # http://www.howtobuildsoftware.com/index.php/how-do/1Em/zsh-zsh-behavior-on-enter
 fi
@@ -129,3 +130,5 @@ eval "$(thefuck --alias)"
 [[ -f /usr/local/etc/profile.d/autojump.sh ]] && . /usr/local/etc/profile.d/autojump.sh
 
 [[ -f ~/.private ]] && source ~/.private
+
+clear

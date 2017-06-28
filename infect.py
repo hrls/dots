@@ -38,6 +38,7 @@ def install_vim_pkgs():
     github('majutsushi/tagbar')
     github('ctrlpvim/ctrlp.vim')
     github('scrooloose/nerdtree')
+    github('tpope/vim-fugitive')
     github('tpope/vim-markdown')
     github('elixir-lang/vim-elixir')
     github('vim-scripts/restore_view.vim')

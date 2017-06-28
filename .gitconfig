@@ -5,11 +5,17 @@
     excludesfile = ~/.gitignore
     autocrlf = input
 [alias]
+    s   = status
+    l   = log --oneline
+    ll  = log
+    lg  = log --pretty=format:'%h - %an, %ar : %s' --graph
     cd  = checkout
     b   = branch
-    s   = status
+    bl  = branch --verbose
+    bd  = branch --delete
     sl  = stash list
     ss  = stash show
+    rl  = remote --verbose
     sub = submodule
 
     df      = diff
