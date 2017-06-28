@@ -43,9 +43,16 @@ def install_vim_pkgs():
     github('vim-scripts/restore_view.vim')
     # github('tikhomirov/vim-glsl')
 
+@restore_cwd
+def touch_hushlogin():
+    cd(home)
+    shell('touch .hushlogin')
+
 if __name__ == '__main__':
     # ['~', ['.local', ['bin', 'var']]]
     ensure_dir(p(home, '.local', 'bin'))
     ensure_dir(p(home, '.local', 'var'))
+
     link_dots()
+    touch_hushlogin()
     install_vim_pkgs()
