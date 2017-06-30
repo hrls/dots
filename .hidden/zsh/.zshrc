@@ -65,18 +65,35 @@ setopt nobeep
 # setopt menucomplete
 # zstyle ':completion:*' menu select=1 _complete _ignored _approximate
 
-wrap_pre() { return 'todo: prepend space before function call' }
+t = title () {
+    echo -e "\033];$@\007"
+}
+dir_title() {
+    cw=`pwd`
+    case `basename $cw` in
+        hrls)
+            t '~' ;;
+        dots)
+            t '…' ;;
+        *)
+            t '•' ;;
+    esac
+}
+wrap_ss() { return 'todo: prepend space before function call' }
 # todo: fix detached HEAD
 git_head() {
     ref_head=`git symbolic-ref HEAD 2>/dev/null | cut -d / -f 3`
     if [[ "$ref_head" != '' ]]; then echo " $ref_head"; fi
+}
+ppre () {
+    dir_title
 }
 if [[ $TERM != 'dumb' ]] then
     bindkey -v
     # todo: custom root prompt
     # todo: prepend or rprompt user@host %{\e[38;5;249m%}%n%{\e[38;5;75m%}@%{\e[38;5;249m%}%m
     setopt prompt_subst
-    PROMPT=$'%{\e[38;5;249m%}local %{\e[38;5;195m%}%~%{\e[38;5;222m%}$(git_head) %{\e[38;5;176m%}λ %{\e[0m%}'
+    PROMPT=$'$(ppre)%{\e[38;5;195m%}%~%{\e[38;5;222m%}$(git_head) %{\e[38;5;176m%}λ %{\e[0m%}'
 
     # http://pawelgoscicki.com/archives/2012/09/vi-mode-indicator-in-zsh-prompt/
     vim_ins_mode="%{$fg[cyan]%}~%{$reset_color%}"
@@ -103,6 +120,8 @@ if [[ $TERM != 'dumb' ]] then
     # todo: remove rprompt; zle accept-line
     # http://www.howtobuildsoftware.com/index.php/how-do/1Em/zsh-zsh-behavior-on-enter
 fi
+
+bindkey '^B' push-line
 
 function load() {
     absp="$HOME/.hidden/zsh/$1"
