@@ -3,8 +3,9 @@
 function erl18() {
     PATH="/usr/local/opt/erlang@18/bin:$PATH"
 }
-export MANPATH=/usr/local/opt/erlang/lib/erlang/man
+export MANPATH=$MANPATH:/usr/local/opt/erlang/lib/erlang/man
 
+export ERL_FLAGS='+K true'
 
 ejabberdctl_args=(
     start debug iexdebug live iexlive foreground
