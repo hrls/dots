@@ -66,11 +66,11 @@ setopt nobeep
 # zstyle ':completion:*' menu select=1 _complete _ignored _approximate
 
 t = title () {
-    echo -e "\033];$@\007"
+    print -Pn "\033];$@\a"
+    # http://www.refining-linux.org/archives/42/ZSH-Gem-8-Hook-function-chpwd/
 }
 dir_title() {
-    cw=`pwd`
-    case `basename $cw` in
+    case `basename $PWD` in
         hrls)
             t '~' ;;
         dots)
@@ -79,21 +79,19 @@ dir_title() {
             t '•' ;;
     esac
 }
+chpwd_functions=(${chpwd_functions[@]} 'dir_title')
 wrap_ss() { return 'todo: prepend space before function call' }
 # todo: fix detached HEAD
 git_head() {
     ref_head=`git symbolic-ref HEAD 2>/dev/null | cut -d / -f 3`
     if [[ "$ref_head" != '' ]]; then echo " $ref_head"; fi
 }
-ppre () {
-    dir_title
-}
 if [[ $TERM != 'dumb' ]] then
     bindkey -v
     # todo: custom root prompt
     # todo: prepend or rprompt user@host %{\e[38;5;249m%}%n%{\e[38;5;75m%}@%{\e[38;5;249m%}%m
     setopt prompt_subst
-    PROMPT=$'$(ppre)%{\e[38;5;195m%}%~%{\e[38;5;222m%}$(git_head) %{\e[38;5;176m%}λ %{\e[0m%}'
+    PROMPT=$'%{\e[38;5;195m%}%~%{\e[38;5;222m%}$(git_head) %{\e[38;5;176m%}λ %{\e[0m%}'
 
     # http://pawelgoscicki.com/archives/2012/09/vi-mode-indicator-in-zsh-prompt/
     vim_ins_mode="%{$fg[cyan]%}~%{$reset_color%}"
@@ -151,3 +149,4 @@ eval "$(thefuck --alias)"
 [[ -f ~/.private ]] && source ~/.private
 
 clear
+dir_title
