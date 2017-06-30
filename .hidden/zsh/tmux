@@ -4,4 +4,4 @@
     # echo "error: tmux failed to start"
 # fi
 
-alias q='tmux attach || tmux new'
+alias q='t 🕳️ && tmux attach || tmux new; dir_title'

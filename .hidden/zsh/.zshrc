@@ -11,6 +11,7 @@ alias del='rm'
 alias which='which -a'
 alias ll='ls -lAFGHh'
 alias la='ls -AFG'
+alias a='ll'
 alias cp='cp -a'
 
 alias g=git
@@ -45,11 +46,11 @@ alias sb='stack build'
 alias se='stack exec'
 
 alias df='df -H'
-alias top='top -o cpu'
+alias top='t ∆ && top -o cpu; dir_title'
 alias ips='ifconfig | grep inet'
 alias pc='rsync -Ph' # -P same as --partial --progress
 alias md5sum='md5 -r'
-alias ra='ranger'
+alias ra='t 🏹 && ranger; dir_title'
 alias btli="btcli list | grep -e '[LI+]\.\s'"
 alias ltr="py ~/.hidden/ltr.py"
 alias ww="qlmanage -p $@ >& /dev/null"
@@ -70,14 +71,16 @@ t = title () {
     # http://www.refining-linux.org/archives/42/ZSH-Gem-8-Hook-function-chpwd/
 }
 dir_title() {
-    case `basename $PWD` in
-        hrls)
-            t '~' ;;
-        dots)
-            t '…' ;;
-        *)
-            t '•' ;;
-    esac
+    if [[ $SHLVL == 1 ]] then
+        case `basename $PWD` in
+            hrls)
+                t '~' ;;
+            dots)
+                t '…' ;;
+            *)
+                t '•' ;;
+        esac
+    fi
 }
 chpwd_functions=(${chpwd_functions[@]} 'dir_title')
 wrap_ss() { return 'todo: prepend space before function call' }
@@ -148,5 +151,6 @@ eval "$(thefuck --alias)"
 
 [[ -f ~/.private ]] && source ~/.private
 
+# post hooks
 clear
 dir_title

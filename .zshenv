@@ -1,6 +1,6 @@
 ZDOTDIR=$HOME/.hidden/zsh
 
-PATH=$PATH:$HOME/.local/bin
+[[ -d "$HOME/.local/bin" ]] && PATH=$PATH:"$HOME/.local/bin"
 
 src=$HOME/src
 tmp=$HOME/tmp
