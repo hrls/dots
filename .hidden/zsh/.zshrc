@@ -82,12 +82,24 @@ dir_title() {
         esac
     fi
 }
+# http://www.faqs.org/docs/Linux-mini/Xterm-Title.html#ss4.1
+# https://www-s.acm.illinois.edu/workshops/zsh/prompt/escapes.html
 chpwd_functions=(${chpwd_functions[@]} 'dir_title')
 wrap_ss() { return 'todo: prepend space before function call' }
 # todo: fix detached HEAD
 git_head() {
     ref_head=`git symbolic-ref HEAD 2>/dev/null | cut -d / -f 3`
-    if [[ "$ref_head" != '' ]]; then echo " $ref_head"; fi
+    if [[ $ref_head != '' ]]; then
+        echo " $ref_head"
+    else
+        tag=`git describe --exact-match HEAD 2>/dev/null`
+        if [[ $? == 0 ]]; then
+            echo " tag: $tag"
+        else
+            hc=`git rev-parse --short HEAD 2>/dev/null`
+            if [[ $? == 0 ]]; then echo " head: $hc"; fi
+        fi
+    fi
 }
 if [[ $TERM != 'dumb' ]] then
     bindkey -v
@@ -117,7 +129,11 @@ if [[ $TERM != 'dumb' ]] then
       return $(( 128 + $1 ))
     }
 
-    # RPROMPT='${vim_mode}'
+    non_null_retval() {
+        retval=$?
+        if [[ $retval != 0 ]]; then echo ": $retval"; fi
+    }
+    # RPROMPT='${vim_mode} $(non_null_retval)'
     # todo: remove rprompt; zle accept-line
     # http://www.howtobuildsoftware.com/index.php/how-do/1Em/zsh-zsh-behavior-on-enter
 fi
