@@ -47,7 +47,7 @@ def install_vim_pkgs():
 @restore_cwd
 def touch_hushlogin():
     cd(home)
-    shell('touch .hushlogin')
+    touch('.hushlogin')
 
 if __name__ == '__main__':
     # ['~', ['.local', ['bin', 'var']]]

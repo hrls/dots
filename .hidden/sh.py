@@ -8,6 +8,7 @@ pwd = lambda: os.getcwd()
 cd = lambda d: os.chdir(path.expanduser(d))
 is_there = lambda f: path.islink(f) or path.isfile(f)
 shell = lambda s: os.system(s)
+touch = lambda f: shell('touch {}'.format(f))
 
 def rm(f):
     if path.islink(f):
