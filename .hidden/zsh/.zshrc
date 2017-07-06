@@ -1,3 +1,5 @@
+# todo :
+# cursors
 LC_CTYPE=en_US.UTF-8
 HISTSIZE=80
 HISTFILE=$HOME/.local/var/.zsh_history
@@ -20,7 +22,6 @@ alias er="mvim ${mvim_args} -R"
 
 alias grep='grep --color=auto -E'			# egrep
 # -Hn file:lineno
-# grep_find: find . -type f -exec grep  -nH -e  {} +
 grey() {
 	find . -type f -name $1 -exec egrep -Hn -e $2 {} + # todo
 }
@@ -34,11 +35,6 @@ alias pip='pip3'
 
 alias tags='ctags -R'
 
-# erlang
-alias erlich='erl -man'
-alias erl_tags="ctags -R ./src ./deps/*/src"
-# alias erl_tags='find . -type f -iname "*.[he]rl" | etags -'
-
 # stack
 alias sr='stack ghci'
 alias sc='stack clean'
@@ -46,11 +42,11 @@ alias sb='stack build'
 alias se='stack exec'
 
 alias df='df -H'
-alias top='t ∆ && top -o cpu; dir_title'
+alias tp='titled ∆ top -o cpu'
 alias ips='ifconfig | grep inet'
 alias pc='rsync -Ph' # -P same as --partial --progress
 alias md5sum='md5 -r'
-alias ra='t 🏹 && ranger; dir_title'
+alias ra='titled 🏹 ranger'
 alias btli="btcli list | grep -e '[LI+]\.\s'"
 alias ltr="py ~/.hidden/ltr.py"
 alias ww="qlmanage -p $@ >& /dev/null"
@@ -70,7 +66,7 @@ t = title () {
     print -Pn "\033];$@\a"
     # http://www.refining-linux.org/archives/42/ZSH-Gem-8-Hook-function-chpwd/
 }
-dir_title() {
+dir_title () {
     if [[ $SHLVL == 1 ]] then
         case `basename $PWD` in
             hrls)
@@ -82,11 +78,16 @@ dir_title() {
         esac
     fi
 }
+titled () {
+    # todo: resolve recursive calls (alias foo=titled f foo)
+    # new: 'titled ∆ top' add hooks precmd and set title
+    title $1 && eval ${@:2}; dir_title
+}
 # http://www.faqs.org/docs/Linux-mini/Xterm-Title.html#ss4.1
 # https://www-s.acm.illinois.edu/workshops/zsh/prompt/escapes.html
 chpwd_functions=(${chpwd_functions[@]} 'dir_title')
 wrap_ss() { return 'todo: prepend space before function call' }
-# todo: fix detached HEAD
+
 git_head() {
     ref_head=`git symbolic-ref HEAD 2>/dev/null | cut -d / -f 3`
     if [[ $ref_head != '' ]]; then
@@ -101,6 +102,7 @@ git_head() {
         fi
     fi
 }
+
 if [[ $TERM != 'dumb' ]] then
     bindkey -v
     # todo: custom root prompt
