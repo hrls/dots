@@ -9,7 +9,7 @@ vss = [
     '.gitignore',
     '.vimrc',
     '.zshenv',
-    '.psqrc',
+    '.psqlrc',
 ]
 
 pre_rm = True
