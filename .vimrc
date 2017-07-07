@@ -1,9 +1,7 @@
-" todo:
-" NERD_Tree: aliases 'e[r] $file' edit / RO
 " zsh :!aliases
-"
-"
-"
+" cursors: bar for edit mode, rectangle otherwise
+" set tags+=`git toplevel`/tags
+" git rev-parse --show-toplevel
 
 set nocompatible
 set viminfo+=n~/.local/var/viminfo
@@ -108,6 +106,8 @@ vnoremap * y :execute ":let @/=@\""<cr> :execute "set hlsearch"<cr>
 nnoremap <leader>8 :nohlsearch<cr>
 
 " folds
+" todo: folded string should display first most nested element
+"       for haskell 'case of' show first ret val
 set foldenable
 set foldmethod=indent
 set foldlevelstart=10
@@ -132,13 +132,27 @@ set viewoptions=cursor,folds,slash,unix
 let g:NERDSpaceDelims = 1
 
 " https://github.com/scrooloose/nerdtree
+" todo: NERD_Tree: aliases 'e[r] $file' edit / RO
 " autocmd vimenter * if !argc() | NERDTree | endif
-map <c-n> :NERDTreeToggle<cr>
 let g:NERDTreeShowHidden = 1
-" let g:NERDTreeShowBookmarks = 1
-" <c-n> replace empty buffer (as ':e folder')
+let g:NERDTreeShowBookmarks = 0
+let g:NERDTreeMinimalUI = 1
+let g:NERDTreeAutoDeleteBuffer = 1
+let g:NERDTreeHighlightCursorline = 1
+let g:NERDTreeBookmarksFile = $HOME . '/.local/NERDTreeBookmarks'
+" let g:NERDTreeStatusline = %{todo}
+function! NERDTreeReplaceEmptyBuffer()
+    if line('$') == 1 && getline(1) == ''
+        " <c-n> replace empty buffer (as ':e dir/')
+        NERDTreeToggle
+    else
+        NERDTreeToggle
+    endif
+endfunction
+command! NERDTreeFullToggle :call NERDTreeReplaceEmptyBuffer
+map <c-n> :NERDTreeToggle<cr>
 " close vim if the only window left is a NERDTree
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
+" autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 
 " https://github.com/ctrlpvim/ctrlp.vim
 set wildignore+=*/.git/*
@@ -147,6 +161,8 @@ let g:ctrlp_show_hidden = 1
 
 " batteries
 source $VIMRUNTIME/ftplugin/man.vim " :Man
+" todo: /usr/bin/less bindings for man buffer
+" http://vim.wikia.com/wiki/Using_vim_as_a_syntax-highlighting_pager
 
 " VimL
 nnoremap <leader>s :so $VIMRUNTIME/syntax/hitest.vim<cr>
@@ -157,6 +173,7 @@ autocmd BufWritePost package.yaml silent !hpack --silent
 
 " Erlang
 set wildignore+=*.beam
+autocmd BufNewFile,BufRead */src/*.app.src,rebar.config setfiletype erlang
 
 " etc...
 " todo: term ≈ !open -a iTerm :pwd
