@@ -26,8 +26,8 @@ def link_dots():
 @restore_cwd
 def install_vim_pkgs():
     # ~/.vim/autoload
-    # todo: install / update pathogen ; .vim/autoload/pathogen.vim
-    #       just download from github master and compare md5 hashes
+    ensure_dir(p(home, '.vim/autoload'))
+    shell('curl -LSso ~/.vim/autoload/pathogen.vim https://tpo.pe/pathogen.vim')
 
     # ~/.vim/bundle
     bundle_dir = p(home, '.vim/bundle')
