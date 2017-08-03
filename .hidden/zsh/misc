@@ -29,6 +29,29 @@ function getacolors {
 # foldn
 }
 
+bar () {
+    local ret=print
+    local pp=$(
+        case $1 in
+            'foo')
+                $ret 'yeah' ;;
+            *)
+                $ret 'noah' ;;
+        esac
+    )
+    echo $pp
+}
+
+# todo: move to env conf
+function foo () {
+zsfs='/usr/local/share/zsh/site-functions'
+if [[ -d $zsfs ]]; then
+    for zsf in `ls $zsfs`; do
+        echo $zsf
+    done
+fi
+}
+
 function reload {
     print "foobar"
 }

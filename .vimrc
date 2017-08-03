@@ -27,6 +27,7 @@ set laststatus=2    " vim-airline
 set noshowmode      " try shm+=s
 set ruler
 set wildmenu        " =list:longest
+set wildchar=<tab>
 set showcmd
 
 set number
@@ -133,7 +134,6 @@ let g:NERDSpaceDelims = 1
 
 " https://github.com/scrooloose/nerdtree
 " todo: NERD_Tree: aliases 'e[r] $file' edit / RO
-" autocmd vimenter * if !argc() | NERDTree | endif
 let g:NERDTreeShowHidden = 1
 let g:NERDTreeShowBookmarks = 0
 let g:NERDTreeMinimalUI = 1
@@ -151,6 +151,7 @@ function! NERDTreeReplaceEmptyBuffer()
 endfunction
 command! NERDTreeFullToggle :call NERDTreeReplaceEmptyBuffer
 map <c-n> :NERDTreeToggle<cr>
+" autocmd vimenter * if !argc() | NERDTree | endif
 " close vim if the only window left is a NERDTree
 " autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 
@@ -163,6 +164,9 @@ let g:ctrlp_show_hidden = 1
 source $VIMRUNTIME/ftplugin/man.vim " :Man
 " todo: /usr/bin/less bindings for man buffer
 " http://vim.wikia.com/wiki/Using_vim_as_a_syntax-highlighting_pager
+
+" open tag in new tab
+nnoremap <silent> <leader>] <c-w><c-]><c-w>T
 
 " VimL
 nnoremap <leader>s :so $VIMRUNTIME/syntax/hitest.vim<cr>

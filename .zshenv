@@ -7,4 +7,5 @@ tmp=$HOME/tmp
 mvim_args="-np -c 'au VimLeave * !open -a iTerm'"
 
 export LESSHISTFILE=$HOME/.local/var/.less_history
+# todo: replace mvim under `uname -s`=Linux
 export EDITOR="mvim ${mvim_args} -f --nomru"

@@ -20,11 +20,9 @@ alias g=git
 alias e="mvim ${mvim_args}"
 alias er="mvim ${mvim_args} -R"
 
-alias grep='grep --color=auto -E'			# egrep
-# -Hn file:lineno
-grey() {
-	find . -type f -name $1 -exec egrep -Hn -e $2 {} + # todo
-}
+alias grep='grep --color=auto -E'			# egrep Hn=file:lineno
+grey () { find . -type f -name $1 -exec egrep -Hn -e $2 {} + } # todo
+greep () { grep --exclude-dir='.git' -RHne $1 . }
 	
 # alias grey='grep -Er --include=\*.{h,e}rl "record" .'
 
@@ -58,6 +56,20 @@ export CLICOLOR_FORCE=true
 alias less='less -r'
 alias more='more -r'
 
+alias d=docker
+alias dm=docker-machine
+alias denv='eval $(docker-machine env)'
+
+wport () {
+    case `uname -s` in
+        Darwin)
+            lsof -n -i4TCP:$1 ;;
+        Linux)
+            netstat -ntlp | grep $1 ;;
+    esac
+}
+
+
 setopt nobeep
 # setopt menucomplete
 # zstyle ':completion:*' menu select=1 _complete _ignored _approximate
@@ -85,6 +97,7 @@ titled () {
 }
 # http://www.faqs.org/docs/Linux-mini/Xterm-Title.html#ss4.1
 # https://www-s.acm.illinois.edu/workshops/zsh/prompt/escapes.html
+# todo: fix ctrl+c git prompt
 chpwd_functions=(${chpwd_functions[@]} 'dir_title')
 wrap_ss() { return 'todo: prepend space before function call' }
 
@@ -165,6 +178,7 @@ add_postgres
 # zstyle ':completion:*warnings' format 'no matches: %d%b'
 # autoload -U promptinit && promptinit # todo: prompt -l
 eval "$(thefuck --alias)"
+eval "$(direnv hook zsh)"
 [[ -f /usr/local/etc/profile.d/autojump.sh ]] && . /usr/local/etc/profile.d/autojump.sh
 
 [[ -f ~/.private ]] && source ~/.private
