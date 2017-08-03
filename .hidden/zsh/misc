@@ -1,5 +1,11 @@
 # vim: set ft=zsh:
 
+function ret () {
+    local ret_code=$?
+    echo $ret_code
+    return $ret_code
+}
+
 function topall() {
     print "not implented yet"
     tpids=`ps ax | grep "$1"`
