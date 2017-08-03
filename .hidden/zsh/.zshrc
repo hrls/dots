@@ -108,7 +108,7 @@ if [[ $TERM != 'dumb' ]] then
     # todo: custom root prompt
     # todo: prepend or rprompt user@host %{\e[38;5;249m%}%n%{\e[38;5;75m%}@%{\e[38;5;249m%}%m
     setopt prompt_subst
-    PROMPT=$'%{\e[38;5;195m%}%~%{\e[38;5;222m%}$(git_head) %{\e[38;5;176m%}λ %{\e[0m%}'
+    PROMPT=$'%m: %{\e[38;5;195m%}%~%{\e[38;5;222m%}$(git_head) %{\e[38;5;176m%}λ %{\e[0m%}'
 
     # http://pawelgoscicki.com/archives/2012/09/vi-mode-indicator-in-zsh-prompt/
     vim_ins_mode="%{$fg[cyan]%}~%{$reset_color%}"
