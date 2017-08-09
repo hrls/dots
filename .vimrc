@@ -179,6 +179,10 @@ autocmd BufWritePost package.yaml silent !hpack --silent
 set wildignore+=*.beam
 autocmd BufNewFile,BufRead */src/*.app.src,rebar.config setfiletype erlang
 
+" Python
+set wildignore+=*.pyc
+autocmd BufNewFile,BufRead *.jinja* setfiletype jinja
+
 " etc...
 " todo: term ≈ !open -a iTerm :pwd
 " todo: autocomple function: fb<tab> -> FooBar .hs, foo_bar .erl

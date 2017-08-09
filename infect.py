@@ -43,6 +43,7 @@ def install_vim_pkgs():
     github('elixir-lang/vim-elixir')
     github('vim-scripts/restore_view.vim')
     # github('tikhomirov/vim-glsl')
+    github('mitsuhiko/vim-jinja')
 
 @restore_cwd
 def touch_hushlogin():
