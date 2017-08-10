@@ -100,7 +100,7 @@ chpwd_functions=(${chpwd_functions[@]} 'dir_title')
 wrap_ss() { return 'todo: prepend space before function call' }
 
 git_head() {
-    ref_head=`git symbolic-ref HEAD 2>/dev/null | cut -d / -f 3`
+    local ref_head=`git symbolic-ref HEAD 2>/dev/null | cut -d / -f 3`
     if [[ $ref_head != '' ]]; then
         echo " $ref_head"
     else
@@ -114,6 +114,12 @@ git_head() {
     fi
 }
 
+nonlocal_prefix() {
+    if [[ $USER != 'hrls' && $HOST != 'probe.local' ]]; then
+        echo "$USER@$HOST "
+    fi
+}
+
 git_nstashes() {
     local n_stashes=`git stash list | wc -l`
 }
@@ -123,7 +129,7 @@ if [[ $TERM != 'dumb' ]] then
     # todo: custom root prompt
     # todo: prepend or rprompt user@host %{\e[38;5;249m%}%n%{\e[38;5;75m%}@%{\e[38;5;249m%}%m
     setopt prompt_subst
-    PROMPT=$'%m: %{\e[38;5;195m%}%~%{\e[38;5;222m%}$(git_head) %{\e[38;5;176m%}λ %{\e[0m%}'
+    PROMPT=$'$(nonlocal_prefix)%{\e[38;5;195m%}%~%{\e[38;5;222m%}$(git_head) %{\e[38;5;176m%}λ %{\e[0m%}'
 
     # http://pawelgoscicki.com/archives/2012/09/vi-mode-indicator-in-zsh-prompt/
     vim_ins_mode="%{$fg[cyan]%}~%{$reset_color%}"
