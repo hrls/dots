@@ -1,18 +1,69 @@
 # vim: set ft=zsh:
 
+alias grep='grep --color=auto -E'			# egrep Hn=file:lineno
+# todo : grey () { find . -type f -name $1 -exec egrep -Hn -e $2 {} + }
+# alias grey='grep -Er --include=\*.{h,e}rl "record" .'
+greep() {
+    # todo: add support of multiple parameters
+    case $# in
+        1) grep --exclude-dir='.git' --exclude-dir='test' -RHne $1 . ;;
+        2) grep --exclude-dir='.git' --exclude-dir='test' $1 -RHne $2 . ;;
+    esac
+}
+
+wport() {
+    if [[ $# == 0 ]] then
+        print 'Usage: wport port'
+        return
+    fi
+    case `uname -s` in
+        Darwin)
+            for port in $@; do
+                lsof -n -i4TCP:${port}
+            done
+            ;;
+        Linux)
+            # todo
+            netstat -ntlp | grep $@ ;;
+    esac
+}
+
+ww() {
+    if [[ $# == 0 ]] then ww * ; fi
+    if [[ `uname -s` == 'Darwin' ]] then
+        qlmanage -p $@ >& /dev/null
+    fi
+}
+
+function test_i () {
+    if [[ `uname -s` == 'Darwin' && `/usr/bin/which mvim` != '' ]] then
+        p 'osx and mvim is there'
+    else
+        p '*nix'
+    fi
+}
+function test_e () {
+    local _=`which -s mvim`
+    if [[ $? == 0 ]] then
+        edi='mvim'
+    else
+        edi='vim'
+    fi
+}
+
 function ret () {
     local ret_code=$?
     echo $ret_code
     return $ret_code
 }
 
-function topall() {
+function topall () {
     print "not implented yet"
     tpids=`ps ax | grep "$1"`
     print $tpids
 }
 
-function shsh() {
+function shsh () {
     if [[ $SHELL == '/bin/zsh' ]] then
         print 'oh your zsh!!'
     else
@@ -20,22 +71,20 @@ function shsh() {
     fi
 }
 
-function getacolors {
-# fold
-	for COLOR in $(seq 0 255)
+function list_colors () {
+	for color in $(seq 0 255)
 	do
-		for STYLE in "38;5"
+		for style in "38;5"
 		do
-			TAG="\033[${STYLE};${COLOR}m"
-			STR="${STYLE};${COLOR}"
-			echo -ne "${TAG}${STR}${NONE}  "
+			tag="\033[${style};${color}m"
+			str="${style};${color}"
+			echo -ne "${tag}${str}${NONE}  "
 		done
 		echo
 	done
-# foldn
 }
 
-bar () {
+function test_case () {
     local ret=print
     local pp=$(
         case $1 in
@@ -49,16 +98,11 @@ bar () {
 }
 
 # todo: move to env conf
-function foo () {
-zsfs='/usr/local/share/zsh/site-functions'
-if [[ -d $zsfs ]]; then
-    for zsf in `ls $zsfs`; do
-        echo $zsf
-    done
-fi
+function list_shared_zfuncs () {
+    zsfs='/usr/local/share/zsh/site-functions'
+    if [[ -d $zsfs ]]; then
+        for zsf in `ls $zsfs`; do
+            echo $zsf
+        done
+    fi
 }
-
-function reload {
-    print "foobar"
-}
-

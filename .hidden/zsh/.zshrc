@@ -1,3 +1,13 @@
+# init
+if [[ `uname -s` == 'Darwin' && `/usr/bin/which mvim` != '' ]] then
+    edi='mvim'
+    edi_args="-np -c 'au VimLeave * !open -a iTerm'"
+    edi_as_editor_args='-f --nomru'
+else
+    edi='vim'
+fi
+export EDITOR="${edi} ${edi_args} ${edi_as_editor_args}"
+
 # todo :
 # cursors
 LC_CTYPE=en_US.UTF-8
@@ -17,14 +27,8 @@ alias a='ll'
 alias cp='cp -a'
 
 alias g=git
-alias e="mvim ${mvim_args}"
-alias er="mvim ${mvim_args} -R"
-
-alias grep='grep --color=auto -E'			# egrep Hn=file:lineno
-grey () { find . -type f -name $1 -exec egrep -Hn -e $2 {} + } # todo
-greep () { grep --exclude-dir='.git' -RHne $1 . }
-	
-# alias grey='grep -Er --include=\*.{h,e}rl "record" .'
+alias e="${edi} ${edi_args}" # todo: 'e' as 'e .'
+alias er="${edi} ${edi_args} -R"
 
 # python
 alias py='python3 -B'
@@ -47,7 +51,6 @@ alias md5sum='md5 -r'
 alias ra='titled 🏹 ranger'
 alias btli="btcli list | grep -e '[LI+]\.\s'"
 alias ltr="py ~/.hidden/ltr.py"
-alias ww="qlmanage -p $@ >& /dev/null"
 
 autoload -U colors && colors
 # todo: replace ANSI by supported xterm-256color
@@ -60,35 +63,30 @@ alias d=docker
 alias dm=docker-machine
 alias denv='eval $(docker-machine env)'
 
-wport () {
-    case `uname -s` in
-        Darwin)
-            lsof -n -i4TCP:$1 ;;
-        Linux)
-            netstat -ntlp | grep $1 ;;
-    esac
-}
-
-
 setopt nobeep
 # setopt menucomplete
 # zstyle ':completion:*' menu select=1 _complete _ignored _approximate
 
-t = title () {
-    print -Pn "\033];$@\a"
+t () {
+    export custom_title=$@
+    title
+}
+title () {
     # http://www.refining-linux.org/archives/42/ZSH-Gem-8-Hook-function-chpwd/
+    if (( $+custom_title ))
+    then print -Pn "\033];${custom_title}\a" 
+    else print -Pn "\033];$@\a"
+    fi
 }
 dir_title () {
-    if [[ $SHLVL == 1 ]] then
-        case `basename $PWD` in
-            hrls)
-                t '~' ;;
-            dots)
-                t '…' ;;
-            *)
-                t '•' ;;
-        esac
-    fi
+    case `basename $PWD` in
+        hrls)
+            title '~' ;;
+        dots)
+            title '…' ;;
+        *)
+            title '•' ;;
+    esac
 }
 titled () {
     # todo: resolve recursive calls (alias foo=titled f foo)
@@ -114,6 +112,10 @@ git_head() {
             if [[ $? == 0 ]]; then echo " head: $hc"; fi
         fi
     fi
+}
+
+git_nstashes() {
+    local n_stashes=`git stash list | wc -l`
 }
 
 if [[ $TERM != 'dumb' ]] then
@@ -178,11 +180,13 @@ add_postgres
 # zstyle ':completion:*warnings' format 'no matches: %d%b'
 # autoload -U promptinit && promptinit # todo: prompt -l
 eval "$(thefuck --alias)"
-eval "$(direnv hook zsh)"
+eval "$(direnv hook zsh)" # todo: replace by [[ -f .env ]] customs instead of bash based direnv
 [[ -f /usr/local/etc/profile.d/autojump.sh ]] && . /usr/local/etc/profile.d/autojump.sh
 
 [[ -f ~/.private ]] && source ~/.private
 
 # post hooks
-clear
-dir_title
+if [[ $SHLVL == 1 ]] then
+    clear
+    dir_title
+fi
