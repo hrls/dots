@@ -1,5 +1,9 @@
 # vim: set ft=zsh:
 
+## tips
+## |& is zsh only version of 2>&1
+## unless ... todo
+
 alias grep='grep --color=auto -E'			# egrep Hn=file:lineno
 # todo : grey () { find . -type f -name $1 -exec egrep -Hn -e $2 {} + }
 # alias grey='grep -Er --include=\*.{h,e}rl "record" .'
@@ -82,19 +86,6 @@ function list_colors () {
 		done
 		echo
 	done
-}
-
-function test_case () {
-    local ret=print
-    local pp=$(
-        case $1 in
-            'foo')
-                $ret 'yeah' ;;
-            *)
-                $ret 'noah' ;;
-        esac
-    )
-    echo $pp
 }
 
 # todo: move to env conf
