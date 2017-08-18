@@ -6,8 +6,8 @@
     autocrlf = input
 [alias]
     s   = status
-    l   = log --oneline
-    ll  = log
+    l   = log --decorate=short --oneline
+    ll  = log --decorate=short
     lg  = log --pretty=format:'%h - %an, %ar : %s' --graph
     cd  = checkout
     b   = branch
