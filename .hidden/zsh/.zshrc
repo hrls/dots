@@ -50,7 +50,6 @@ alias pc='rsync -Ph' # -P same as --partial --progress
 alias md5sum='md5 -r'
 alias ra='titled 🏹 ranger'
 alias btli="btcli list | grep -e '[LI+]\.\s'"
-alias ltr="py ~/.hidden/ltr.py"
 
 autoload -U colors && colors
 # todo: replace ANSI by supported xterm-256color

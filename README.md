@@ -1,2 +1,2 @@
-`python infect.py`  
+`./infect`  
 

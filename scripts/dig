@@ -1,0 +1,16 @@
+# vim: set ft=zsh:
+
+make_delta() {
+    # arg: <commit>
+    # for empty args:
+    #   git diff
+    #   git diff HEAD^
+}
+
+sync_affected() {
+    # copy modified files to docker container
+    for updatee in $(git diff --name-only); do
+        echo ${updatee}
+        # docker cp ${updatee} ${cont_id}:${rel}/{$updatee}
+    done
+}
