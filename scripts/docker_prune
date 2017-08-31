@@ -1,2 +1,2 @@
-docker image prune
-docker volume prune
+# vim: set ft=zsh:
+docker image prune -f && docker volume prune -f
