@@ -188,7 +188,6 @@ eval "$(thefuck --alias)"
 eval "$(direnv hook zsh)" # todo: replace by [[ -f .env ]] customs instead of bash based direnv
 [[ -f /usr/local/etc/profile.d/autojump.sh ]] && . /usr/local/etc/profile.d/autojump.sh
 
-[[ -f ~/.private ]] && source ~/.private
 
 # post hooks
 if [[ $SHLVL == 1 ]] then

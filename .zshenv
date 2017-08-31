@@ -6,3 +6,5 @@ src=$HOME/src
 tmp=$HOME/tmp
 
 export LESSHISTFILE=$HOME/.local/var/.less_history
+
+[[ -f ~/.private ]] && source ~/.private
