@@ -1,6 +1,6 @@
 [user]
-    name = hrls
-    email = viktor.kharitonovich@gmail.com
+	name = hrls
+	email = viktor.kharitonovich@gmail.com
 [core]
     excludesfile = ~/.gitignore
     autocrlf = input
@@ -24,6 +24,8 @@
     dft     = difftool
     vdft    = difftool -t mvimdiff
 
+    append  = commit --amend --no-edit
+
 [push]
     default = matching
 
@@ -35,8 +37,6 @@
     cmd = mvim -f -d  \"$LOCAL\" \"$REMOTE\"
 [difftool "opendiff"]
     cmd = opendiff \"$LOCAL\" \"$REMOTE\"
-[difftool "pargs"]
-    cmd = pargs \"$LOCAL\" \"$REMOTE\"
     
 [merge]
 	tool = mvimdiff
