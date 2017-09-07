@@ -78,14 +78,26 @@ title () {
     fi
 }
 dir_title () {
-    case `basename $PWD` in
-        hrls)
-            title '~' ;;
-        dots)
-            title '…' ;;
-        *)
-            title '•' ;;
-    esac
+    if [[ $HOST != 'probe.local' ]]; then
+        local host_pre="$HOST : "
+    fi
+    if [[ $PWD == $HOME ]]; then
+        if (( $+host_pre ))
+        then title "${host_pre}~"
+        else title '~'
+        fi
+    else
+        local pwd_name=`basename $PWD`
+        case ${pwd_name} in
+            dots)
+                title "${host_pre}…" ;;
+            *)
+                if (( $+host_pre ))
+                then title "${host_pre}${pwd_name}"
+                else title '•'
+                fi
+        esac
+    fi
 }
 titled () {
     # todo: resolve recursive calls (alias foo=titled f foo)
@@ -153,9 +165,9 @@ if [[ $TERM != 'dumb' ]] then
 
     non_null_retval() {
         retval=$?
-        if [[ $retval != 0 ]]; then echo ": $retval"; fi
+        [[ $retval != 0 ]] && echo " =$retval"
     }
-    # RPROMPT='${vim_mode} $(non_null_retval)'
+    # RPROMPT='$(non_null_retval) ${vim_mode}'
     # todo: remove rprompt; zle accept-line
     # http://www.howtobuildsoftware.com/index.php/how-do/1Em/zsh-zsh-behavior-on-enter
 fi
