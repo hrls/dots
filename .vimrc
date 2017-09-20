@@ -140,6 +140,7 @@ let g:NERDTreeMinimalUI = 1
 let g:NERDTreeAutoDeleteBuffer = 1
 let g:NERDTreeHighlightCursorline = 1
 let g:NERDTreeBookmarksFile = $HOME . '/.local/NERDTreeBookmarks'
+let g:NERDTreeHijackNetrw = 1
 " let g:NERDTreeStatusline = %{todo}
 function! NERDTreeReplaceEmptyBuffer()
     if line('$') == 1 && getline(1) == ''
