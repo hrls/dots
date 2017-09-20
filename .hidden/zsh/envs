@@ -1,8 +1,10 @@
 # vim: set ft=zsh:
 
-# alias java9='export JAVA_HOME=$(/usr/libexec/java_home -v 1.9)'
+function env_java() {
+    alias java8='export JAVA_HOME=$(/usr/libexec/java_home -v 1.8)'
+}
 
-function add_postgres() {
+function env_postgres() {
     alias pg='titled sql psql'
     export PATH=/Applications/Postgres.app/Contents/Versions/9.5/bin:$PATH
 }

@@ -179,17 +179,17 @@ function load() {
     [[ -f ${absp} ]] && source ${absp}
 }
 
-load misc
-load add_env
-load haskell
-load erlang
+load zfuncs
+load envs
 load tmux
+load haskell
+# load erlang
 
 # fpath+=~/.hidden/zsh
 # todo: fpath / autoload / source
 
 # db*
-add_postgres
+env_postgres
 
 # batteries
 # autoload -U compinit && compinit

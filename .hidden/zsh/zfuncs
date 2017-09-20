@@ -15,9 +15,9 @@ greep() {
     esac
 }
 
-wport() {
+port() {
     if [[ $# == 0 ]] then
-        print 'Usage: wport port'
+        print 'Usage: port <int>'
         return
     fi
     case `uname -s` in
@@ -32,6 +32,12 @@ wport() {
     esac
 }
 
+listen() {
+    while true; do
+        nc -l 127.0.0.1 $1
+    done
+}
+
 ww() {
     if [[ $# == 0 ]] then ww * ; fi
     if [[ `uname -s` == 'Darwin' ]] then
@@ -39,43 +45,19 @@ ww() {
     fi
 }
 
-function test_i () {
-    if [[ `uname -s` == 'Darwin' && `/usr/bin/which mvim` != '' ]] then
-        p 'osx and mvim is there'
-    else
-        p '*nix'
-    fi
-}
-function test_e () {
-    local _=`which -s mvim`
-    if [[ $? == 0 ]] then
-        edi='mvim'
-    else
-        edi='vim'
-    fi
-}
-
-function ret () {
+function ret() {
     local ret_code=$?
     echo $ret_code
     return $ret_code
 }
 
-function topall () {
+function topall() {
     print "not implented yet"
     tpids=`ps ax | grep "$1"`
     print $tpids
 }
 
-function shsh () {
-    if [[ $SHELL == '/bin/zsh' ]] then
-        print 'oh your zsh!!'
-    else
-        print 'ur dumb…'
-    fi
-}
-
-function list_colors () {
+function list_colors() {
 	for color in $(seq 0 255)
 	do
 		for style in "38;5"
@@ -89,11 +71,32 @@ function list_colors () {
 }
 
 # todo: move to env conf
-function list_shared_zfuncs () {
+function list_shared() {
     zsfs='/usr/local/share/zsh/site-functions'
     if [[ -d $zsfs ]]; then
         for zsf in `ls $zsfs`; do
             echo $zsf
         done
+    fi
+}
+
+# =======================================
+# tail
+# =======================================
+
+function test_i () {
+    if [[ `uname -s` == 'Darwin' && `/usr/bin/which mvim` != '' ]] then
+        p 'osx and mvim is there'
+    else
+        p '*nix'
+    fi
+}
+
+function test_e () {
+    local _=`which -s mvim`
+    if [[ $? == 0 ]] then
+        edi='mvim'
+    else
+        edi='vim'
     fi
 }
