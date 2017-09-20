@@ -196,8 +196,6 @@ add_postgres
 # zstyle ':completion:*descriptions' format '%U%B%d%b%u' # todo: tweak
 # zstyle ':completion:*warnings' format 'no matches: %d%b'
 # autoload -U promptinit && promptinit # todo: prompt -l
-eval "$(thefuck --alias)"
-eval "$(direnv hook zsh)" # todo: replace by [[ -f .env ]] customs instead of bash based direnv
 [[ -f /usr/local/etc/profile.d/autojump.sh ]] && . /usr/local/etc/profile.d/autojump.sh
 
 
