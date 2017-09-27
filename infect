@@ -12,6 +12,7 @@ vss = [
     '.vimrc',
     '.zshenv',
     '.psqlrc',
+    '.tmux.conf',
 ]
 
 pre_rm = True
