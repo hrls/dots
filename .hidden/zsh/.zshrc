@@ -37,15 +37,9 @@ alias pip='pip3'
 
 alias tags='ctags -R'
 
-# stack
-alias sr='stack ghci'
-alias sc='stack clean'
-alias sb='stack build'
-alias se='stack exec'
-
 alias df='df -H'
 alias tp='titled ∆ top -o cpu'
-alias ips='ifconfig | grep inet'
+alias ips='ifconfig | grep inet' # todo: filter loopback / inet6
 alias pc='rsync -Ph' # -P same as --partial --progress
 alias md5sum='md5 -r'
 alias ra='titled 🏹 ranger'
@@ -57,10 +51,6 @@ LSCOLORS='Exfxcxdxbxegedabagacad'
 export CLICOLOR_FORCE=true
 alias less='less -r'
 alias more='more -r'
-
-alias d=docker
-alias dm=docker-machine
-alias denv='eval $(docker-machine env)'
 
 setopt nobeep
 # setopt menucomplete
@@ -179,15 +169,16 @@ function load() {
     [[ -f ${absp} ]] && source ${absp}
 }
 
-load zfuncs
-load envs
-load tmux
-load haskell
-# load erlang
-
 # fpath+=~/.hidden/zsh
 # todo: fpath / autoload / source
 
+load zfuncs
+load tmux
+load docker
+load haskell
+# load erlang
+
+load envs
 # db*
 env_postgres
 

@@ -1,0 +1,5 @@
+# vim: set ft=zsh:
+
+alias d=docker
+alias dm=docker-machine
+alias denv='eval $(docker-machine env)'

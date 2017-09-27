@@ -1,3 +1,13 @@
 # vim: set ft=zsh:
+
 stack_args=(new build clean path exec ghci repl)
 compctl -k stack_args stack
+
+# stack
+alias sr='stack ghci'
+alias sc='stack clean'
+alias sb='stack build'
+alias se='stack exec'
+alias ss='stack build --file-watch'
+
+# https://docs.haskellstack.org/en/stable/build_command/
