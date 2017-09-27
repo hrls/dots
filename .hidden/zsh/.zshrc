@@ -66,18 +66,17 @@ setopt nobeep
 # setopt menucomplete
 # zstyle ':completion:*' menu select=1 _complete _ignored _approximate
 
-t () {
-    export custom_title=$@
-    title
-}
-title () {
+t() { export custom_title=$@ && title }
+dt() { export custom_title=`basename $PWD` && title }
+
+title() {
     # http://www.refining-linux.org/archives/42/ZSH-Gem-8-Hook-function-chpwd/
     if (( $+custom_title ))
     then print -Pn "\033];${custom_title}\a" 
     else print -Pn "\033];$@\a"
     fi
 }
-dir_title () {
+dir_title() {
     if [[ $HOST != 'probe.local' ]]; then
         local host_pre="$HOST : "
     fi
@@ -99,7 +98,7 @@ dir_title () {
         esac
     fi
 }
-titled () {
+titled() {
     # todo: resolve recursive calls (alias foo=titled f foo)
     # new: 'titled ∆ top' add hooks precmd and set title
     title $1 && eval ${@:2}; dir_title
@@ -173,6 +172,7 @@ if [[ $TERM != 'dumb' ]] then
 fi
 
 bindkey '^B' push-line
+# todo: bindkey 'nmode_w' next-split-frame
 
 function load() {
     absp="$HOME/.hidden/zsh/$1"
