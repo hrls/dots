@@ -4,4 +4,7 @@
     # echo "error: tmux failed to start"
 # fi
 
-alias q='t 🕳️ && tmux attach || tmux new; dir_title'
+# todo: different titles for local / remote sessions
+
+tmuxp='tmux -2 -u'
+alias q="title '⎞'; ${tmuxp} attach || ${tmuxp} new; dir_title"
