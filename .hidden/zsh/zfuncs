@@ -45,6 +45,10 @@ ww() {
     fi
 }
 
+gecho() {
+    osascript -e "display notification \"$2\" with title \"$1\""
+}
+
 function ret() {
     local ret_code=$?
     echo $ret_code
