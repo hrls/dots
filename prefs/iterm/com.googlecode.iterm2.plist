@@ -79,9 +79,9 @@
 	<key>NSWindow Frame SUUpdateAlert</key>
 	<string>703 567 620 392 0 0 1920 1177 </string>
 	<key>NSWindow Frame SharedPreferences</key>
-	<string>570 581 796 473 0 0 1920 1177 </string>
+	<string>570 569 796 473 0 0 1920 1177 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>147 211 1396 866 0 0 1920 1177 </string>
+	<string>101 539 920 621 0 0 1920 1177 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
 	<string>145 180 1704 995 0 0 1920 1177 </string>
 	<key>NSWindow Frame iTerm Window 2</key>
@@ -698,6 +698,15 @@
 				<real>0.22248570000000001</real>
 				<key>Red Component</key>
 				<real>0.20990739999999999</real>
+			</dict>
+			<key>Semantic History</key>
+			<dict>
+				<key>action</key>
+				<string>editor</string>
+				<key>editor</key>
+				<string>org.vim.MacVim</string>
+				<key>text</key>
+				<string></string>
 			</dict>
 			<key>Send Code When Idle</key>
 			<false/>
