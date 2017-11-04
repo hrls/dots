@@ -6,8 +6,9 @@ compctl -k stack_args stack
 # stack
 alias sr='stack ghci'
 alias sc='stack clean'
-alias sb='stack build'
+alias sb='stack build --fast'
 alias se='stack exec'
-alias ss='stack build --file-watch'
+alias sm='stack exec `basename $PWD`'
+alias ss='stack build --fast --file-watch'
 
 # https://docs.haskellstack.org/en/stable/build_command/
