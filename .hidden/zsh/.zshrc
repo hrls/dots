@@ -1,6 +1,7 @@
 # init
 if [[ `uname -s` == 'Darwin' && `/usr/bin/which mvim` != '' ]] then
     edi='mvim'
+    # todo: open iterm only on local machine
     edi_args="-np -c 'au VimLeave * !open -a iTerm'"
     edi_as_editor_args='-f --nomru'
 else
@@ -29,6 +30,8 @@ alias cp='cp -a'
 alias g=git
 alias e="${edi} ${edi_args}" # todo: 'e' as 'e .'
 alias er="${edi} ${edi_args} -R"
+alias f=fzf
+alias fe='e $(fzf)'
 
 # python
 alias py='python3 -B'
@@ -61,12 +64,14 @@ dt() { export custom_title=`basename $PWD` && title }
 
 title() {
     # http://www.refining-linux.org/archives/42/ZSH-Gem-8-Hook-function-chpwd/
+    # todo: change tmux title
     if (( $+custom_title ))
     then print -Pn "\033];${custom_title}\a" 
     else print -Pn "\033];$@\a"
     fi
 }
 dir_title() {
+    # todo: check for 'probe' only too
     if [[ $HOST != 'probe.local' ]]; then
         local host_pre="$HOST : "
     fi
@@ -182,13 +187,16 @@ load envs
 # db*
 env_postgres
 
-# batteries
 # autoload -U compinit && compinit
 # zstyle ':completion:*descriptions' format '%U%B%d%b%u' # todo: tweak
 # zstyle ':completion:*warnings' format 'no matches: %d%b'
 # autoload -U promptinit && promptinit # todo: prompt -l
-[[ -f /usr/local/etc/profile.d/autojump.sh ]] && . /usr/local/etc/profile.d/autojump.sh
-
+case `uname -s` in
+    Darwin)
+        load darwin ;;
+    Linux)
+        load gentoo ;; # todo
+esac
 
 # post hooks
 if [[ $SHLVL == 1 ]] then
