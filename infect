@@ -40,7 +40,7 @@ def install_vim_pkgs():
     github('hrls/bullfinch')
 
     github('vim-airline/vim-airline')
-    github('junegunn/fzf')
+    github('junegunn/fzf.vim')
     github('majutsushi/tagbar')
     github('scrooloose/nerdtree')
     github('vim-scripts/restore_view.vim')

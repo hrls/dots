@@ -6,6 +6,12 @@
 set nocompatible
 set viminfo+=n~/.local/var/viminfo
 
+" :scriptnames
+" :function
+" :func FuncName
+
+let g:pathogen_disabled = ['vim-elixir', 'vim-fugitive']
+
 execute pathogen#infect()
 syntax on
 filetype plugin indent on
@@ -98,6 +104,8 @@ inoremap <D-5> <Esc>:5tabnext<cr>
 vnoremap < <gv
 vnoremap > >gv
 
+noremap <f2> :NextError()<cr>
+
 " highlights w/o jump to the next occurrence
 nnoremap * *N
 " highlights selected in vmode
@@ -156,10 +164,15 @@ map <c-n> :NERDTreeToggle<cr>
 " close vim if the only window left is a NERDTree
 " autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 
-" https://github.com/ctrlpvim/ctrlp.vim
+if has('terminal') == 1
+endif
+
 set wildignore+=*/.git/*
-let g:ctrlp_show_hidden = 1
-" let g:ctrlp_user_command = 'find %s -type f'
+
+" fzf
+set runtimepath+=/usr/local/opt/fzf
+nnoremap <leader>n :Files<cr>
+nnoremap <leader>e :Buffers<cr>
 
 " batteries
 source $VIMRUNTIME/ftplugin/man.vim " :Man
