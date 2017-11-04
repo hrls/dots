@@ -36,17 +36,23 @@ def install_vim_pkgs():
     bundle_dir = p(home, '.vim/bundle')
     ensure_dir(bundle_dir)
     cd(bundle_dir)
+
     github('hrls/bullfinch')
+
     github('vim-airline/vim-airline')
+    github('junegunn/fzf')
     github('majutsushi/tagbar')
-    github('ctrlpvim/ctrlp.vim')
     github('scrooloose/nerdtree')
-    github('tpope/vim-fugitive')
-    github('tpope/vim-markdown')
-    github('elixir-lang/vim-elixir')
     github('vim-scripts/restore_view.vim')
-    # github('tikhomirov/vim-glsl')
+
+    github('tpope/vim-markdown')
     github('mitsuhiko/vim-jinja')
+
+    # github('ctrlpvim/ctrlp.vim')
+    # github('tpope/vim-fugitive')
+
+    # github('tikhomirov/vim-glsl')
+    # github('elixir-lang/vim-elixir')
 
 @restore_cwd
 def touch_hushlogin():
@@ -54,8 +60,6 @@ def touch_hushlogin():
     touch('.hushlogin')
 
 if __name__ == '__main__':
-
-    ap = argparse.ArgumentParser('--vim', description='infect_vim')
 
     # ['~', ['.local', ['bin', 'var']]]
     ensure_dir(p(home, '.local', 'bin'))
