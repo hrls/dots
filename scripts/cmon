@@ -1,0 +1,22 @@
+# vim: set ft=zsh:
+
+# usage: cmon <process substr>
+#  cmon
+#  cmon chrome
+#  cmon java
+#
+# print vmem usages
+case `uname -s` in
+    Darwin)
+        if [[ $# == 0 ]]; then
+            echo 'looking around'
+        else
+            echo "hunting $1"
+            pids=`ps -ax | grep $1`
+        fi
+        ;;
+    *)
+        echo 'todo'
+        ;;
+esac
+    
