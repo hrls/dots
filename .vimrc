@@ -60,7 +60,7 @@ set gdefault
 
 set ttyfast
 
-set visualbell " no fucking beeps; macvim dont flashes
+set novisualbell
 set guioptions+=c " kill popup dialogs
 set guioptions-=m " menu
 set guioptions-=T " toolbar
@@ -171,7 +171,9 @@ set wildignore+=*/.git/*
 
 " fzf
 set runtimepath+=/usr/local/opt/fzf
-nnoremap <leader>n :Files<cr>
+nnoremap <leader>t :Tags<cr>
+nnoremap <leader>f :Files<cr>
+nnoremap <leader>n :GFiles<cr>
 nnoremap <leader>e :Buffers<cr>
 
 " batteries
@@ -192,6 +194,9 @@ autocmd BufWritePost package.yaml silent !hpack --silent
 " Erlang
 set wildignore+=*.beam
 autocmd BufNewFile,BufRead */src/*.app.src,rebar.config setfiletype erlang
+
+" Ruby
+autocmd FileType ruby set tabstop=2 shiftwidth=2
 
 " Python
 set wildignore+=*.pyc
