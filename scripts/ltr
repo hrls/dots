@@ -10,15 +10,15 @@ torrents = Pathname.glob(torrents)
 
 case torrents.size
 when 0
-    puts 'no any torrent file in Downloads folder'
+  puts 'no any torrent file in Downloads folder'
 when 1
-    torrent_file = torrents.first.realpath
-    if $DEBUG then
-        puts torrent_file
-        puts content_to
-    end
-    retval = system("btcli add '#{torrent_file}' -d '#{content_to}'")
-    FileUtils.rm torrent_file if retval
+  torrent_file = torrents.first.realpath
+  if $DEBUG then
+    puts torrent_file
+    puts content_to
+  end
+  retval = system("btcli add '#{torrent_file}' -d '#{content_to}'")
+  FileUtils.rm torrent_file if retval
 else
-    puts 'todo: show prompt'
+  puts 'todo: show prompt'
 end
