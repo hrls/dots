@@ -1,29 +1,24 @@
-#!/usr/bin/env python3
-import sys, os, os.path as path
-from getopt import getopt
+#!/usr/bin/env ruby
+require 'pathname'
+require 'fileutils'
 
-# opts, args = getopt(sys.argv[1:], 'v')
-# opts = dict(opts)
+content_to =  Pathname.new '/Volumes/rttr'
+content_to = content_to.join(*ARGV) if ARGV.size > 0
 
-torrents_source_dir = path.expanduser('~/Downloads')
-into_dir = '/Volumes/rttr'
+torrents = Pathname.new('~').expand_path.join('Downloads', '*.torrent')
+torrents = Pathname.glob(torrents)
 
-if len(sys.argv) == 2:
-    into_dir = path.sep.join((into_dir, sys.argv[1]))
-
-os.chdir(torrents_source_dir)
-torrents = list(filter(lambda s: path.splitext(s)[1] == '.torrent', os.listdir()))
-if len(torrents) == 0:
-    exit('no any .torrent file found in {}'.format(torrents_source_dir))
-
-if len(torrents) == 1:
-    torrent_file = path.abspath(torrents[0])
-else:
-    by_date_added = sort(torrents, key=path.getctime)
-    exit('todo: sort and get last')
-
-print('{}'.format(torrent_file))
-rc = os.system("btcli add '{}' -d '{}'".format(torrent_file, into_dir))
-if rc == 0:
-    os.remove(torrent_file)
-    
+case torrents.size
+when 0
+    puts 'no any torrent file in Downloads folder'
+when 1
+    torrent_file = torrents.first.realpath
+    if $DEBUG then
+        puts torrent_file
+        puts content_to
+    end
+    retval = system("btcli add '#{torrent_file}' -d '#{content_to}'")
+    FileUtils.rm torrent_file if retval
+else
+    puts 'todo: show prompt'
+end
