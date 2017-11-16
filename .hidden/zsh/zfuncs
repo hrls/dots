@@ -16,11 +16,11 @@ greep() {
 }
 
 port() {
-    if [[ $# == 0 ]] then
+    if [[ $# == 0 ]]; then
         print 'Usage: port <int>'
         return
     fi
-    case `uname -s` in
+    case $(uname -s) in
         Darwin)
             for port in $@; do
                 lsof -n -i4TCP:${port}
@@ -39,8 +39,8 @@ listen() {
 }
 
 ww() {
-    if [[ $# == 0 ]] then ww * ; fi
-    if [[ `uname -s` == 'Darwin' ]] then
+    if [[ $# == 0 ]]; then ww * ; fi
+    if [[ $(uname -s) == 'Darwin' ]]; then
         qlmanage -p $@ >& /dev/null
     fi
 }
@@ -57,7 +57,7 @@ function ret() {
 
 function topall() {
     print "not implented yet"
-    tpids=`ps ax | grep "$1"`
+    tpids=$(ps ax | grep "$1")
     print $tpids
 }
 
@@ -78,7 +78,7 @@ function list_colors() {
 function list_shared() {
     zsfs='/usr/local/share/zsh/site-functions'
     if [[ -d $zsfs ]]; then
-        for zsf in `ls $zsfs`; do
+        for zsf in $(ls $zsfs); do
             echo $zsf
         done
     fi
@@ -89,7 +89,7 @@ function list_shared() {
 # =======================================
 
 function test_i () {
-    if [[ `uname -s` == 'Darwin' && `/usr/bin/which mvim` != '' ]] then
+    if [[ `uname -s` == 'Darwin' && `/usr/bin/which mvim` != '' ]]; then
         p 'osx and mvim is there'
     else
         p '*nix'
@@ -98,7 +98,7 @@ function test_i () {
 
 function test_e () {
     local _=`which -s mvim`
-    if [[ $? == 0 ]] then
+    if [[ $? == 0 ]]; then
         edi='mvim'
     else
         edi='vim'

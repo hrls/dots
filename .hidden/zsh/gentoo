@@ -1,4 +1,6 @@
 # vim: set ft=zsh:
+alias ll='ll --color=auto'
+alias la='la --color=auto'
 
 # batteries
 [[ -f /etc/profile.d/autojump.sh ]] && . /etc/profile.d/autojump.sh
