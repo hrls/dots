@@ -10,8 +10,8 @@ alias grep='grep --color=auto -E'			# egrep Hn=file:lineno
 greep() {
     # todo: add support of multiple parameters
     case $# in
-        1) grep --exclude-dir='.git' --exclude-dir='test' -RHne $1 . ;;
-        2) grep --exclude-dir='.git' --exclude-dir='test' $1 -RHne $2 . ;;
+        1) grep --exclude='tags' --exclude-dir='.git' --exclude-dir='test' -RHne $1 . ;;
+        2) grep --exclude='tags' --exclude-dir='.git' --exclude-dir='test' $1 -RHne $2 . ;;
     esac
 }
 

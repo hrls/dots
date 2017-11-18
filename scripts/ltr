@@ -3,7 +3,7 @@ require 'pathname'
 require 'fileutils'
 
 content_to = Pathname.new('/Volumes/rttr')
-content_to = content_to.join(*ARGV) unless ARGV.is_empty?
+content_to = content_to.join(*ARGV) unless ARGV.empty?
 
 torrents = Pathname.new('~').expand_path.join('Downloads', '*.torrent')
 torrents = Pathname.glob(torrents)
@@ -17,6 +17,7 @@ when 1
     puts torrent_file
     puts content_to
   end
+  # TODO: escape quotes
   retval = system("btcli add '#{torrent_file}' -d '#{content_to}'")
   FileUtils.rm(torrent_file) if retval
 else
