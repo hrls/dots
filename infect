@@ -5,23 +5,37 @@ require 'fileutils'
 # TODO: cd pwd func wrapper
 # TODO: sshh module @home, shell, github().pull/clone
 
-def github(repo)
-  local = Pathname.new(repo.split('/').last)
-  if local.exist? && (local / '.git').exist?
-    system("git -C #{local.realpath} pull")
-  else
-    system("git clone https://github.com/#{repo}")
+# Paths and utils
+module Base
+  def home
+    Pathname.new('~').expand_path
+  end
+
+  def newhome
+    pdir(home) unless home.exist?
+  end
+
+  def pdir(base, *subs)
+    dir = Pathname.new(base).join(*subs).expand_path
+    FileUtils.mkdir_p(dir) unless dir.exist?
+    dir
+  end
+
+  module_function :home, :newhome, :pdir
+
+  def github(repo)
+    local = Pathname.new(repo.split('/').last)
+    if local.exist? && (local / '.git').exist?
+      system("git -C #{local.realpath} pull")
+    else
+      system("git clone https://github.com/#{repo}")
+    end
   end
 end
 
-def pdir(base, *subs)
-  dir = Pathname.new(base).join(*subs).expand_path
-  FileUtils.mkdir_p(dir) unless dir.exist?
-  dir
-end
-
 # Vim plugins
-module Vim
+class Vim
+  extend Base
   @pkgs = %(
 
     hrls/bullfinch
@@ -36,27 +50,38 @@ module Vim
 
   ).split
 
-  def install_packages(home = '~')
-    home = Pathname.new(home).expand_path unless home.instance_of?(Pathname)
+  def self.install_packages
+    autoload_dir = pdir(home / '.vim' / 'autoload')
+    pathogen = autoload_dir / 'pathogen.vim'
+    system("curl -LSso #{pathogen} https://tpo.pe/pathogen.vim")
 
-    autoload_dir = pdir(home, '.vim', 'autoload')
-    pathogen_abs = autoload_dir / 'pathogen.vim'
-    system("curl -LSso #{pathogen_abs} https://tpo.pe/pathogen.vim")
-
-    bundle_dir = pdir(home, '.vim', 'bundle')
-    FileUtils.cd(bundle_dir, verbose: true)
+    bundles = pdir(home / '.vim' / 'bundle')
+    FileUtils.cd(bundles, verbose: true)
     @pkgs.each { |pkg| github pkg }
   end
-  module_function :install_packages
 end
 
-home = Pathname.new('~/tmp/newhome').expand_path
+# Env / shell / etc
+class Zsh
+  extend Base
 
-pdir(home, '.local', 'bin')
-pdir(home, '.local', 'var')
+  def self.hushlogin
+    hl = home / '.hushlogin'
+    system("touch #{hl}") unless hl.exist?
+  end
 
-# TODO: touch ~/.hushlogin
+  def self.dotlocal
+    pdir(home / '.local' / 'bin')
+    pdir(home / '.local' / 'var')
+  end
+end
+
 # TODO: link dotfiles
 # TODO: symlinks scripts/* ~/.local/bin
 
-Vim.install_packages(home)
+Base.newhome
+
+Zsh.hushlogin
+Zsh.dotlocal
+
+Vim.install_packages
