@@ -12,16 +12,16 @@ module Base
   end
 
   def newhome
-    pdir(home) unless home.exist?
+    p(home) unless home.exist?
   end
 
-  def pdir(base, *subs)
+  def p(base, *subs)
     dir = Pathname.new(base).join(*subs).expand_path
     FileUtils.mkdir_p(dir) unless dir.exist?
     dir
   end
 
-  module_function :home, :newhome, :pdir
+  module_function :home, :newhome, :p
 
   def github(repo)
     local = Pathname.new(repo.split('/').last)
@@ -50,20 +50,38 @@ class Vim
 
   ).split
 
-  def self.install_packages
-    autoload_dir = pdir(home / '.vim' / 'autoload')
+  def self.packages
+    autoload_dir = p(home / '.vim' / 'autoload')
     pathogen = autoload_dir / 'pathogen.vim'
     system("curl -LSso #{pathogen} https://tpo.pe/pathogen.vim")
 
-    bundles = pdir(home / '.vim' / 'bundle')
+    bundles = p(home / '.vim' / 'bundle')
     FileUtils.cd(bundles, verbose: true)
     @pkgs.each { |pkg| github pkg }
   end
 end
 
 # Env / shell / etc
-class Zsh
+class Env
   extend Base
+
+  @dotfiles = %w[
+    .gitconfig
+    .gitignore
+    .vimrc
+    .zshenv
+    .hidden
+
+    .tmux.conf
+    .psqlrc
+  ]
+
+  def self.linkdots
+    pre = Pathname.pwd.relative_path_from(home)
+    @dotfiles.each do |dotfile|
+      FileUtils.ln_s(pre / dotfile, home, force: true, verbose: true)
+    end
+  end
 
   def self.hushlogin
     hl = home / '.hushlogin'
@@ -71,17 +89,17 @@ class Zsh
   end
 
   def self.dotlocal
-    pdir(home / '.local' / 'bin')
-    pdir(home / '.local' / 'var')
+    p(home / '.local' / 'bin')
+    p(home / '.local' / 'var')
   end
 end
 
-# TODO: link dotfiles
 # TODO: symlinks scripts/* ~/.local/bin
 
 Base.newhome
 
-Zsh.hushlogin
-Zsh.dotlocal
+Env.hushlogin
+Env.dotlocal
+Env.linkdots
 
-Vim.install_packages
+Vim.packages
