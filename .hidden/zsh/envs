@@ -6,6 +6,6 @@ function env_java() {
 
 function env_postgres() {
     alias pg='titled sql psql'
-    export PATH=/Applications/Postgres.app/Contents/Versions/9.5/bin:$PATH
+    export PATH=/Applications/Postgres.app/Contents/Versions/10/bin:$PATH
 }
 

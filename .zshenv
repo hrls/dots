@@ -7,5 +7,6 @@ src=$HOME/src
 tmp=$HOME/tmp
 
 export LESSHISTFILE=$HOME/.local/var/.less_history
+export REDISCLI_HISTFILE=$HOME/.local/var/.rediscli_histfile
 
 [[ -f ~/.private ]] && source ~/.private

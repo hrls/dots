@@ -36,7 +36,6 @@ alias fe='e $(fzf)'
 # python
 alias py='python3 -B'
 alias pyre='py -i'
-alias pip='pip3'
 
 alias tags='ctags -R'
 
@@ -72,7 +71,7 @@ title() {
 }
 dir_title() {
     # todo: check for 'probe' only too
-    if [[ $HOST != 'probe.local' ]]; then
+    if [[ $HOST != 'lodb' && $HOST != 'lodb.local' ]]; then
         local host_pre="$HOST : "
     fi
     if [[ $PWD == $HOME ]]; then

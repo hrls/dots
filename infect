@@ -36,7 +36,7 @@ end
 # Vim plugins
 class Vim
   extend Base
-  @pkgs = %(
+  @pkgs = %w[
 
     hrls/bullfinch
     vim-airline/vim-airline
@@ -48,7 +48,7 @@ class Vim
 
     tpope/vim-markdown
 
-  ).split
+  ]
 
   def self.packages
     autoload_dir = p(home / '.vim' / 'autoload')
