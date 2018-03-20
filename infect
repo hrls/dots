@@ -47,7 +47,7 @@ class Vim
     vim-scripts/restore_view.vim
 
     tpope/vim-markdown
-
+    chr4/nginx.vim
   ]
 
   def self.packages
@@ -72,6 +72,7 @@ class Env
     .zshenv
     .hidden
 
+    .ghci
     .tmux.conf
     .psqlrc
   ]

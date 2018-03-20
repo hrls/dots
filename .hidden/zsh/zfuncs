@@ -49,6 +49,12 @@ gecho() {
     osascript -e "display notification \"$2\" with title \"$1\""
 }
 
+function tree() {
+    # ls dir only
+        $(tree to dir only, depth - 1)
+    # ls files only
+}
+
 function ret() {
     local ret_code=$?
     echo $ret_code

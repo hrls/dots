@@ -39,7 +39,7 @@ alias pyre='py -i'
 
 alias tags='ctags -R'
 
-alias df='df -H'
+alias df='df -Hl'
 alias tp='titled ∆ top -o cpu'
 alias ips='ifconfig | grep inet' # todo: filter loopback / inet6
 alias pc='rsync -Ph' # -P same as --partial --progress

@@ -1,0 +1,6 @@
+:set -fwarn-unused-binds
+:set -fwarn-unused-imports
+
+:set -XOverloadedStrings
+
+:def hoogle \str -> return $ ":!hoogle --count=15 \"" ++ str ++ "\""

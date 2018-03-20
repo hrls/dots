@@ -15,6 +15,7 @@
     bd  = branch --delete
     sl  = stash list
     ss  = stash show
+    c   = commit
     rl  = remote --verbose
     sub = submodule
 

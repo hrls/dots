@@ -21,5 +21,5 @@ when 1
   retval = system("btcli add '#{torrent_file}' -d '#{content_to}'")
   FileUtils.rm(torrent_file) if retval
 else
-  puts 'todo: show prompt'
+  puts 'multiple torrents: show prompt'
 end

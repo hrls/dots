@@ -202,6 +202,9 @@ autocmd FileType ruby set tabstop=2 shiftwidth=2
 set wildignore+=*.pyc
 autocmd BufNewFile,BufRead *.jinja* setfiletype jinja
 
+" Yaml
+autocmd FileType yaml set tabstop=2 shiftwidth=2
+
 " etc...
 " todo: term ≈ !open -a iTerm :pwd
 " todo: autocomple function: fb<tab> -> FooBar .hs, foo_bar .erl
