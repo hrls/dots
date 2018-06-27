@@ -71,7 +71,9 @@ title() {
 }
 dir_title() {
     # todo: check for 'probe' only too
-    if [[ $HOST != 'lodb' && $HOST != 'lodb.local' ]]; then
+    if [[ $HOST != 'lodb' && $HOST != 'lodb.local'
+       && $HOST != 'pd' && $HOST != 'pd.local'
+       ]]; then
         local host_pre="$HOST : "
     fi
     if [[ $PWD == $HOME ]]; then
@@ -118,8 +120,11 @@ git_head() {
     fi
 }
 
+# TODO: fix
 nonlocal_prefix() {
-    if [[ $USER != 'hrls' && $HOST != 'probe.local' ]]; then
+    if [[ ($USER != 'hrls')
+       && !($HOST == 'probe.local' || $HOST == 'pd.local')
+       ]]; then
         echo "$USER@$HOST "
     fi
 }
