@@ -1,5 +1,6 @@
 ZDOTDIR=$HOME/.hidden/zsh
 
+PATH="$PATH:/usr/local/sbin"
 [[ -d "$HOME/.local/bin" ]] && PATH=$PATH:"$HOME/.local/bin"
 [[ -d "$HOME/.cargo/bin" ]] && PATH=$PATH:"$HOME/.cargo/bin"
 

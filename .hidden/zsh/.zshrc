@@ -180,11 +180,12 @@ load zfuncs
 load tmux
 load docker
 load haskell
+load rust
 # load erlang
 
 load envs
 # db*
-env_postgres
+# env_postgres
 
 # autoload -U compinit && compinit
 # zstyle ':completion:*descriptions' format '%U%B%d%b%u' # todo: tweak

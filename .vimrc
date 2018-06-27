@@ -10,7 +10,7 @@ set viminfo+=n~/.local/var/viminfo
 " :function
 " :func FuncName
 
-let g:pathogen_disabled = ['vim-elixir', 'vim-fugitive']
+let g:pathogen_disabled = []
 
 execute pathogen#infect()
 syntax on

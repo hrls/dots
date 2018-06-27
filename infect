@@ -46,6 +46,8 @@ class Vim
     scrooloose/nerdtree
     vim-scripts/restore_view.vim
 
+    rust-lang/rust.vim
+    racer-rust/vim-racer
     tpope/vim-markdown
     chr4/nginx.vim
   ]

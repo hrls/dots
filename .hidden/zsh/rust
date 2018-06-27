@@ -1,0 +1,35 @@
+# vim: set ft=zsh:
+
+alias rsdoc='rustup doc --std'
+
+racer_cmds=(
+    complete complete-with-snippet
+    find-definition
+    coord point
+    daemon 
+    prefix
+)
+compctl -k racer_cmds racer
+
+cargo_cmds=(
+    build check clean doc new init run test
+    bench update search publish install uninstall
+)
+compctl -k cargo_cmds cargo
+
+
+rustup_cmds=(
+    show update default toolchain target component override
+    run which doc man self set completions help
+)
+compctl -k cargo_cmds cargo
+
+
+# RUST_SRC_PATH=$(rustc --print sysroot)/lib/rustlib/src/rust/src
+
+# rustup completions
+# cargo
+# racer ? vim, not cli
+#
+# TODO: init complete list based on 'bin help --help' output
+#       cron this task and log when new arg token is available
