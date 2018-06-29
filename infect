@@ -41,9 +41,11 @@ class Vim
     hrls/bullfinch
     vim-airline/vim-airline
 
+    wincent/ferret
     junegunn/fzf.vim
-    majutsushi/tagbar
     scrooloose/nerdtree
+    majutsushi/tagbar
+
     vim-scripts/restore_view.vim
 
     rust-lang/rust.vim
