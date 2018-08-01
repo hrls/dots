@@ -11,7 +11,6 @@ export EDITOR="${edi} ${edi_args} ${edi_as_editor_args}"
 
 # todo :
 # cursors
-LC_CTYPE=en_US.UTF-8
 HISTSIZE=80
 HISTFILE=$HOME/.local/var/.zsh_history
 SAVEHIST=$HISTSIZE
