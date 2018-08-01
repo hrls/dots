@@ -6,6 +6,8 @@ run apt update
 run apt-get install -y curl make
 run apt-get install -y zsh git ruby vim
 
+run chsh --shell /bin/zsh
+
 # install dots
 workdir /root/src
 run git clone https://github.com/hrls/dots
@@ -18,11 +20,13 @@ entrypoint zsh
 # TODO: fzf
 run apt-get install -y autojump jq ncdu tmux
 run apt-get install -y netcat screenfetch tig
+
 run curl -LO https://github.com/BurntSushi/ripgrep/releases/download/0.8.1/ripgrep_0.8.1_amd64.deb
 run dpkg -i ripgrep_0.8.1_amd64.deb
 
 run apt-get install -y clang
 run apt-get install -y ghc cabal-install
 run curl https://sh.rustup.rs -sSf | sh -s -- -y --no-modify-path --default-toolchain nightly
+run cargo install ripgrep
 # run cargo install mdcat
 # run cargo install mdbook
