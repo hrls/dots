@@ -104,6 +104,8 @@ inoremap <D-5> <Esc>:5tabnext<cr>
 vnoremap < <gv
 vnoremap > >gv
 
+noremap Y "+y
+
 noremap <f2> :NextError()<cr>
 
 " highlights w/o jump to the next occurrence
