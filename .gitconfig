@@ -45,3 +45,5 @@
     prompt = false
 [mergetool "mvimdiff"]
     cmd = mvim -f -d \"$LOCAL\" \"$REMOTE\"
+[color]
+	ui = auto

@@ -121,11 +121,7 @@ git_head() {
 
 # TODO: fix
 nonlocal_prefix() {
-    if [[ ($USER != 'hrls')
-       && !($HOST == 'probe.local' || $HOST == 'pd.local')
-       ]]; then
-        echo "$USER@$HOST "
-    fi
+    echo "$USER@$HOST "
 }
 
 git_nstashes() {

@@ -25,7 +25,7 @@ module Base
 
   def github(repo)
     local = Pathname.new(repo.split('/').last)
-    if local.exist? && (local / '.git').exist?
+    if local.exist? && (local + '.git').exist?
       system("git -C #{local.realpath} pull")
     else
       system("git clone https://github.com/#{repo}")
@@ -55,11 +55,11 @@ class Vim
   ]
 
   def self.packages
-    autoload_dir = p(home / '.vim' / 'autoload')
-    pathogen = autoload_dir / 'pathogen.vim'
+    autoload_dir = p(home + '.vim' + 'autoload')
+    pathogen = autoload_dir + 'pathogen.vim'
     system("curl -LSso #{pathogen} https://tpo.pe/pathogen.vim")
 
-    bundles = p(home / '.vim' / 'bundle')
+    bundles = p(home + '.vim' + 'bundle')
     FileUtils.cd(bundles, verbose: true)
     @pkgs.each { |pkg| github pkg }
   end
@@ -84,18 +84,18 @@ class Env
   def self.linkdots
     pre = Pathname.pwd.relative_path_from(home)
     @dotfiles.each do |dotfile|
-      FileUtils.ln_s(pre / dotfile, home, force: true, verbose: true)
+      FileUtils.ln_s(pre + dotfile, home, force: true, verbose: true)
     end
   end
 
   def self.hushlogin
-    hl = home / '.hushlogin'
+    hl = home + '.hushlogin'
     system("touch #{hl}") unless hl.exist?
   end
 
   def self.dotlocal
-    p(home / '.local' / 'bin')
-    p(home / '.local' / 'var')
+    p(home + '.local' + 'bin')
+    p(home + '.local' + 'var')
   end
 end
 
