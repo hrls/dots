@@ -26,6 +26,7 @@ alias la='ls -AFG'
 alias a='ll'
 alias cp='cp -a'
 
+alias cat=bat
 alias g=git
 alias e="${edi} ${edi_args}" # todo: 'e' as 'e .'
 alias er="${edi} ${edi_args} -R"
@@ -88,7 +89,7 @@ dir_title() {
             *)
                 if (( $+host_pre ))
                 then title "${host_pre}${pwd_name}"
-                else title '•'
+                else title "${pwd_name}"
                 fi
         esac
     fi
@@ -165,7 +166,9 @@ if [[ $TERM != 'dumb' ]] then
     # http://www.howtobuildsoftware.com/index.php/how-do/1Em/zsh-zsh-behavior-on-enter
 fi
 
+bindkey '^?' backward-delete-char
 bindkey '^B' push-line
+# todo: push-line in command mode
 # todo: bindkey 'nmode_w' next-split-frame
 
 function load() {

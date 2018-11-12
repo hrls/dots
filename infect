@@ -42,14 +42,16 @@ class Vim
     vim-airline/vim-airline
 
     wincent/ferret
+    dyng/ctrlsf.vim
     junegunn/fzf.vim
     scrooloose/nerdtree
+    scrooloose/nerdcommenter
     majutsushi/tagbar
 
     vim-scripts/restore_view.vim
 
     rust-lang/rust.vim
-    racer-rust/vim-racer
+    keith/swift.vim
     tpope/vim-markdown
     chr4/nginx.vim
   ]
