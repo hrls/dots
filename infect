@@ -71,22 +71,24 @@ end
 class Env
   extend Base
 
-  @dotfiles = %w[
+  @linked = %w[
+    makefile
     .gitconfig
     .gitignore
     .vimrc
     .zshenv
     .hidden
 
+    .irbrc
     .ghci
     .tmux.conf
     .psqlrc
   ]
 
-  def self.linkdots
+  def self.links
     pre = Pathname.pwd.relative_path_from(home)
-    @dotfiles.each do |dotfile|
-      FileUtils.ln_s(pre + dotfile, home, force: true, verbose: true)
+    @linked.each do |fname|
+      FileUtils.ln_s(pre + fname, home, force: true, verbose: true)
     end
   end
 
@@ -106,7 +108,7 @@ end
 Base.newhome
 
 Env.hushlogin
+Env.links
 Env.dotlocal
-Env.linkdots
 
 Vim.packages
