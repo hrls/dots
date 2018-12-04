@@ -106,7 +106,7 @@ chpwd_functions=(${chpwd_functions[@]} 'dir_title')
 wrap_ss() { return 'todo: prepend space before function call' }
 
 git_head() {
-    local ref_head=`git symbolic-ref HEAD 2>/dev/null | cut -d / -f 3`
+    local ref_head=`git symbolic-ref HEAD 2>/dev/null | cut -d / -f 3-`
     if [[ $ref_head != '' ]]; then
         echo " $ref_head"
     else
