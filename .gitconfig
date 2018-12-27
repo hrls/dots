@@ -1,38 +1,39 @@
 [user]
-    name = hrls
-    email = viktor.kharitonovich@gmail.com
+	name = hrls
+	email = viktor.kharitonovich@gmail.com
 [core]
-    excludesfile = ~/.gitignore
-    autocrlf = input
+	excludesfile = ~/.gitignore
+	autocrlf = input
 [alias]
-    s   = status
-    l   = log --decorate=short --oneline
-    ll  = log --decorate=short
-    lg  = log --pretty=format:'%h - %an, %ar : %s' --graph
-    cd  = checkout
-    b   = branch
-    bl  = branch -vv
-    bd  = branch --delete
-    sl  = stash list
-    ss  = stash show
-    c   = commit
-    rc  = rebase --continue
-    rl  = remote --verbose
-    df  = diff
+	s   = status --show-stash
+	l   = log --decorate=short --oneline
+	ll  = log --decorate=short
+	lg  = log --pretty=format:'%h - %an, %ar : %s' --graph
+	cd  = checkout
+	b   = branch
+	bl  = branch -vv
+	bd  = branch --delete
+	sl  = stash list
+	ss  = stash show
+	c   = commit
+	rc  = rebase --continue
+	rl  = remote --verbose
+	df  = diff
 
-    sub = submodule
-    append = commit --amend --no-edit
+	sub = submodule
+	append = commit --amend --no-edit
 
-[push]
-    default = matching
 
 [diff]
-    tool = mvimdiff
+	tool = mvimdiff
 [difftool "mvimdiff"]
-    # todo: open in tabs
-    cmd = mvim -f -d  \"$LOCAL\" \"$REMOTE\"
+	# todo: open in tabs
+	cmd = mvim -f -d  \"$LOCAL\" \"$REMOTE\"
 [difftool "opendiff"]
-    cmd = opendiff \"$LOCAL\" \"$REMOTE\"
-    
+	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+
+[push]
+	default = simple
+
 [color]
-    ui = auto
+	ui = auto
