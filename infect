@@ -85,6 +85,7 @@ class Env
     .zshenv
     .hidden
 
+    .tcshrc
     .irbrc
     .ghci
     .tmux.conf

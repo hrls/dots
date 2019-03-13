@@ -207,9 +207,13 @@ nnoremap <leader>s :so $VIMRUNTIME/syntax/hitest.vim<cr>
 " Rust
 let g:ale_fixers = { 'rust': [ 'rustfmt'] }
 let g:ale_rust_cargo_use_check = 0
+let g:ale_rust_cargo_check_tests = 1
 let g:ale_rust_cargo_use_clippy = 1
+let g:ale_rust_cargo_use_clippy = executable("cargo clippy")
 let g:ale_rust_cargo_check_tests = 1
 let g:ale_rust_cargo_clippy_options = '--tests'
+" 'cargo clippy --all',
+" {buffer, lines -> filter(lines, 'v:val !=~ ''^\s*//''')},
 
 " Haskell
 set wildignore+=*/.stack-work/*

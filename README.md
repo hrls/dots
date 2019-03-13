@@ -5,6 +5,8 @@
  - [ ] infect backups old dotfiles
  - [ ] infect generate vim `:Helptags` (check ret code)
  - [ ] ruler tweaks
+ - [ ] t is tmux
+ - [ ] zsh => tcsh
 
 # install
 `./infect`  

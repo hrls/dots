@@ -1,2 +1,2 @@
 bindkey -v
-set autolist
+set autolist # list completion choises
