@@ -1,0 +1,15 @@
+autojump
+bat
+ripgrep
+fd
+fzf
+
+cmake
+ctags
+netcat
+
+jq
+ncdu
+
+nasm
+ghc

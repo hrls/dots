@@ -3,3 +3,5 @@
 alias d=docker
 alias dm=docker-machine
 alias denv='eval $(docker-machine env)'
+alias drun='docker run -it --rm'
+alias contgc='docker container rm -f $(docker container ls -qa)'

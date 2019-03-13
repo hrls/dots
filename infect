@@ -43,6 +43,7 @@ class Vim
 
     wincent/ferret
     dyng/ctrlsf.vim
+    w0rp/ale
     junegunn/fzf.vim
     scrooloose/nerdtree
     scrooloose/nerdcommenter

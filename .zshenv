@@ -19,4 +19,6 @@ export REDISCLI_HISTFILE=$HOME/.local/var/.rediscli_histfile
 export BAT_THEME='1337'
 export BAT_STYLE='plain,numbers,changes'
 
+# export FZF_DEFAULT_COMMAND='git ls-files || fd --type file'
+
 [[ -f ~/.private ]] && source ~/.private

@@ -2,7 +2,7 @@
 require 'pathname'
 require 'fileutils'
 
-content_to = Pathname.new('/Volumes/pool')
+content_to = Pathname.new('~/torrents')
 content_to = content_to.join(*ARGV) unless ARGV.empty?
 
 torrents = Pathname.new('~').expand_path.join('Downloads', '*.torrent')

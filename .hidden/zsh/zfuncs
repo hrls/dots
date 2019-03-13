@@ -4,7 +4,9 @@
 ## |& is zsh only version of 2>&1
 ## unless ... todo
 
-alias grep='grep --color=auto -E'			# egrep Hn=file:lineno
+alias fd='fd --hidden --color=auto'
+# alias rg='rg --hidden --color=auto'
+alias grep=rg
 # todo : grey () { find . -type f -name $1 -exec egrep -Hn -e $2 {} + }
 # alias grey='grep -Er --include=\*.{h,e}rl "record" .'
 greep() {
@@ -49,10 +51,19 @@ gecho() {
     osascript -e "display notification \"$2\" with title \"$1\""
 }
 
-function tree() {
-    # ls dir only
-        $(tree to dir only, depth - 1)
-    # ls files only
+notify() {
+    osascript \
+        -e 'tell application "iTerm"' \
+        -e 'activate' \
+        -e 'display dialog "this is the note icon." with icon note' \
+        -e 'end tell'
+    # osascript -e 'display notification "iTerm icon" with icon alias "Applications:iTerm.app:Contents:Resources:AppIcon.icns"'
+}
+
+tree() {
+    # ls directories first
+    # ls files from current dir
+    $(tree to dir only, depth - 1)
 }
 
 function ret() {

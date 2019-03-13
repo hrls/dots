@@ -189,6 +189,17 @@ nnoremap <silent> <leader>] <c-w><c-]><c-w>T
 " VimL
 nnoremap <leader>s :so $VIMRUNTIME/syntax/hitest.vim<cr>
 
+" Rust
+let g:ale_virtualtext_cursor = 1
+let g:ale_rust_cargo_use_clippy = executable("cargo clippy")
+let g:ale_rust_cargo_check_tests = 1
+" let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
+
+" 'cargo clippy --all',
+" {buffer, lines -> filter(lines, 'v:val !=~ ''^\s*//''')},
+let g:ale_fixers = { 'rust': [ 'cargo fmt'] }
+
+
 " Haskell
 set wildignore+=*/.stack-work/*
 autocmd BufWritePost package.yaml silent !hpack --silent
