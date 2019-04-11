@@ -1,19 +1,17 @@
 # vim: set ft=zsh:
 
+alias car=cargo
 alias rsdoc='rustup doc --std'
 
-racer_cmds=(
-    complete complete-with-snippet
-    find-definition
-    coord point
-    daemon 
-    prefix
-)
-compctl -k racer_cmds racer
-
 cargo_cmds=(
-    build check clean doc new init run test
-    bench update search publish install uninstall
+    clean
+    check build run test bench
+    fmt doc
+    new init
+    update search install uninstall
+    clippy
+    add rm upgrade
+    watch
 )
 compctl -k cargo_cmds cargo
 
@@ -29,7 +27,6 @@ compctl -k cargo_cmds cargo
 
 # rustup completions
 # cargo
-# racer ? vim, not cli
 #
 # TODO: init complete list based on 'bin help --help' output
 #       cron this task and log when new arg token is available
