@@ -5,32 +5,23 @@
 	excludesfile = ~/.gitignore
 	autocrlf = input
 [alias]
+	b   = branch
+	c   = commit
+	co  = checkout
+	cb  = checkout --branch
+	df  = diff
+	rc  = rebase --continue
 	s   = status --show-stash
+	sl  = stash list
+	ss  = stash show
+
+	sub = submodule
+	url = remote get-url --all origin
+	append = commit --amend --no-edit
+
 	l   = log --decorate=short --oneline
 	ll  = log --decorate=short
 	lg  = log --pretty=format:'%h - %an, %ar : %s' --graph
-	cd  = checkout
-	b   = branch
-	bl  = branch -vv
-	bd  = branch --delete
-	sl  = stash list
-	ss  = stash show
-	c   = commit
-	rc  = rebase --continue
-	rl  = remote --verbose
-	df  = diff
-
-	sub = submodule
-	append = commit --amend --no-edit
-
-
-[diff]
-	tool = mvimdiff
-[difftool "mvimdiff"]
-	# todo: open in tabs
-	cmd = mvim -f -d  \"$LOCAL\" \"$REMOTE\"
-[difftool "opendiff"]
-	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
 
 [push]
 	default = simple
