@@ -59,6 +59,11 @@ set gdefault
 " set showmatch " hl [{()}]
 
 set ttyfast
+set autoread
+
+set nobackup
+set nowritebackup
+set noswapfile
 
 set novisualbell
 set guioptions+=c " kill popup dialogs
@@ -81,6 +86,8 @@ inoremap <up> <nop>
 inoremap <down> <nop>
 inoremap <left> <nop>
 inoremap <right> <nop>
+" disable ex mode
+nnoremap Q <nop>
 
 " navigate around wrapped text
 nnoremap j gj
@@ -90,16 +97,16 @@ nnoremap <tab> <c-w>w
 nnoremap <s-tab> <c-w>W
 
 " todo: bypass warning - E16: Invalid range
-noremap <D-1> :1tabnext<cr>
-noremap <D-2> :2tabnext<cr>
-noremap <D-3> :3tabnext<cr>
-noremap <D-4> :4tabnext<cr>
-noremap <D-5> :5tabnext<cr>
-inoremap <D-1> <Esc>:1tabnext<cr>
-inoremap <D-2> <Esc>:2tabnext<cr>
-inoremap <D-3> <Esc>:3tabnext<cr>
-inoremap <D-4> <Esc>:4tabnext<cr>
-inoremap <D-5> <Esc>:5tabnext<cr>
+noremap  <silent> <D-1> :1tabnext<cr>
+noremap  <silent> <D-2> :2tabnext<cr>
+noremap  <silent> <D-3> :3tabnext<cr>
+noremap  <silent> <D-4> :4tabnext<cr>
+noremap  <silent> <D-5> :5tabnext<cr>
+inoremap <silent> <D-1> <Esc>:1tabnext<cr>
+inoremap <silent> <D-2> <Esc>:2tabnext<cr>
+inoremap <silent> <D-3> <Esc>:3tabnext<cr>
+inoremap <silent> <D-4> <Esc>:4tabnext<cr>
+inoremap <silent> <D-5> <Esc>:5tabnext<cr>
 
 vnoremap < <gv
 vnoremap > >gv
@@ -114,7 +121,7 @@ nnoremap * *N
 " just highlight, select in vmode, then replace :'<,'>s//bar/g
 vnoremap * y :execute ":let @/=@\""<cr> :execute "set hlsearch"<cr>
 " turn off searh highlight
-nnoremap <leader>8 :nohlsearch<cr>
+nnoremap <silent> <leader>8 :nohlsearch<cr>
 
 " folds
 " todo: folded string should display first most nested element
@@ -126,8 +133,17 @@ set foldnestmax=10
 
 " Plugins
 
+" ALE
+let g:ale_fix_on_save = 1
+let g:ale_lint_on_text_changed = 'normal'
+" neovim feature
+" let g:ale_virtualtext_cursor = 1
+nmap <silent> <C-k> <Plug>(ale_previous_wrap)
+nmap <silent> <C-j> <Plug>(ale_next_wrap)
+
 " airline
 silent! call airline#extensions#whitespace#disable()
+let g:airline#extensions#ale#enabled = 1
 
 " tagbar
 let g:tagbar_compact = 1
@@ -151,6 +167,8 @@ let g:NERDTreeAutoDeleteBuffer = 1
 let g:NERDTreeHighlightCursorline = 1
 let g:NERDTreeBookmarksFile = $HOME . '/.local/NERDTreeBookmarks'
 let g:NERDTreeHijackNetrw = 1
+let g:NERDTreeHighlightCursorline = 1
+let g:NERDTreeShowLineNumbers = 1
 " let g:NERDTreeStatusline = %{todo}
 function! NERDTreeReplaceEmptyBuffer()
     if line('$') == 1 && getline(1) == ''
@@ -165,9 +183,6 @@ map <c-n> :NERDTreeToggle<cr>
 " autocmd vimenter * if !argc() | NERDTree | endif
 " close vim if the only window left is a NERDTree
 " autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
-
-if has('terminal') == 1
-endif
 
 set wildignore+=*/.git/*
 
@@ -190,15 +205,11 @@ nnoremap <silent> <leader>] <c-w><c-]><c-w>T
 nnoremap <leader>s :so $VIMRUNTIME/syntax/hitest.vim<cr>
 
 " Rust
-let g:ale_virtualtext_cursor = 1
-let g:ale_rust_cargo_use_clippy = executable("cargo clippy")
+let g:ale_fixers = { 'rust': [ 'rustfmt'] }
+let g:ale_rust_cargo_use_check = 0
+let g:ale_rust_cargo_use_clippy = 1
 let g:ale_rust_cargo_check_tests = 1
-" let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
-
-" 'cargo clippy --all',
-" {buffer, lines -> filter(lines, 'v:val !=~ ''^\s*//''')},
-let g:ale_fixers = { 'rust': [ 'cargo fmt'] }
-
+let g:ale_rust_cargo_clippy_options = '--tests'
 
 " Haskell
 set wildignore+=*/.stack-work/*
