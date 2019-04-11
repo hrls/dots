@@ -53,6 +53,7 @@ class Vim
 
     rust-lang/rust.vim
     keith/swift.vim
+    idris-hackers/idris-vim
     tpope/vim-markdown
     chr4/nginx.vim
   ]
@@ -65,6 +66,10 @@ class Vim
     bundles = p(home + '.vim' + 'bundle')
     FileUtils.cd(bundles, verbose: true)
     @pkgs.each { |pkg| github pkg }
+  end
+
+  def self.helptags
+    system("vim +Helptags +exit")
   end
 end
 
@@ -113,3 +118,4 @@ Env.links
 Env.dotlocal
 
 Vim.packages
+Vim.helptags
