@@ -2,3 +2,21 @@
 
 # batteries
 [[ -f /usr/local/etc/profile.d/autojump.sh ]] && . /usr/local/etc/profile.d/autojump.sh
+
+# brew
+uninstall() {
+    if [[ $# != 1 ]]; then
+        echo "usage: uninstall <brew formula>"
+        return -1
+    fi
+
+    formula=$1
+    brew rm ${formula}
+    if [[ $? != 0 ]]; then return -2; fi
+
+    dangled_deps=$(join <(brew leaves) <(brew deps ${formula}))
+
+    if [[ ${dangled_deps} != '' ]]; then
+        brew rm ${dangled_deps}
+    fi
+}
