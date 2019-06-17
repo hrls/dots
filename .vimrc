@@ -124,7 +124,7 @@ vnoremap * y :execute ":let @/=@\""<cr> :execute "set hlsearch"<cr>
 nnoremap <silent> <leader>8 :nohlsearch<cr>
 
 " folds
-" todo: folded string should display first most nested element
+" TODO: fold should display last line in folded block
 "       for haskell 'case of' show first ret val
 set foldenable
 set foldmethod=indent

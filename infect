@@ -69,7 +69,7 @@ class Vim
   end
 
   def self.helptags
-    system("vim +Helptags +exit")
+    system("vim -es +Helptags +exit")
   end
 end
 

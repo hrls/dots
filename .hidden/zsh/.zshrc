@@ -30,8 +30,6 @@ alias cat=bat
 alias g=git
 alias e="${edi} ${edi_args}" # todo: 'e' as 'e .'
 alias er="${edi} ${edi_args} -R"
-alias f=fzf
-alias fe='e $(fzf)'
 
 # python
 alias py='python3 -B'
@@ -45,7 +43,6 @@ alias ips='ifconfig | grep inet' # todo: filter loopback / inet6
 alias pc='rsync -Ph' # -P same as --partial --progress
 alias md5sum='md5 -r'
 alias ra='titled 🏹 ranger'
-alias btli="btcli list | grep -e '[LI+]\.\s'"
 
 autoload -U colors && colors
 # todo: replace ANSI by supported xterm-256color
@@ -168,8 +165,11 @@ fi
 
 bindkey '^?' backward-delete-char
 bindkey '^B' push-line
+# bindkey '^R' history-incremental-search-backward
 # todo: push-line in command mode
 # todo: bindkey 'nmode_w' next-split-frame
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 function load() {
     absp="$HOME/.hidden/zsh/$1"

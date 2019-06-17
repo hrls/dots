@@ -24,7 +24,12 @@
 	lg  = log --pretty=format:'%h - %an, %ar : %s' --graph
 
 [push]
-	default = simple
+	default = current
 
 [color]
 	ui = auto
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
