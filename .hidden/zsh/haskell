@@ -1,14 +1,35 @@
 # vim: set ft=zsh:
 
+cab() {
+    case $# in
+        0)
+            echo "cabal new wrapper"
+            echo "usage: cab cmd => cabal new-cmd"
+            ;;
+        1)
+            local cmd
+            case $1 in
+                'check') cmd=(new-build --flags='no-code') ;;
+                *) cmd="new-$1" ;;
+            esac
+            echo ${cmd}
+            cabal ${cmd}
+            ;;
+        *)
+            echo "$# args support not implemented yet"
+            ;;
+    esac
+}
+
 stack_args=(new build clean path exec ghci repl)
 compctl -k stack_args stack
 
 # stack
-alias sr='stack ghci'
-alias sc='stack clean'
-alias sb='stack build --fast'
-alias se='stack exec'
-alias sm='stack exec `basename $PWD`'
-alias ss='stack build --fast --file-watch'
+# alias sr='stack ghci'
+# alias sc='stack clean'
+# alias sb='stack build --fast'
+# alias se='stack exec'
+# alias sm='stack exec `basename $PWD`'
+# alias ss='stack build --fast --file-watch'
 
 # https://docs.haskellstack.org/en/stable/build_command/
