@@ -11,12 +11,16 @@ cab() {
     shift
 
     case ${cmd} in
-        'check') cmd=(new-build --flags='no-code') ;;
-        *) cmd=("new-${cmd}" $@) ;; # or $*
+        'check') (cabal new-build --flags='no-code') ;;
+        'lint') (hlint -g) ;;
+        'repl') case "${1}" in
+            '') (cabal new-repl) ;;
+            'exe') (cabal new-repl exe:$(basename $PWD)) ;;
+            'lib') (cabal new-repl lib:$(basename $PWD)) ;;
+            *) (cabal new-repl $@) ;;
+        esac ;;
+        *) (cabal "new-${cmd}" $@) ;; # or $*
     esac
-
-    echo ${cmd}
-    cabal ${cmd}
 }
 
 stack_args=(new build clean path exec ghci repl)
