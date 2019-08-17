@@ -1,24 +1,22 @@
 # vim: set ft=zsh:
 
 cab() {
-    case $# in
-        0)
-            echo "cabal new wrapper"
-            echo "usage: cab cmd => cabal new-cmd"
-            ;;
-        1)
-            local cmd
-            case $1 in
-                'check') cmd=(new-build --flags='no-code') ;;
-                *) cmd="new-$1" ;;
-            esac
-            echo ${cmd}
-            cabal ${cmd}
-            ;;
-        *)
-            echo "$# args support not implemented yet"
-            ;;
+    if [[ $# == 0 ]]; then
+        echo "cabal new wrapper"
+        echo "usage: cab cmd => cabal new-cmd"
+        return
+    fi
+
+    local cmd=$1
+    shift
+
+    case ${cmd} in
+        'check') cmd=(new-build --flags='no-code') ;;
+        *) cmd=("new-${cmd}" $@) ;; # or $*
     esac
+
+    echo ${cmd}
+    cabal ${cmd}
 }
 
 stack_args=(new build clean path exec ghci repl)
