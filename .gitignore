@@ -22,7 +22,6 @@ __pycache__
 
 # logs and db
 *.log
-*.sql
 *.sqlite
 
 # OS files

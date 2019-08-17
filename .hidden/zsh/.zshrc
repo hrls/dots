@@ -1,13 +1,13 @@
 # init
-if [[ `uname -s` == 'Darwin' && `/usr/bin/which mvim` != '' ]] then
-    edi='mvim'
-    # todo: open iterm only on local machine
-    edi_args="-np -c 'au VimLeave * !open -a iTerm'"
-    edi_as_editor_args='-f --nomru'
+#
+# TODO: nvim/vim for non-local
+#
+if [[ `uname -s` == 'Darwin' && $(which -s nvim) ]] then
+    export EDITOR=nvim
+    # (mvim -n -p -c 'au VimLeave * !open -a iTerm' --nomru)
 else
-    edi='vim'
+    export EDITOR=vim
 fi
-export EDITOR="${edi} ${edi_args} ${edi_as_editor_args}"
 
 # todo :
 # cursors
@@ -21,15 +21,13 @@ alias p=echo
 alias cls='clear'
 alias del='rm'
 alias which='which -a'
-alias ll='ls -lAFGHh'
+alias ll='ls -oAFHGh'
 alias la='ls -AFG'
 alias a='ll'
 alias cp='cp -a'
 
 alias cat=bat
 alias g=git
-alias e="${edi} ${edi_args}" # todo: 'e' as 'e .'
-alias er="${edi} ${edi_args} -R"
 
 # python
 alias py='python3 -B'
@@ -43,6 +41,7 @@ alias ips='ifconfig | grep inet' # todo: filter loopback / inet6
 alias pc='rsync -Ph' # -P same as --partial --progress
 alias md5sum='md5 -r'
 alias ra='titled 🏹 ranger'
+alias br=broot
 
 autoload -U colors && colors
 # todo: replace ANSI by supported xterm-256color
@@ -172,8 +171,7 @@ bindkey '^B' push-line
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 function load() {
-    absp="$HOME/.hidden/zsh/$1"
-    [[ -f ${absp} ]] && source ${absp}
+    source "$HOME/.hidden/zsh/$1"
 }
 
 # fpath+=~/.hidden/zsh
@@ -181,13 +179,12 @@ function load() {
 
 load zfuncs
 load tmux
-load docker
+load docker; env_docker
 load haskell
 load rust
 # load erlang
 
-load envs
-# db*
+# load envs
 # env_postgres
 
 # autoload -U compinit && compinit
@@ -202,7 +199,4 @@ case `uname -s` in
 esac
 
 # post hooks
-if [[ $SHLVL == 1 ]] then
-    clear
-    dir_title
-fi
+[[ $SHLVL == 1 ]] && dir_title

@@ -2,5 +2,6 @@
 :set -fwarn-unused-imports
 
 :set -XOverloadedStrings
+:set -XNumericUnderscores
 
 :def hoogle \str -> return $ ":!hoogle --count=15 \"" ++ str ++ "\""

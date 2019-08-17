@@ -134,7 +134,7 @@ set foldnestmax=10
 " Plugins
 
 " ALE
-let g:ale_fix_on_save = 1
+let g:ale_fix_on_save = 0 " 0 - off, 1 - on
 let g:ale_lint_on_text_changed = 'normal'
 " neovim feature
 " let g:ale_virtualtext_cursor = 1
@@ -204,8 +204,14 @@ nnoremap <silent> <leader>] <c-w><c-]><c-w>T
 " VimL
 nnoremap <leader>s :so $VIMRUNTIME/syntax/hitest.vim<cr>
 
+let g:ale_fixers = {
+            \'rust': [ 'rustfmt'],
+            \}
+let g:ale_linters = {
+            \'haskell': [ 'hlint' ],
+            \}
+
 " Rust
-let g:ale_fixers = { 'rust': [ 'rustfmt'] }
 let g:ale_rust_cargo_use_check = 0
 let g:ale_rust_cargo_check_tests = 1
 let g:ale_rust_cargo_use_clippy = 1
@@ -216,6 +222,7 @@ let g:ale_rust_cargo_clippy_options = '--tests'
 " {buffer, lines -> filter(lines, 'v:val !=~ ''^\s*//''')},
 
 " Haskell
+let g:ale_haskell_hlint_executable = 'hlint -g'
 set wildignore+=*/.stack-work/*
 autocmd BufWritePost package.yaml silent !hpack --silent
 

@@ -1,2 +1,4 @@
 bindkey -v
-set autolist # list completion choises
+set autolist # list completion choices
+
+# TODO: rewrite cab

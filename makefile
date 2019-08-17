@@ -37,6 +37,6 @@ gc:
 
 machine:
 	docker-machine create default \
-		--virtualbox-cpu-count "-1" \
+		--virtualbox-cpu-count "6" \
 		--virtualbox-memory "8192" \
 		--virtualbox-disk-size "30000"

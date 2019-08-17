@@ -5,5 +5,10 @@ alias dm=docker-machine
 
 denv() { eval $(docker-machine env $1) }
 
-alias drun='docker run -it --rm'
-alias contgc='docker container rm -f $(docker container ls -qa)'
+alias d_run='docker run -it --rm'
+alias d_gc='docker system prune -f'
+
+env_docker() {
+    docker_bins='/Applications/Docker.app/Contents/Resources/bin'
+    [[ -d ${docker_bins} ]] && export PATH=${docker_bins}:$PATH
+}
