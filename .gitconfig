@@ -5,12 +5,18 @@
 	excludesfile = ~/.gitignore
 	autocrlf = input
 [alias]
+    f   = fetch --tags
+    p   = pull --ff-only
 	b   = branch
+    br  = branch --remote
 	c   = commit
 	co  = checkout
 	bc  = checkout -b
 	df  = diff
+    dfs = diff --staged
+    r   = rebase --interactive
 	rc  = rebase --continue
+    rom = rebase --interactive origin/master
 	s   = status --show-stash
 	sl  = stash list
 	ss  = stash show

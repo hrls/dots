@@ -16,3 +16,6 @@ endfunction
 " s-tab on empty should works as backspace
 inoremap <silent> <tab> <c-r>=OmniTab()<cr>
 inoremap <silent> <s-tab> <c-r>=BsSTab()<cr>
+
+
+" TODO bind {} to NextBlock (currently NextEmptyLine =)

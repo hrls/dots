@@ -3,11 +3,11 @@
 # TODO: nvim/vim for non-local
 #
 if [[ `uname -s` == 'Darwin' && $(which -s nvim) ]] then
-    export EDITOR=nvim
+    # export EDITOR=nvim
     # (mvim -n -p -c 'au VimLeave * !open -a iTerm' --nomru)
-else
-    export EDITOR=vim
 fi
+
+export EDITOR=vim
 
 # todo :
 # cursors
@@ -27,7 +27,23 @@ alias a='ll'
 alias cp='cp -a'
 
 alias cat=bat
+
 alias g=git
+alias gs='git s'
+alias gl='git l'
+alias gf='git f'
+alias grom='git rebase --interactive origin/master'
+gbc() {
+    return; # TODO
+    if [ $# != 1 ]; then
+        echo 'gbc <branch>'
+        return;
+    fi
+
+    branch=$1
+    # TODO
+    git checkout -b ${branch} --track origin/${branch}
+}
 
 # python
 alias py='python3 -B'
@@ -35,6 +51,8 @@ alias pyre='py -i'
 
 alias tags='ctags -R'
 
+alias s='pwd | pbcopy; exit'
+alias vrg='rg --vimgrep --color=auto'
 alias df='df -Hl'
 alias tp='titled ∆ htop'
 alias ips='ifconfig | grep inet' # todo: filter loopback / inet6

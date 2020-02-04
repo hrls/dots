@@ -13,6 +13,15 @@ cab() {
     case ${cmd} in
         'check') (cabal new-build --flags='no-code') ;;
         'lint') (hlint -g) ;;
+        'init') cabal init \
+            --version='0.0.0' \
+            --license='MIT' \
+            --lib # --exe
+            --tests ;;
+        'doc') echo 'not implemented yet' ;; # build deps docs
+        'install') cabal install ${1} \
+            --installdir=$HOME/.cabal/bin \
+            --overwrite-policy=always ;;
         'repl') case "${1}" in
             '') (cabal new-repl) ;;
             'exe') (cabal new-repl exe:$(basename $PWD)) ;;

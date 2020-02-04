@@ -5,10 +5,48 @@ alias dm=docker-machine
 
 denv() { eval $(docker-machine env $1) }
 
-alias d_run='docker run -it --rm'
-alias d_gc='docker system prune -f'
+alias d_run='docker run --interactive --tty --rm'
+d_gc() {
+    docker system prune --force --all
+    docker volume prune --force
+}
 
 env_docker() {
     docker_bins='/Applications/Docker.app/Contents/Resources/bin'
     [[ -d ${docker_bins} ]] && export PATH=${docker_bins}:$PATH
 }
+
+docker_cmds=(
+    container
+    image
+    network
+    system
+    volume
+
+    build
+    commit
+    exec
+    images
+    import
+    info
+    inspect
+    kill
+    login
+    logs
+    ps
+    push
+    rename
+    restart
+    rm
+    rmi
+    run
+    save
+    start
+    stats
+    stop
+    tag
+    top
+    update
+    wait
+)
+compctl -k docker_cmds docker

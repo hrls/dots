@@ -1,3 +1,9 @@
+makefile
+
+# haskell
+.ghc.environment.*
+dist-newstyle
+
 tags
 *.patch
 

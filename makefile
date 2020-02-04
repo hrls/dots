@@ -7,7 +7,7 @@ ifeq ($(OS), Darwin)
 	SYS_UPD := brew
 endif
 
-default: update
+default: update git_fetch
 
 update: \
 	update_os \
@@ -40,3 +40,7 @@ machine:
 		--virtualbox-cpu-count "6" \
 		--virtualbox-memory "8192" \
 		--virtualbox-disk-size "30000"
+
+git_fetch:
+	git -C ~/src/iconic/core
+	git -C ~/tmp/core

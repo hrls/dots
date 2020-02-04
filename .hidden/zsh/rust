@@ -1,10 +1,13 @@
 # vim: set ft=zsh:
 
 alias car=cargo
-alias rsdoc='rustup doc --std'
+alias ca='car ca'
+alias std='rustup doc --std'
+alias rsdoc='cargo doc --no-deps --open'
+alias tomls='fd --type file --extension toml'
 
 cargo_cmds=(
-    clean
+    clean generate-lockfile
     check build run test bench
     fmt doc
     new init
@@ -20,7 +23,7 @@ rustup_cmds=(
     show update default toolchain target component override
     run which doc man self set completions help
 )
-compctl -k cargo_cmds cargo
+compctl -k rustup_cmds rustup
 
 
 # RUST_SRC_PATH=$(rustc --print sysroot)/lib/rustlib/src/rust/src
