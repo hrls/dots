@@ -144,7 +144,7 @@ git_nstashes() {
 }
 
 if [[ $TERM != 'dumb' ]] then
-    bindkey -v
+    bindkey -e
     # todo: custom root prompt
     # todo: prepend or rprompt user@host %{\e[38;5;249m%}%n%{\e[38;5;75m%}@%{\e[38;5;249m%}%m
     setopt prompt_subst
@@ -181,7 +181,7 @@ if [[ $TERM != 'dumb' ]] then
 fi
 
 bindkey '^?' backward-delete-char
-bindkey '^B' push-line
+bindkey '^T' push-line
 # bindkey '^R' history-incremental-search-backward
 # todo: push-line in command mode
 # todo: bindkey 'nmode_w' next-split-frame

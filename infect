@@ -83,6 +83,7 @@ class Env
     .gitignore
     .vimrc
     .zshenv
+    .emacs
     .hidden
 
     .tcshrc
