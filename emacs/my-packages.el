@@ -44,6 +44,13 @@
   ;; :init (global-flycheck-mode)
   :hook (rust-mode . flycheck-mode))
 
+(use-package projectile
+  :init
+  (projectile-mode +1)
+  :bind (:map projectile-mode-map
+              ("s-p" . projectile-command-map)
+              ("C-c p" . projectile-command-map)))
+
 ;; LSP wars
 
 ;; (setq lsp-keymap-prefix "s-r")
