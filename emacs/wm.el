@@ -68,5 +68,34 @@
 
 
 
+;; TODO: save in custom.el
+;; defcustom wm-initial-frame-alist
+;; setq initial-frame-alist wm-initial-frame-alist
+
+(defun wm-save-selected-frame-as-initial ()
+  (interactive)
+  (let ((position (frame-position)))
+    (set-in-alist 'initial-frame-alist (cons 'left (car position)))
+    (set-in-alist 'initial-frame-alist (cons 'top (cdr position)))
+    (set-in-alist 'initial-frame-alist (cons 'width (frame-width)))
+    (set-in-alist 'initial-frame-alist (cons 'height (frame-height)))
+    (customize-set-value 'initial-frame-alist initial-frame-alist)))
+
+
 (setq initial-frame-alist
       '((left . 1300) (top . 130) (width . 120) (height . 70)))
+
+
+;;; N-frames environment
+;;; External commmands always open frames in some predicted area
+;;;   rotate relative offset from already existing frames
+
+;;; terminal 'e file_1 file_2 file_3' => [f[f[file_3]]] overlapping batch
+;;; terminal 'e ${dir_or_file}' as initial frame
+
+;; (setq default-frame-alist initial-frame-alist + some offset )
+
+
+;; TODO: add it to {after-make,after-delete,move}-frame-functions
+(defun wm-set-position-for-new-frame ())
+;;  (setq default-frame-alist (wm-free-space-for-new-frame))

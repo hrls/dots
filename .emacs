@@ -41,6 +41,8 @@
 (setq search-highlight t)
 (setq query-replace-highlight t)
 
+(setq kill-whole-line t)
+
 (column-number-mode t)
 (show-paren-mode t)
 (delete-selection-mode t)
@@ -76,6 +78,7 @@
 
 
 (add-to-list 'load-path "~/src/dots/emacs")
+(require 'suwayyah)
 (require 'wm)
 (require 'my-packages)
 (require 'omnitab)
@@ -88,4 +91,12 @@
 (define-key global-map "\C-x\C-k" 'kill-region) ;; elisp ko kmacro
 
 (global-set-key (kbd "s-i") 'xref-find-definitions-other-window)
+(define-key prog-mode-map [s-mouse-1] 'xref-find-definitions-at-mouse)
+(define-key prog-mode-map [S-return]
+  (lambda ()(interactive)
+    (progn
+      (beginning-of-line)
+      (newline-and-indent)
+      (previous-line)
+      (indent-for-tab-command))))
 ;; (global-set-key (kbd "s-/") 'comment-or-uncomment-region)

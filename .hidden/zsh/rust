@@ -6,6 +6,7 @@ alias std='rustup doc --std'
 alias rsdoc='cargo doc --no-deps --open'
 alias tomls='fd --type file --extension toml'
 
+# TODO: cargo list | tail -n +2 | awk '{print $1}' -
 cargo_cmds=(
     clean generate-lockfile
     check build run test bench

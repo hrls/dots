@@ -82,7 +82,7 @@ class Env
     .gitconfig
     .gitignore
     .vimrc
-    .zshenv
+    .zshrc
     .emacs
     .hidden
 

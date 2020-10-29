@@ -1,30 +1,40 @@
-# init
-#
-# TODO: nvim/vim for non-local
-#
-if [[ `uname -s` == 'Darwin' && $(which -s nvim) ]] then
-    # export EDITOR=nvim
-    # (mvim -n -p -c 'au VimLeave * !open -a iTerm' --nomru)
-fi
+export LANG=en_US.utf8
+export LC_ALL=en_US.UTF-8 # macOS
 
-export EDITOR=vim
-
-# todo :
-# cursors
-HISTSIZE=80
-HISTFILE=$HOME/.local/var/.zsh_history
-SAVEHIST=$HISTSIZE
+# History
+export HISTSIZE=200
+export HISTFILE=$HOME/.local/var/.zsh_history
+export SAVEHIST=$HISTSIZE
 setopt hist_ignore_all_dups
 setopt hist_ignore_space
 
-alias p=echo
+setopt nobeep
+
+PATH="$PATH:/usr/local/sbin"
+[[ -d "$HOME/.local/bin" ]] && PATH=$PATH:"$HOME/.local/bin"
+[[ -d "$HOME/.cargo/bin" ]] && PATH=$PATH:"$HOME/.cargo/bin"
+[[ -d "$HOME/.cabal/bin" ]] && PATH=$PATH:"$HOME/.cabal/bin"
+
+src=$HOME/src
+tmp=$HOME/tmp
+
+autoload -U colors && colors
+export LSCOLORS='Exfxcxdxbxegedabagacad'
+export CLICOLOR_FORCE=true
+
+export BAT_THEME='1337'
+export BAT_STYLE='plain,numbers,changes'
+
+
 alias cls='clear'
-alias del='rm'
 alias which='which -a'
 alias ll='ls -oAFHGh'
 alias la='ls -AFG'
 alias a='ll'
 alias cp='cp -a'
+alias fd='fd --hidden --color=auto'
+alias grep=rg
+alias rg='rg --hidden --color=auto'
 
 alias cat=bat
 
@@ -33,21 +43,6 @@ alias gs='git s'
 alias gl='git l'
 alias gf='git f'
 alias grom='git rebase --interactive origin/master'
-gbc() {
-    return; # TODO
-    if [ $# != 1 ]; then
-        echo 'gbc <branch>'
-        return;
-    fi
-
-    branch=$1
-    # TODO
-    git checkout -b ${branch} --track origin/${branch}
-}
-
-# python
-alias py='python3 -B'
-alias pyre='py -i'
 
 alias tags='ctags -R'
 
@@ -60,29 +55,33 @@ alias pc='rsync -Ph' # -P same as --partial --progress
 alias md5sum='md5 -r'
 alias ra='titled 🏹 ranger'
 alias br=broot
+alias py='python3 -B'
+alias pyre='py -i'
 
-autoload -U colors && colors
-# todo: replace ANSI by supported xterm-256color
-LSCOLORS='Exfxcxdxbxegedabagacad'
-export CLICOLOR_FORCE=true
 alias less='less -r'
 alias more='more -r'
 
-setopt nobeep
+# export FZF_DEFAULT_COMMAND='git ls-files || fd --type file'
+
+export LESSHISTFILE=$HOME/.local/var/.less_history
+export REDISCLI_HISTFILE=$HOME/.local/var/.rediscli_histfile
+
+
 # setopt menucomplete
 # zstyle ':completion:*' menu select=1 _complete _ignored _approximate
 
 t() { export custom_title=$@ && title }
 dt() { export custom_title=`basename $PWD` && title }
 
+# TODO: change tmux title
+# http://www.refining-linux.org/archives/42/ZSH-Gem-8-Hook-function-chpwd/
 title() {
-    # http://www.refining-linux.org/archives/42/ZSH-Gem-8-Hook-function-chpwd/
-    # todo: change tmux title
     if (( $+custom_title ))
-    then print -Pn "\033];${custom_title}\a" 
+    then print -Pn "\033];${custom_title}\a"
     else print -Pn "\033];$@\a"
     fi
 }
+
 dir_title() {
     # todo: check for 'probe' only too
     if [[ $HOST != 'lodb' && $HOST != 'lodb.local'
@@ -108,16 +107,15 @@ dir_title() {
         esac
     fi
 }
+
+# TODO: resolve recursive calls (alias foo=titled f foo)
+# new: 'titled ∆ top' add hooks precmd and set title
 titled() {
-    # todo: resolve recursive calls (alias foo=titled f foo)
-    # new: 'titled ∆ top' add hooks precmd and set title
     title $1 && eval ${@:2}; dir_title
 }
+
 # http://www.faqs.org/docs/Linux-mini/Xterm-Title.html#ss4.1
-# https://www-s.acm.illinois.edu/workshops/zsh/prompt/escapes.html
-# todo: fix ctrl+c git prompt
 chpwd_functions=(${chpwd_functions[@]} 'dir_title')
-wrap_ss() { return 'todo: prepend space before function call' }
 
 git_head() {
     local ref_head=`git symbolic-ref HEAD 2>/dev/null | cut -d / -f 3-`
@@ -180,13 +178,6 @@ if [[ $TERM != 'dumb' ]] then
     # http://www.howtobuildsoftware.com/index.php/how-do/1Em/zsh-zsh-behavior-on-enter
 fi
 
-bindkey '^?' backward-delete-char
-bindkey '^T' push-line
-# bindkey '^R' history-incremental-search-backward
-# todo: push-line in command mode
-# todo: bindkey 'nmode_w' next-split-frame
-
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 function load() {
     source "$HOME/.hidden/zsh/$1"
@@ -195,26 +186,46 @@ function load() {
 # fpath+=~/.hidden/zsh
 # todo: fpath / autoload / source
 
-load zfuncs
-load tmux
-load docker; env_docker
-load haskell
-load rust
-# load erlang
-
-# load envs
-# env_postgres
-
 # autoload -U compinit && compinit
 # zstyle ':completion:*descriptions' format '%U%B%d%b%u' # todo: tweak
 # zstyle ':completion:*warnings' format 'no matches: %d%b'
 # autoload -U promptinit && promptinit # todo: prompt -l
+
+load zfuncs
+load tmux
+load docker; env_docker
+load rust
+load haskell
+
+# load erlang
+# load envs
+# env_postgres
+
+
 case `uname -s` in
     Darwin)
-        load darwin ;;
+        # TODO: switch back to Terminal.app if new frame was killed w/o switching
+        export EDITOR="emacsclient --create-frame --no-wait --alternate-editor='open -a Emacs'"
+
+        e() {
+            case $# in
+                0) (eval $EDITOR .) ;;
+                *) (eval $EDITOR $@) ;; # TODO: emacsclient cant handle multiple files at once, try for loop
+            esac
+        }
+        ;;
     Linux)
-        load gentoo ;; # todo
+        export EDITOR='emacs -nw' # TODO: run as daemon
+        ;;
 esac
 
-# post hooks
+bindkey '^?' backward-delete-char
+
+# Post hooks ...
 [[ $SHLVL == 1 ]] && dir_title
+
+# Batteries +[===]
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+[ -f /usr/local/etc/profile.d/autojump.sh ] && source /usr/local/etc/profile.d/autojump.sh
+
+[[ -f ~/.private ]] && source ~/.private

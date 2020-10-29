@@ -1,21 +1,7 @@
 # vim: set ft=zsh:
 
 ## tips
-## |& is zsh only version of 2>&1
 ## unless ... todo
-
-alias fd='fd --hidden --color=auto'
-# alias rg='rg --hidden --color=auto'
-alias grep=rg
-# todo : grey () { find . -type f -name $1 -exec egrep -Hn -e $2 {} + }
-# alias grey='grep -Er --include=\*.{h,e}rl "record" .'
-greep() {
-    # todo: add support of multiple parameters
-    case $# in
-        1) grep --exclude='tags' --exclude-dir='.git' --exclude-dir='test' -RHne $1 . ;;
-        2) grep --exclude='tags' --exclude-dir='.git' --exclude-dir='test' $1 -RHne $2 . ;;
-    esac
-}
 
 port() {
     if [[ $# == 0 ]]; then
@@ -40,29 +26,32 @@ listen() {
     done
 }
 
-ww() {
+# preview file
+p() {
     if [[ $# == 0 ]]; then ww * ; fi
     if [[ $(uname -s) == 'Darwin' ]]; then
         qlmanage -p $@ >& /dev/null
     fi
 }
 
-gecho() {
+# notification title text
+# TODO: customize icon and click action
+notification() {
     osascript -e "display notification \"$2\" with title \"$1\""
 }
 
-notify() {
+alert() {
     osascript \
-        -e 'tell application "iTerm"' \
+        -e "tell application \"Terminal\"" \
         -e 'activate' \
-        -e 'display dialog "this is the note icon." with icon note' \
+        -e "display dialog \"$1\" with icon note" \
         -e 'end tell'
     # osascript -e 'display notification "iTerm icon" with icon alias "Applications:iTerm.app:Contents:Resources:AppIcon.icns"'
 }
 
+# TODO: ls directories first
+#       ls files from current dir
 tree() {
-    # ls directories first
-    # ls files from current dir
     $(tree to dir only, depth - 1)
 }
 
@@ -91,33 +80,12 @@ function list_colors() {
 	done
 }
 
-# todo: move to env conf
+# TODO: include
 function list_shared() {
     zsfs='/usr/local/share/zsh/site-functions'
     if [[ -d $zsfs ]]; then
         for zsf in $(ls $zsfs); do
             echo $zsf
         done
-    fi
-}
-
-# =======================================
-# tail
-# =======================================
-
-function test_i () {
-    if [[ `uname -s` == 'Darwin' && `/usr/bin/which mvim` != '' ]]; then
-        p 'osx and mvim is there'
-    else
-        p '*nix'
-    fi
-}
-
-function test_e () {
-    local _=`which -s mvim`
-    if [[ $? == 0 ]]; then
-        edi='mvim'
-    else
-        edi='vim'
     fi
 }
