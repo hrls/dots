@@ -84,9 +84,7 @@ title() {
 
 dir_title() {
     # todo: check for 'probe' only too
-    if [[ $HOST != 'lodb' && $HOST != 'lodb.local'
-       && $HOST != 'pd' && $HOST != 'pd.local'
-       ]]; then
+    if [[ $HOST != 'lodb' && $HOST != 'lodb.local' ]]; then
         local host_pre="$HOST : "
     fi
     if [[ $PWD == $HOME ]]; then
@@ -141,7 +139,7 @@ git_nstashes() {
     local n_stashes=`git stash list | wc -l`
 }
 
-if [[ $TERM != 'dumb' ]] then
+if [[ $TERM != 'dumb' ]]; then
     bindkey -e
     # todo: custom root prompt
     # todo: prepend or rprompt user@host %{\e[38;5;249m%}%n%{\e[38;5;75m%}@%{\e[38;5;249m%}%m
@@ -154,19 +152,19 @@ if [[ $TERM != 'dumb' ]] then
     vim_mode=$vim_ins_mode
 
     function zle-keymap-select {
-      vim_mode="${${KEYMAP/vicmd/${vim_cmd_mode}}/(main|viins)/${vim_ins_mode}}"
-      zle reset-prompt
+        vim_mode="${${KEYMAP/vicmd/${vim_cmd_mode}}/(main|viins)/${vim_ins_mode}}"
+        zle reset-prompt
     }
     zle -N zle-keymap-select
 
     function zle-line-finish {
-      vim_mode=$vim_ins_mode
+        vim_mode=$vim_ins_mode
     }
     zle -N zle-line-finish
 
     function TRAPINT() {
-      vim_mode=$vim_ins_mode
-      return $(( 128 + $1 ))
+        vim_mode=$vim_ins_mode
+        return $(( 128 + $1 ))
     }
 
     non_null_retval() {
@@ -205,12 +203,15 @@ load haskell
 case `uname -s` in
     Darwin)
         # TODO: switch back to Terminal.app if new frame was killed w/o switching
-        export EDITOR="emacsclient --create-frame --no-wait --alternate-editor='open -a Emacs'"
+        #   fallback to alternate-editor crashes external $EDITOR call such as 'git commit'
+        export EDITOR="emacsclient --create-frame --alternate-editor='open -a Emacs'"
 
+        # TODO: '| e -' read from stdin
         e() {
             case $# in
-                0) (eval $EDITOR .) ;;
-                *) (eval $EDITOR $@) ;; # TODO: emacsclient cant handle multiple files at once, try for loop
+                0) (eval "$EDITOR --no-wait .") ;;
+                # TODO: emacsclient cant handle multiple files at once, try for loop
+                *) (eval "$EDITOR --no-wait $@") ;;
             esac
         }
         ;;
