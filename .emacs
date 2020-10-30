@@ -16,7 +16,7 @@
 
 ;;; GUI
 (tool-bar-mode -1)
-(fringe-mode '(12 . 0))
+(fringe-mode '(0 . 12))
 ;; (setq cursor-type 'hbar
 ;;       custom-enabled-themes '(wombat))
 (scroll-bar-mode -1)
@@ -47,7 +47,14 @@
 (show-paren-mode t)
 (delete-selection-mode t)
 
-(add-hook 'prog-mode-hook (lambda () (setq show-trailing-whitespace t)))
+;;; prog-mode
+(defun prog-mode-tweaks ()
+  (setq display-line-numbers-width 3
+        show-trailing-whitespace t)
+  ;; TODO: hide or dim on inactive frames or windows
+  (display-line-numbers-mode))
+
+(add-hook 'prog-mode-hook 'prog-mode-tweaks)
 
 ;;; Buffers
 (require 'ibuffer)
