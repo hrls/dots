@@ -19,7 +19,7 @@
 (fringe-mode '(12 . 0))
 ;; (setq cursor-type 'hbar
 ;;       custom-enabled-themes '(wombat))
-
+(scroll-bar-mode -1)
 (setq scroll-step 1
       scroll-margin 8
       scroll-conservatively 1001
