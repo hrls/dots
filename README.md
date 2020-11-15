@@ -1,7 +1,7 @@
 # ...
 
 ## install
-`./infect`
+`./infect.rb` or `ruby infect.rb` or `irb -I . -r infect` and then follow prompt.
 
 ## TODO:
  - [ ] rust etags / company etags

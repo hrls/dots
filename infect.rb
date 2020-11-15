@@ -1,4 +1,5 @@
 #!/usr/bin/env ruby
+
 require 'pathname'
 require 'fileutils'
 
@@ -113,11 +114,18 @@ end
 
 # TODO: symlinks scripts/* ~/.local/bin
 
-Base.newhome
 
-Env.hushlogin
-Env.links
-Env.dotlocal
+if __FILE__ == $PROGRAM_NAME
+  # Modules.*.for_each(Module.*)
+  Base.newhome
 
-Vim.packages
-Vim.helptags
+  Env.hushlogin
+  Env.links
+  Env.dotlocal
+
+  Vim.packages
+  Vim.helptags
+else
+  # TODO: prompt lists available modules and their commands
+  #       wildcards for interactive launch with 'irb -I . -r infect' => 'Env.*'
+end
