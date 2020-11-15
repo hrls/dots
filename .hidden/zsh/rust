@@ -1,4 +1,4 @@
-# vim: set ft=zsh:
+# -*- mode: shell-script; -*-
 
 alias car=cargo
 alias ca='car ca'

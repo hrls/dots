@@ -1,6 +1,8 @@
 export LANG=en_US.utf8
 export LC_ALL=en_US.UTF-8 # macOS
 
+export WORDCHARS=${WORDCHARS/\/} # rm path separator
+
 # History
 export HISTSIZE=200
 export HISTFILE=$HOME/.local/var/.zsh_history
@@ -54,17 +56,22 @@ alias ips='ifconfig | grep inet' # todo: filter loopback / inet6
 alias pc='rsync -Ph' # -P same as --partial --progress
 alias md5sum='md5 -r'
 alias ra='titled 🏹 ranger'
-alias br=broot
 alias py='python3 -B'
 alias pyre='py -i'
 
 alias less='less -r'
 alias more='more -r'
 
-# export FZF_DEFAULT_COMMAND='git ls-files || fd --type file'
 
 export LESSHISTFILE=$HOME/.local/var/.less_history
 export REDISCLI_HISTFILE=$HOME/.local/var/.rediscli_histfile
+
+export FZF_DEFAULT_COMMAND='fd --hidden --follow --exclude .git'
+export FZF_CTRL_T_COMMAND="git ls-files || $FZF_DEFAULT_COMMAND"
+
+
+tabs -4
+# man 1 zshmisc
 
 
 # setopt menucomplete
@@ -224,6 +231,19 @@ bindkey '^?' backward-delete-char
 
 # Post hooks ...
 [[ $SHLVL == 1 ]] && dir_title
+
+autoload -U add-zsh-hook
+
+load-dot-env() {
+    # TODO: exit when leaves dir in ${current_env}
+    if [[ -f .env && -r .env ]]; then
+        # TODO: launch new session and source .env inside
+        source .env && current_env=$PWD && echo "env loaded"
+    fi
+}
+
+# TODO: new tab in Terminal.app doesn't load .env
+add-zsh-hook chpwd load-dot-env
 
 # Batteries +[===]
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

@@ -7,13 +7,12 @@ ifeq ($(OS), Darwin)
 	SYS_UPD := brew
 endif
 
-default: update git_fetch
+default: update
 
 update: \
 	update_os \
 	update_rs \
 	update_hs \
-	update_rb \
 	gc
 
 update_os:
@@ -26,7 +25,8 @@ update_hs:
 	cabal new-update || cabal update
 
 update_rb:
-	# gem update && gem cleanup"
+	gem update
+	gem cleanup
 
 gc:
 	rm -fv .DS_Store .swp \
@@ -40,7 +40,3 @@ machine:
 		--virtualbox-cpu-count "6" \
 		--virtualbox-memory "8192" \
 		--virtualbox-disk-size "30000"
-
-git_fetch:
-	git -C ~/src/iconic/core
-	git -C ~/tmp/core

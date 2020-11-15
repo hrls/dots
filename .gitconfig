@@ -1,22 +1,26 @@
+# -*- mode: conf-unix; indent-tabs-mode: t -*-
+
 [user]
 	name = hrls
 	email = viktor.kharitonovich@gmail.com
+
 [core]
 	excludesfile = ~/.gitignore
 	autocrlf = input
+
 [alias]
-    f   = fetch --tags
-    p   = pull --ff-only
+	f   = fetch --all --tags
+	p   = pull --ff-only
 	b   = branch
-    br  = branch --remote
+	br  = branch --remote
+	bc  = checkout -b
 	c   = commit
 	co  = checkout
-	bc  = checkout -b
 	df  = diff
-    dfs = diff --staged
-    r   = rebase --interactive
+	dfs = diff --staged
+	r   = rebase --interactive
 	rc  = rebase --continue
-    rom = rebase --interactive origin/master
+	rom = rebase --interactive origin/master
 	s   = status --show-stash
 	sl  = stash list
 	ss  = stash show
@@ -24,20 +28,24 @@
 	sub = submodule
 	url = remote get-url --all origin
 	append = commit --amend --no-edit
+	bdr = !sh -c 'git --verbose --dry-run push $2 --delete $1' # brd branch origin
 
 	l   = log --decorate=short --oneline
 	ll  = log --decorate=short
 	lg  = log --pretty=format:'%h - %an, %ar : %s' --graph
 
+
 [push]
 	default = current
 
+[pull]
+	rebase = true
+
 [color]
 	ui = auto
+
 [filter "lfs"]
 	clean = git-lfs clean -- %f
 	smudge = git-lfs smudge -- %f
 	process = git-lfs filter-process
 	required = true
-[pull]
-	rebase = true
