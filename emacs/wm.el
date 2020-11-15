@@ -85,6 +85,9 @@
 (setq initial-frame-alist
       '((left . 1300) (top . 130) (width . 120) (height . 70)))
 
+;; (add-to-list 'default-frame-alist '(font . "Monaco 12") t)
+(add-to-list 'default-frame-alist '(font . "Menlo 12") t)
+
 
 ;;; N-frames environment
 ;;; External commmands always open frames in some predicted area
