@@ -1,0 +1,23 @@
+#!/usr/bin/env zsh
+
+# usage: haunt
+#  TODO: haunt <process>
+case $(uname -s) in
+    Darwin)
+        # TODO:
+        # bold prefix in header (w/ ansi colors)
+        # C-i[nspect]: vmem and other stats on preview `ps -axm -o %mem,rss,vsz`
+        # C-p[orts]: lists open ports and inspect them via `lsof`
+        FZF_DEFAULT_COMMAND='ps -ef' \
+                           fzf --multi \
+                           --header '[C-r]eload, C-j[ump], C-k[ill]' \
+                           --bind 'ctrl-r:reload(eval $FZF_DEFAULT_COMMAND),ctrl-j:jump,ctrl-k:execute-silent(kill -9 {+2})+reload(eval $FZF_DEFAULT_COMMAND)' \
+                           --header-lines=1 \
+                           --height=50% \
+                           --layout=reverse \
+            | awk '{print $2}'
+        ;;
+    *)
+        echo 'todo'
+        ;;
+esac
