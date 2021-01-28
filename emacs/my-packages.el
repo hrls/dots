@@ -42,8 +42,8 @@
         ivy-display-style 'fancy
         ivy-magic-tilde t
         projectile-completion-system 'ivy)
-  :bind (("C-s" . swiper-isearch-thing-at-point)
-         ("C-r" . hrls/swiper-isearch-backward-thing-at-point)
+  :bind (("C-s" . swiper-isearch)
+         ("C-r" . swiper-isearch-thing-at-point)
          ("C-x C-f" . counsel-find-file)
          ("s-b" . counsel-buffer-or-recentf)
          ("s-f" . counsel-fzf)
@@ -57,11 +57,7 @@
            (if (region-active-p)
                (buffer-substring-no-properties (region-beginning) (region-end))
              (if-let (symbol (symbol-at-point)) (symbol-name symbol)))))
-      (counsel-rg initial-input nil "--hidden" nil)))
-  (defun hrls/swiper-isearch-backward-thing-at-point ()
-    (interactive)
-    (swiper-isearch-backward
-     (if-let (symbol (symbol-at-point)) (symbol-name symbol)))))
+      (counsel-rg initial-input nil "--hidden" nil))))
 
 
 (use-package projectile
@@ -137,6 +133,13 @@
 
 (use-package haskell-mode :defer t)
 (use-package swift-mode :defer t)
+(use-package elixir-mode :defer t)
+(use-package vyper-mode :defer t)
+
+(use-package dockerfile-mode :defer t)
+(use-package docker
+  :defer t
+  :bind ("s-d" . docker))
 
 (use-package hydra)
 (use-package eldoc :delight) ; TODO: useful with tweaks

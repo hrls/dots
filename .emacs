@@ -10,8 +10,10 @@
 (setq inhibit-startup-message t)
 (setq inhibit-startup-echo-area-message "hrls")
 
-(setq auto-save-default nil)
 (setq make-backup-files nil)
+(setq auto-save-default nil)
+(setq backup-directory-alist
+      `(("." . ,(concat user-emacs-directory "autosaves"))))
 
 
 ;;; GUI
@@ -46,6 +48,13 @@
 (show-paren-mode t)
 (delete-selection-mode t)
 
+
+(global-auto-revert-mode 1)
+
+(require 'saveplace)
+(setq-default save-place t)
+
+
 ;;; prog-mode
 (defun prog-mode-tweaks ()
   ;; TODO:
@@ -62,6 +71,7 @@
 
 ;;; Buffers
 (require 'ibuffer)
+;; TODO: Filename/Process column: prefix [project] for projectile buffers
 (defalias 'list-buffers 'ibuffer)
 (require 'uniquify)
 (setq uniquify-separator "/"
@@ -111,7 +121,6 @@
 (global-set-key (kbd "s-x") #'execute-extended-command)
 
 (global-set-key (kbd "C-a") #'hrls/ctrl-a-move-beginning-of)
-(global-set-key (kbd "C-e") #'hrls/ctrl-e-move-end-of)
 (global-set-key (kbd "C-w") #'hrls/ctrl-w-kill)
 (global-set-key (kbd "C-x i") #'ielm) ; TODO: in new selected frame
 
@@ -124,3 +133,4 @@
 (define-key prog-mode-map [s-mouse-1] #'xref-find-definitions-at-mouse)
 (define-key prog-mode-map [C-return] #'hrls/indent-and-return)
 
+(put 'upcase-region 'disabled nil)
