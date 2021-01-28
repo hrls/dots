@@ -4,7 +4,7 @@ export LC_ALL=en_US.UTF-8 # macOS
 export WORDCHARS=${WORDCHARS/\/} # rm path separator
 
 # History
-export HISTSIZE=200
+export HISTSIZE=2000
 export HISTFILE=$HOME/.local/var/.zsh_history
 export SAVEHIST=$HISTSIZE
 setopt hist_ignore_all_dups
@@ -24,9 +24,10 @@ autoload -U colors && colors
 export LSCOLORS='Exfxcxdxbxegedabagacad'
 export CLICOLOR_FORCE=true
 
-export BAT_THEME='1337'
-export BAT_STYLE='plain,numbers,changes'
-
+if [[ $(whence -p bat) ]]; then
+    export BAT_THEME='1337'
+    export BAT_STYLE='plain,numbers,changes'
+fi
 
 alias cls='clear'
 alias which='which -a'
@@ -35,8 +36,12 @@ alias la='ls -AFG'
 alias a='ll'
 alias cp='cp -a'
 alias fd='fd --hidden --color=auto'
-alias grep=rg
-alias rg='rg --hidden --color=auto'
+
+if [[ $(whence -p rg) ]]; then
+    alias grep=rg
+    alias rg='rg --hidden --color=auto'
+    alias vrg='rg --vimgrep'
+fi
 
 alias cat=bat
 
@@ -49,7 +54,6 @@ alias grom='git rebase --interactive origin/master'
 alias tags='ctags -R'
 
 alias s='pwd | pbcopy; exit'
-alias vrg='rg --vimgrep --color=auto'
 alias df='df -Hl'
 alias tp='titled ∆ htop'
 alias ips='ifconfig | grep inet' # todo: filter loopback / inet6
@@ -137,9 +141,25 @@ git_head() {
     fi
 }
 
-# TODO: fix
+# Forms user@host prefix for non-local environments.
+# - empty for local env
+# - hostname when username is hrls
+# - full logname@hostname pair otherwise: ssh session, docker
 nonlocal_prefix() {
-    echo "$USER@$HOST "
+    local prefix=''
+    if [[ $LOGNAME != 'hrls' ]]; then
+        prefix+="$LOGNAME" # TODO: colorize
+    fi
+    if [[ -n ${prefix} || -v SSH_CONNECTION  ]]; then
+        if [[ -n ${prefix} ]]; then
+            prefix+='@'
+        fi
+        prefix+="$HOSTNAME"
+    fi
+    if [[ -n ${prefix} ]]; then
+        prefix+=' '
+    fi
+    echo ${prefix}
 }
 
 git_nstashes() {
@@ -151,7 +171,7 @@ if [[ $TERM != 'dumb' ]]; then
     # todo: custom root prompt
     # todo: prepend or rprompt user@host %{\e[38;5;249m%}%n%{\e[38;5;75m%}@%{\e[38;5;249m%}%m
     setopt prompt_subst
-    PROMPT=$'$(nonlocal_prefix)%{\e[38;5;195m%}%~%{\e[38;5;222m%}$(git_head) %{\e[38;5;176m%}λ %{\e[0m%}'
+    PROMPT=$'$(nonlocal_prefix)%{\e[38;5;195m%}%~%{\e[38;5;222m%}$(git_head)%{\e[38;5;176m%} λ %{\e[0m%}'
 
     # http://pawelgoscicki.com/archives/2012/09/vi-mode-indicator-in-zsh-prompt/
     vim_ins_mode="%{$fg[cyan]%}~%{$reset_color%}"
