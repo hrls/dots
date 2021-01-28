@@ -28,7 +28,8 @@
 	sub = submodule
 	url = remote get-url --all origin
 	append = commit --amend --no-edit
-	bdr = !sh -c 'git --verbose --dry-run push $2 --delete $1' # brd branch origin
+	rob = !sh -c 'git push origin --delete $1' # rob branch
+	brm = !sh -c 'git branch --list --merged | grep --invert-match $(git branch --show-current) | xargs git branch --delete'
 
 	l   = log --decorate=short --oneline
 	ll  = log --decorate=short
