@@ -12,7 +12,6 @@ default: update
 update: \
 	update_os \
 	update_rs \
-	update_hs \
 	gc
 
 update_os:
@@ -29,7 +28,9 @@ update_rb:
 	gem cleanup
 
 gc:
-	rm -fv .DS_Store .swp \
+	fd --hidden --no-ignore --type file --fixed-strings .DS_Store --exec rm {}
+	rm -fv \
+		.swp \
 		.tig_history \
 		.sh_history \
 		.python_history # TODO: hide history files in ~/.local/var

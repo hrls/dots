@@ -2,7 +2,7 @@
 
 alias car=cargo
 alias ca='car ca'
-alias std='rustup doc --std'
+alias std='open -a Safari $(rustup doc --std --path)'
 alias rsdoc='cargo doc --no-deps --open'
 alias tomls='fd --type file --extension toml'
 
