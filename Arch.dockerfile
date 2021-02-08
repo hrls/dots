@@ -1,9 +1,13 @@
 from archlinux:latest
 
-run pacman --sync --refresh --sysupgrade --noconfirm
-run pacman --sync --noconfirm \
+run sed -i '/NoExtract\s*=\s*usr\/share\/man/d' /etc/pacman.conf
+
+run pacman --noconfirm --sync --refresh # --sysupgrade
+run pacman --noconfirm --sync \
     core/curl \
     core/make \
+    core/man \
+    core/man-pages \
     extra/zsh \
     extra/git \
     extra/emacs \
@@ -20,6 +24,9 @@ run pacman --sync --noconfirm \
     community/tokei \
     community/ranger \
     community/github-cli
+
+
+# run pacman -Sy community/ghc community/cabal-install
 
 run chsh --shell /bin/zsh
 entrypoint zsh
