@@ -1,23 +1,34 @@
-makefile
-
-# haskell
-.ghc.environment.*
-dist-newstyle
+.git/
 
 tags
 *.patch
 
-# python
+makefile
+
+# Vim
+*.swp
+
+# Haskell
+.ghc.environment.*
+dist-newstyle
+
+# Python
 *.pyc
 __pycache__
 
-# compiled
+# Compiled
 *.class
 *.o
 *.so
 build/
+target/
 
-# packages
+# Logs and DBs
+*.log
+*.sqlite
+
+
+# Packages
 *.7z
 *.dmg
 *.gz
@@ -26,10 +37,6 @@ build/
 *.rar
 *.tar
 *.zip
-
-# logs and db
-*.log
-*.sqlite
 
 # OS files
 .DS_Store
@@ -44,6 +51,3 @@ Thumbs.db
 # IntelliJ IDEA
 .idea
 *.iml
-
-# vim
-*.swp
