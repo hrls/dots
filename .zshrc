@@ -1,6 +1,9 @@
 export LANG=en_US.utf8
 export LC_ALL=en_US.UTF-8 # macOS
 
+# XDG Base Directory Specification
+export XDG_CONFIG_HOME=$HOME/.config
+
 export WORDCHARS=${WORDCHARS/\/} # rm path separator
 
 # History
@@ -38,8 +41,11 @@ alias cp='cp -a'
 alias fd='fd --hidden --color=auto'
 
 if [[ $(whence -p rg) ]]; then
+    # print -P %N
+    # http://zsh.sourceforge.net/Doc/Release/Zsh-Modules.html#index-funcsourcetrace
+    export RIPGREP_CONFIG_PATH=$src/dots/.ripgreprc
     alias grep=rg
-    alias rg='rg --hidden --color=auto'
+    alias rg='rg --smart-case --hidden --color=auto'
     alias vrg='rg --vimgrep'
 fi
 
@@ -53,8 +59,9 @@ alias grom='git rebase --interactive origin/master'
 
 alias tags='ctags -R'
 
-alias s='pwd | pbcopy; exit'
+alias s='pwd | pbcopy && echo $PWD in paste buffer'
 alias df='df -Hl'
+alias du='du -d 1 -ch' # limit depth, human-readable, total
 alias tp='titled ∆ htop'
 alias ips='ifconfig | grep inet' # todo: filter loopback / inet6
 alias pc='rsync -Ph' # -P same as --partial --progress
@@ -63,15 +70,23 @@ alias ra='titled 🏹 ranger'
 alias py='python3 -B'
 alias pyre='py -i'
 
-alias less='less -r'
-alias more='more -r'
+alias more='less'
 
-
+export LESS='--no-init --quit-if-one-screen --raw-control-chars --tabs=4'
 export LESSHISTFILE=$HOME/.local/var/.less_history
+
 export REDISCLI_HISTFILE=$HOME/.local/var/.rediscli_histfile
 
 export FZF_DEFAULT_COMMAND='fd --hidden --follow --exclude .git'
 export FZF_CTRL_T_COMMAND="git ls-files || $FZF_DEFAULT_COMMAND"
+export FZF_ALT_C_COMMAND='fd --hidden --type directory --search-path $(relative_root_or_dot)'
+
+function relative_root_or_dot() {
+    if [[ $(git rev-parse --is-inside-work-tree 2> /dev/null) == 'true' ]]; then
+        local relative_root=$(git rev-parse --show-cdup)
+    fi
+    echo ${relative_root:-.}
+}
 
 
 tabs -4
@@ -93,9 +108,9 @@ title() {
     fi
 }
 
-dir_title() {
-    # todo: check for 'probe' only too
-    if [[ $HOST != 'lodb' && $HOST != 'lodb.local' ]]; then
+function dir_title() {
+    # TODO: $HOST in title only for
+    if [[ -v SSH_CONNECTION ]]; then
         local host_pre="$HOST : "
     fi
     if [[ $PWD == $HOME ]]; then
@@ -126,7 +141,7 @@ titled() {
 # http://www.faqs.org/docs/Linux-mini/Xterm-Title.html#ss4.1
 chpwd_functions=(${chpwd_functions[@]} 'dir_title')
 
-git_head() {
+function git_head() {
     local ref_head=`git symbolic-ref HEAD 2>/dev/null | cut -d / -f 3-`
     if [[ $ref_head != '' ]]; then
         echo " $ref_head"
@@ -145,7 +160,7 @@ git_head() {
 # - empty for local env
 # - hostname when username is hrls
 # - full logname@hostname pair otherwise: ssh session, docker
-nonlocal_prefix() {
+function nonlocal_prefix() {
     local prefix=''
     if [[ $LOGNAME != 'hrls' ]]; then
         prefix+="$LOGNAME" # TODO: colorize
@@ -162,7 +177,7 @@ nonlocal_prefix() {
     echo ${prefix}
 }
 
-git_nstashes() {
+function git_nstashes() {
     local n_stashes=`git stash list | wc -l`
 }
 
@@ -248,6 +263,7 @@ case `uname -s` in
 esac
 
 bindkey '^?' backward-delete-char
+bindkey '^J' fzf-cd-widget
 
 # Post hooks ...
 [[ $SHLVL == 1 ]] && dir_title
@@ -266,7 +282,8 @@ load-dot-env() {
 add-zsh-hook chpwd load-dot-env
 
 # Batteries +[===]
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+##  $(brew --prefix)/opt/fzf/install --xdg --key-bindings --completion --no-update-rc --no-bash --no-fish
+[ -f "${XDG_CONFIG_HOME:-$HOME/.config}"/fzf/fzf.zsh ] && source "${XDG_CONFIG_HOME:-$HOME/.config}"/fzf/fzf.zsh
 [ -f /usr/local/etc/profile.d/autojump.sh ] && source /usr/local/etc/profile.d/autojump.sh
 
 [[ -f ~/.private ]] && source ~/.private
