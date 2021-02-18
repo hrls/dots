@@ -1,5 +1,7 @@
 # -*- mode: shell-script; -*-
 
+export RUST_BACKTRACE=1
+
 alias car=cargo
 alias ca='car ca'
 alias std='open -a Safari $(rustup doc --std --path)'

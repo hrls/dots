@@ -11,7 +11,7 @@
   (let ((displays (display-monitor-attributes-list)))
     (cond ((= 1 (length displays))
            (let* ((workarea (alist-get 'workarea (car displays)))
-                  (width-padding (lambda (w) (/ w 3)))
+                  (width-padding (lambda (w) (/ w 4)))
                   (height-padding (lambda (h) (/ h 7))))
              (cl-multiple-value-bind
                  (left top right bottom)
@@ -82,9 +82,10 @@
     (customize-set-value 'initial-frame-alist initial-frame-alist)))
 
 
+;; 1300 x 130 on iMac 27
+;; 888 x 50 on MBP 16
 (setq initial-frame-alist
-      '((left . 1300) (top . 130) (width . 120) (height . 70)))
-
+      '((left . 888) (top . 50) (width . 120) (height . 70)))
 ;; (add-to-list 'default-frame-alist '(font . "Monaco 12") t)
 (add-to-list 'default-frame-alist '(font . "Menlo 12") t)
 

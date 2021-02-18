@@ -1,0 +1,16 @@
+# -*- mode: shell-script; -*-
+
+function data() {
+    local ty=$1
+    shift
+
+    function ${ty} {
+        declare -A obj
+        obj+=('type' "${ty}")
+    }
+
+    # declare -A ${type}
+    # ty+=('typename' "${ty}")
+
+}
+

@@ -1,3 +1,5 @@
+SHELL = /bin/zsh
+
 OS := $(shell uname -s)
 
 ifeq ($(OS), Linux)
@@ -10,20 +12,28 @@ endif
 default: update
 
 update: \
-	update_os \
-	update_rs \
+	update-macos \
+	update-rust \
 	gc
 
-update_os:
+update-os:
 	$(SYS_UPD) update
 
-update_rs:
+update-macos:
+	brew update && brew outdated
+
+macos-postupdate:
+	$(shell brew --prefix)/opt/fzf/install \
+		--xdg --key-bindings --completion \
+		--no-update-rc --no-bash --no-fish
+
+update-rust:
 	rustup update; true
 
-update_hs:
-	cabal new-update || cabal update
+update-haskell:
+	whence -p cabal && cabal new-update || cabal update
 
-update_rb:
+update-ruby:
 	gem update
 	gem cleanup
 
@@ -36,7 +46,7 @@ gc:
 		.python_history # TODO: hide history files in ~/.local/var
 
 
-machine:
+docker-machine:
 	docker-machine create default \
 		--virtualbox-cpu-count "6" \
 		--virtualbox-memory "8192" \

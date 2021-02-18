@@ -79,6 +79,7 @@ export REDISCLI_HISTFILE=$HOME/.local/var/.rediscli_histfile
 
 export FZF_DEFAULT_COMMAND='fd --hidden --follow --exclude .git'
 export FZF_CTRL_T_COMMAND="git ls-files || $FZF_DEFAULT_COMMAND"
+# TODO: add root folder to list of relatives
 export FZF_ALT_C_COMMAND='fd --hidden --type directory --search-path $(relative_root_or_dot)'
 
 function relative_root_or_dot() {
