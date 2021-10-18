@@ -26,7 +26,7 @@ module Base
 
   def github(repo)
     local = Pathname.new(repo.split('/').last)
-    if local.exist? && (local + '.git').exist?
+    if local.exist? && (local / '.git').exist?
       system("git -C #{local.realpath} pull")
     else
       system("git clone https://github.com/#{repo}")
@@ -60,17 +60,17 @@ class Vim
   ]
 
   def self.packages
-    autoload_dir = p(home + '.vim' + 'autoload')
-    pathogen = autoload_dir + 'pathogen.vim'
+    autoload_dir = p(home / '.vim' / 'autoload')
+    pathogen = autoload_dir / 'pathogen.vim'
     system("curl -LSso #{pathogen} https://tpo.pe/pathogen.vim")
 
-    bundles = p(home + '.vim' + 'bundle')
+    bundles = p(home / '.vim' / 'bundle')
     FileUtils.cd(bundles, verbose: true)
     @pkgs.each { |pkg| github pkg }
   end
 
   def self.helptags
-    system("vim -es +Helptags +exit")
+    system('vim -es +Helptags +exit')
   end
 end
 
@@ -102,18 +102,17 @@ class Env
   end
 
   def self.hushlogin
-    hl = home + '.hushlogin'
+    hl = home / '.hushlogin'
     system("touch #{hl}") unless hl.exist?
   end
 
   def self.dotlocal
-    p(home + '.local' + 'bin')
-    p(home + '.local' + 'var')
+    p(home / '.local' / 'bin')
+    p(home / '.local' / 'var')
   end
 end
 
 # TODO: symlinks scripts/* ~/.local/bin
-
 
 if __FILE__ == $PROGRAM_NAME
   # Modules.*.for_each(Module.*)
@@ -126,6 +125,7 @@ if __FILE__ == $PROGRAM_NAME
   Vim.packages
   Vim.helptags
 else
+  p(home) # shutup rubocop
   # TODO: prompt lists available modules and their commands
   #       wildcards for interactive launch with 'irb -I . -r infect' => 'Env.*'
 end
