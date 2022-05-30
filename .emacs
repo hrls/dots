@@ -20,6 +20,7 @@
 ;; (setq redisplay-dont-pause t) ; >_<
 (tool-bar-mode -1)
 (fringe-mode '(0 . 13))
+(set-default 'cursor-type 'hbar)
 ;; (setq cursor-type 'hbar
 ;;       custom-enabled-themes '(wombat))
 (scroll-bar-mode -1)
@@ -120,13 +121,14 @@
 (global-set-key (kbd "s-a") #'backward-sentence)
 (global-set-key (kbd "s-x") #'execute-extended-command)
 
-(global-set-key (kbd "C-a") #'hrls/ctrl-a-move-beginning-of)
-(global-set-key (kbd "C-w") #'hrls/ctrl-w-kill)
-(global-set-key (kbd "C-x i") #'ielm) ; TODO: in new selected frame
+(global-set-key "\C-a" #'hrls/ctrl-a-move-beginning-of)
+(global-set-key "\C-e" #'hrls/ctrl-e-move-end-of)
+(global-set-key "\C-w" #'hrls/ctrl-w-kill)
 
 (global-set-key (kbd "C-8") #'highlight-symbol-at-point)
 (global-set-key (kbd "C-*") #'unhighlight-regexp)
 (global-set-key (kbd "s-/") #'comment-or-uncomment-region)
+(global-set-key (kbd "C-x i") #'ielm) ; TODO: in new selected frame
 
 (global-set-key (kbd "s-i") #'xref-find-definitions-other-window)
 
