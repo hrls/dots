@@ -8,7 +8,7 @@ export WORDCHARS=${WORDCHARS/\/} # rm path separator
 
 # History
 export HISTSIZE=2000
-export HISTFILE=$HOME/.local/var/.zsh_history
+export HISTFILE=$HOME/.local/var/.zsh_history # TODO: replace by XDG path
 export SAVEHIST=$HISTSIZE
 setopt hist_ignore_all_dups
 setopt hist_ignore_space
@@ -233,6 +233,7 @@ load haskell
 
 case `uname -s` in
     Darwin)
+        export os='macos'
         # TODO: switch back to Terminal.app if new frame was killed w/o switching
         #   fallback to alternate-editor crashes external $EDITOR call such as 'git commit'
         export EDITOR="emacsclient --create-frame --alternate-editor='open -a Emacs'"
@@ -247,6 +248,7 @@ case `uname -s` in
         }
         ;;
     Linux)
+        export os='linux'
         export EDITOR='emacs -nw' # TODO: run as daemon
         ;;
 esac
@@ -278,8 +280,18 @@ export FZF_DEFAULT_COMMAND='fd --hidden --follow --exclude .git'
 export FZF_CTRL_T_COMMAND="git ls-files 2>/dev/null || $FZF_DEFAULT_COMMAND"
 export FZF_COMPLETION_TRIGGER='**'
 
-##  $(brew --prefix)/opt/fzf/install --xdg --key-bindings --completion --no-update-rc --no-bash --no-fish
-[ -f "${XDG_CONFIG_HOME}"/fzf/fzf.zsh ] && source "${XDG_CONFIG_HOME}"/fzf/fzf.zsh
+case ${os} in
+    macos)
+        if [[ ! -f ${XDG_CONFIG_HOME}/fzf/fzf.zsh ]]; then
+            $(brew --prefix)/opt/fzf/install --xdg --key-bindings --completion --no-update-rc --no-bash --no-fish
+        fi
+        source "${XDG_CONFIG_HOME}"/fzf/fzf.zsh
+        ;;
+    linux)
+        source /usr/share/fzf/completion.zsh
+        source /usr/share/fzf/key-bindings.zsh
+        ;;
+esac
 
 _fzf_compgen_path() {
     fd --hidden --follow --exclude ".git" . "$1"
