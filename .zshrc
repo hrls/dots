@@ -77,18 +77,6 @@ export LESSHISTFILE=$HOME/.local/var/.less_history
 
 export REDISCLI_HISTFILE=$HOME/.local/var/.rediscli_histfile
 
-export FZF_DEFAULT_COMMAND='fd --hidden --follow --exclude .git'
-export FZF_CTRL_T_COMMAND="git ls-files || $FZF_DEFAULT_COMMAND"
-# TODO: add root folder to list of relatives
-export FZF_ALT_C_COMMAND='fd --hidden --type directory --search-path $(relative_root_or_dot)'
-
-function relative_root_or_dot() {
-    if [[ $(git rev-parse --is-inside-work-tree 2> /dev/null) == 'true' ]]; then
-        local relative_root=$(git rev-parse --show-cdup)
-    fi
-    echo ${relative_root:-.}
-}
-
 
 tabs -4
 # man 1 zshmisc
@@ -109,9 +97,9 @@ title() {
     fi
 }
 
-function dir_title() {
-    # TODO: $HOST in title only for
-    if [[ -v SSH_CONNECTION ]]; then
+dir_title() {
+    # todo: check for 'probe' only too
+    if [[ $HOST != 'wx' && $HOST != 'wx.local' ]]; then
         local host_pre="$HOST : "
     fi
     if [[ $PWD == $HOME ]]; then
@@ -283,8 +271,38 @@ load-dot-env() {
 add-zsh-hook chpwd load-dot-env
 
 # Batteries +[===]
+
+## FZF
+## https://github.com/junegunn/fzf#settings
+export FZF_DEFAULT_COMMAND='fd --hidden --follow --exclude .git'
+export FZF_CTRL_T_COMMAND="git ls-files 2>/dev/null || $FZF_DEFAULT_COMMAND"
+export FZF_COMPLETION_TRIGGER='**'
+
 ##  $(brew --prefix)/opt/fzf/install --xdg --key-bindings --completion --no-update-rc --no-bash --no-fish
-[ -f "${XDG_CONFIG_HOME:-$HOME/.config}"/fzf/fzf.zsh ] && source "${XDG_CONFIG_HOME:-$HOME/.config}"/fzf/fzf.zsh
+[ -f "${XDG_CONFIG_HOME}"/fzf/fzf.zsh ] && source "${XDG_CONFIG_HOME}"/fzf/fzf.zsh
+
+_fzf_compgen_path() {
+    fd --hidden --follow --exclude ".git" . "$1"
+}
+_fzf_compgen_dir() {
+    fd --type directory --hidden --follow --exclude ".git" . "$1"
+}
+_fzf_comprun() {
+    local command=$1 # TODO: expand alias
+    shift
+    case "$command" in
+        cd)
+            # TODO: recursive tree list
+            fzf "$@" --preview 'tree -C {} | head -200' ;;
+        export|unset)
+            fzf "$@" --preview "eval 'echo \$'{}" ;;
+        ssh)
+            fzf "$@" --preview 'dig {}' ;;
+        *)
+            fzf "$@" ;;
+    esac
+}
+
 [ -f /usr/local/etc/profile.d/autojump.sh ] && source /usr/local/etc/profile.d/autojump.sh
 
 [[ -f ~/.private ]] && source ~/.private
