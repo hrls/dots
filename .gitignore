@@ -3,7 +3,15 @@
 tags
 *.patch
 
+.env
 makefile
+
+# Compiled
+build/
+target/
+*.class
+*.o
+*.so
 
 # Vim
 *.swp
@@ -16,17 +24,9 @@ dist-newstyle
 *.pyc
 __pycache__
 
-# Compiled
-*.class
-*.o
-*.so
-build/
-target/
-
 # Logs and DBs
 *.log
 *.sqlite
-
 
 # Packages
 *.7z

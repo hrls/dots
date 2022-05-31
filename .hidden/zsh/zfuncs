@@ -49,12 +49,6 @@ alert() {
     # osascript -e 'display notification "iTerm icon" with icon alias "Applications:iTerm.app:Contents:Resources:AppIcon.icns"'
 }
 
-# TODO: ls directories first
-#       ls files from current dir
-tree() {
-    $(tree to dir only, depth - 1)
-}
-
 function ret() {
     local ret_code=$?
     echo $ret_code
