@@ -15,9 +15,9 @@
 
 (defun hrls/ctrl-e-move-end-of (arg)
   (interactive "^d")
-  (move-end-of-line nil)
-  (if (= arg (point))
-      (forward-paragraph)))
+  (move-end-of-line nil))
+  ;; (if (= arg (point))
+  ;;     (forward-paragraph)))
 
 ;;; Daggers
 

@@ -21,8 +21,7 @@
 (tool-bar-mode -1)
 (fringe-mode '(0 . 13))
 (set-default 'cursor-type 'hbar)
-;; (setq cursor-type 'hbar
-;;       custom-enabled-themes '(wombat))
+(load-theme 'wombat t)
 (scroll-bar-mode -1)
 (setq scroll-step 1
       scroll-margin 1
