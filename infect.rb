@@ -18,14 +18,16 @@ def github(repo)
   end
 end
 
+def linked(path, to:)
+  path = Pathname.new(path) unless path.class == Pathname
+  prefix = path.realpath.dirname.relative_path_from(to)
+  FileUtils.ln_s(prefix / path.basename, to, force: true, verbose: true)
+  path
+end
+
 def make_links(of, to:)
   of = of.children if of.class == Pathname && of.directory?
-  of.each do |piece|
-    piece = Pathname.new(piece) unless piece.class == Pathname
-    piece = piece.realpath
-    prefix = piece.dirname.relative_path_from(to)
-    FileUtils.ln_s(prefix / piece.basename, to, force: true, verbose: true)
-  end
+  of.each.map { |piece| linked(piece, to: to) }
 end
 
 # TODO: cd pwd func wrapper
@@ -72,10 +74,23 @@ end
 
 module Emacs
   @els = This / 'emacs'
+  @target = dir(Home / '.emacs.d')
+
+  def self.init
+    linked(@els / 'init.el', to: @target)
+  end
+
+  def self.themes
+    make_links(@els.glob('*-theme.el'), to: @target)
+  end
 
   def self.call
-    emacs = dir(Home / '.emacs.d')
-    make_links(@els, to: emacs)
+    init = self.init
+    themes = self.themes
+
+    processed = themes << init
+    elisp = dir(@target / 'elisp')
+    make_links(@els.glob('*.el') - processed, to: elisp)
   end
 end
 
@@ -136,8 +151,8 @@ if __FILE__ == $PROGRAM_NAME
   Emacs.()
   Scripts.()
 
-  Vim.plugins
-  Vim.helptags
+  # Vim.plugins
+  # Vim.helptags
 else
   # Modules.*.for_each(Module.*)
   # TODO: prompt lists available modules and their commands
