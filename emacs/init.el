@@ -1,8 +1,6 @@
 (set-language-environment 'UTF-8)
 
 (setq user-full-name "hrls")
-(setq user-mail-address "viktor.kharitonovich@gmail.com")
-
 
 ;;; Init / Inhibit
 (setq initial-scratch-message nil)
@@ -17,73 +15,39 @@
 
 
 ;;; GUI
-;; (setq redisplay-dont-pause t) ; >_<
-(tool-bar-mode -1)
-(fringe-mode '(0 . 13))
 (set-default 'cursor-type 'hbar)
-(load-theme 'wombat t)
+(tool-bar-mode -1)
 (scroll-bar-mode -1)
+(fringe-mode '(0 . 13))
+;; (setq redisplay-dont-pause t) ; >_<
 (setq scroll-step 1
       scroll-margin 1
       scroll-conservatively 1001
       mouse-wheel-progressive-speed nil
       mouse-wheel-scroll-amount  '(1 ((shift) . 0.1)))
 
-
 (setq use-dialog-box nil)
 (defalias 'yes-or-no-p 'y-or-n-p)
 
 
 ;;; Text
-(setq-default standard-indent 4)
-(setq-default tab-width 4)
-(setq-default indent-tabs-mode nil)
+(setq-default standard-indent 4
+              tab-width 4
+              indent-tabs-mode nil)
 
 (setq search-highlight t
-      query-replace-highlight t)
-
-(setq kill-whole-line t)
+      query-replace-highlight t
+      kill-whole-line t)
 
 (column-number-mode t)
 (show-paren-mode t)
 (delete-selection-mode t)
 
 
-(global-auto-revert-mode 1)
-
-(require 'saveplace)
-(setq-default save-place t)
-
-
-;;; prog-mode
-(defun prog-mode-tweaks ()
-  ;; TODO:
-  ;; [ ] - highlight variable/tokens under cursor (C-8/C-*)
-  ;; [ ] - C-w (backward-kill-word) respects current-prog-lang-mode delimiters
-  ;; [ ] - C-a more like vi-like [I]nsert, first press go to first visible char, second '^'
-
-  (setq display-line-numbers-width 3
-        show-trailing-whitespace t)
-  ;; TODO: hide or dim on inactive frames or windows
-  (display-line-numbers-mode))
-
-(add-hook 'prog-mode-hook 'prog-mode-tweaks)
-
-;;; Buffers
-(require 'ibuffer)
-;; TODO: Filename/Process column: prefix [project] for projectile buffers
-(defalias 'list-buffers 'ibuffer)
-(require 'uniquify)
-(setq uniquify-separator "/"
-      uniquify-buffer-name-style 'forward)
-;; (require 'bs)
-;; (global-set-key (kbd "<f2>") 'bs-show)
-
-
 ;;; Dired
 (require 'dired)
-(setq dired-find-subdir t)
-(setq dired-recursive-deletes 'top)
+(setq dired-find-subdir t
+      dired-recursive-deletes 'top)
 
 (autoload 'dired-jump "dired-x"
   "Jump to Dired buffer corresponding to current buffer." t)
@@ -94,7 +58,17 @@
 
 
 ;;; Windows
+;;; https://www.gnu.org/software/emacs/manual/html_node/emacs/Windows.html
 (windmove-default-keybindings) ; Shift+Arrows when get bored w/ C-x o
+
+
+;;; Buffers
+(require 'ibuffer)
+;; TODO: Filename/Process column: prefix [project] for projectile buffers
+(defalias 'list-buffers 'ibuffer)
+(require 'uniquify)
+(setq uniquify-separator "/"
+      uniquify-buffer-name-style 'forward)
 
 
 ;; ~/.config/emacs/custom.el or XDG
@@ -102,36 +76,56 @@
 (if (file-exists-p custom-file) (load custom-file))
 
 
-(require 'server)
-(unless (server-running-p) (server-start))
+;;; prog-mode
+(defun prog-mode-tweaks ()
+  (setq display-line-numbers-width 3
+        show-trailing-whitespace t)
+  (display-line-numbers-mode))
 
+(add-hook 'prog-mode-hook 'prog-mode-tweaks)
 
-(add-to-list 'load-path "~/src/dots/emacs")
+;;; Daggers
+(add-to-list 'load-path "~/.emacs.d/elisp")
+(require 'my-packages)
 (require 'suwayyah)
 (require 'wm)
-(require 'my-packages)
 (require 'omnitab)
 (require 'fallback)
+;; (load-theme 'alh t)
 
+;;; Bindings
 (global-set-key [?\t] #'omni-func)
 ;; (setq tab-always-indent 'complete) ; one day w/ CAPF support
 
-(global-set-key (kbd "s-e") #'forward-sentence)
-(global-set-key (kbd "s-a") #'backward-sentence)
-(global-set-key (kbd "s-x") #'execute-extended-command)
-
-(global-set-key "\C-a" #'hrls/ctrl-a-move-beginning-of)
-(global-set-key "\C-e" #'hrls/ctrl-e-move-end-of)
-(global-set-key "\C-w" #'hrls/ctrl-w-kill)
-
-(global-set-key (kbd "C-8") #'highlight-symbol-at-point)
-(global-set-key (kbd "C-*") #'unhighlight-regexp)
-(global-set-key (kbd "s-/") #'comment-or-uncomment-region)
+(global-set-key (kbd "C-a") #'hrls/ctrl-a-move-beginning-of)
+(global-set-key (kbd "C-e") #'hrls/ctrl-e-move-end-of)
+(global-set-key (kbd "C-w") #'hrls/ctrl-w-kill)
+(global-set-key (kbd "C-8") #'highlight-symbol-at-point) ; TODO: hl selected text when region is active
+(global-set-key (kbd "C-*") #'unhighlight-regexp) ; TODO: no prompt if there is only one lighter
 (global-set-key (kbd "C-x i") #'ielm) ; TODO: in new selected frame
 
+
+;; (global-set-key (kbd "s-e") #'forward-sentence)
+;; (global-set-key (kbd "s-a") #'backward-sentence)
+(global-set-key (kbd "s-x") #'execute-extended-command)
+(global-set-key (kbd "s-/") #'comment-or-uncomment-region)
 (global-set-key (kbd "s-i") #'xref-find-definitions-other-window)
+
 
 (define-key prog-mode-map [s-mouse-1] #'xref-find-definitions-at-mouse)
 (define-key prog-mode-map [C-return] #'hrls/indent-and-return)
 
-(put 'upcase-region 'disabled nil)
+;; Free bindings
+;; C-t
+;; C-j
+;; C-x f
+
+
+;;; Etc tweaks
+(global-auto-revert-mode 1)
+
+(require 'saveplace)
+(setq-default save-place t)
+
+(require 'server)
+(unless (server-running-p) (server-start))
