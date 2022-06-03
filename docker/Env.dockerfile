@@ -25,3 +25,10 @@ entrypoint zsh
 copy . /src/dots
 workdir /src/dots
 run ruby infect.rb
+
+# rust-lang via https://rustup.rs
+run curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs \
+    | sh -s -- -y --no-modify-path --default-toolchain stable
+
+run source ~/.cargo/env && rustc --version
+
