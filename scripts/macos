@@ -1,6 +1,0 @@
-#!/usr/bin/env zsh
-
-terminal-new-tab() {
-    osascript -e 'tell application "System Events" to tell process "Terminal" to keystroke "t" using command down'
-}
-
