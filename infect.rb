@@ -45,6 +45,7 @@ This = Pathname.new(__FILE__).realpath.dirname
 Home = Pathname.new('~').expand_path
 # https://specifications.freedesktop.org/basedir-spec/basedir-spec-latest.html
 Config = dir(Home / '.config')
+Data = dir(Home / '.local' / 'var')
 Executables = dir(Home / '.local' / 'bin')
 
 
