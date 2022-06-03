@@ -3,12 +3,19 @@
 require 'pathname'
 require 'fileutils'
 
+class Pathname
+  def *(subs)
+    subs.map { |sub| self + sub }
+  end
+end
+
 def dir(base, *subs)
   dir = Pathname.new(base).join(*subs).expand_path
   FileUtils.mkdir_p(dir) unless dir.exist?
   dir
 end
 
+# TODO: relax context as current cwd only
 def github(repo)
   local = Pathname.new(repo.split('/').last)
   if local.exist? && (local / '.git').exist?
@@ -19,21 +26,21 @@ def github(repo)
 end
 
 def linked(path, to:)
-  path = Pathname.new(path) unless path.class == Pathname
+  path = Pathname.new(path) unless path.is_a?(Pathname)
   prefix = path.realpath.dirname.relative_path_from(to)
   FileUtils.ln_s(prefix / path.basename, to, force: true, verbose: true)
   path
 end
 
 def make_links(of, to:)
-  of = of.children if of.class == Pathname && of.directory?
+  of = of.children if of.is_a?(Pathname) && of.directory?
   of.each.map { |piece| linked(piece, to: to) }
 end
 
 # TODO: cd pwd func wrapper
 # TODO: sshh module @home, shell, github().pull/clone
 
-This = Pathname.pwd # TODO: __FILE__ realpath.dirname
+This = Pathname.new(__FILE__).realpath.dirname
 # https://specifications.freedesktop.org/basedir-spec/basedir-spec-latest.html
 Home = Pathname.new('~').expand_path
 Config = dir(Home / '.config')
@@ -41,7 +48,7 @@ Executables = dir(Home / '.local' / 'bin')
 
 
 module Env
-  @rc_confs = %w[
+  @rc_confs = This * %w[
     .gitconfig
     .gitignore
 
@@ -65,7 +72,7 @@ module Env
 end
 
 module Zsh
-  @sources = ['.zshrc', '.hidden']
+  @sources = This * ['.zshrc', '.hidden']
 
   def self.call
     make_links(@sources, to: Home)
