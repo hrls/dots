@@ -79,10 +79,9 @@ module Env
 end
 
 module Zsh
-  Sources = This * ['.zshrc', '.hidden']
-
   def self.call
-    lnx Sources, to: Home
+    ln This / '.zshrc', to: Home
+    lnx This / 'zsh', to: dir(Home / '.zsh')
   end
 end
 

@@ -210,7 +210,7 @@ fi
 
 
 function load() {
-    source "$HOME/.hidden/zsh/$1"
+    source "$HOME/.zsh/$1"
 }
 
 # fpath+=~/.hidden/zsh
