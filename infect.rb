@@ -12,105 +12,103 @@ end
 def dir(base, *subs)
   dir = Pathname.new(base).join(*subs).expand_path
   FileUtils.mkdir_p(dir) unless dir.exist?
-  dir
+  dir.realpath
 end
 
 # TODO: relax context as current cwd only
 def github(repo)
   local = Pathname.new(repo.split('/').last)
-  if local.exist? && (local / '.git').exist?
-    system("git -C #{local.realpath} pull")
+  if (local / '.git').exist?
+    system "git -C #{local.realpath} pull"
   else
-    system("git clone https://github.com/#{repo}")
+    system "git clone https://github.com/#{repo}"
   end
 end
 
-def linked(path, to:)
+def ln(path, to:)
   path = Pathname.new(path) unless path.is_a?(Pathname)
+  return unless path.exist?
   prefix = path.realpath.dirname.relative_path_from(to)
   FileUtils.ln_s(prefix / path.basename, to, force: true, verbose: true)
   path
 end
 
-def make_links(of, to:)
+def lnx(of, to:)
   of = of.children if of.is_a?(Pathname) && of.directory?
-  of.each.map { |piece| linked(piece, to: to) }
+  of.each.map { |piece| ln(piece, to: to) }
 end
 
 # TODO: cd pwd func wrapper
 # TODO: sshh module @home, shell, github().pull/clone
 
 This = Pathname.new(__FILE__).realpath.dirname
-# https://specifications.freedesktop.org/basedir-spec/basedir-spec-latest.html
 Home = Pathname.new('~').expand_path
+# https://specifications.freedesktop.org/basedir-spec/basedir-spec-latest.html
 Config = dir(Home / '.config')
 Executables = dir(Home / '.local' / 'bin')
 
 
 module Env
-  @rc_confs = This * %w[
+  Homies = This * %w[
     .gitconfig
     .gitignore
 
     .tmux.conf
     .ghci
     .irbrc
-    .psqlrc
-
-    .vimrc
-    .tcshrc
   ]
 
   def self.call
-    make_links(@rc_confs, to: Home)
+    lnx Homies, to: Home
+  end
+
+  def self.configs
+    ln This / '.ripgreprc', to: Config
+  end
+
+  def self.extras
+    ln This / '.psqlrc', to: Home
+    ln This / '.tcshrc', to: Home
   end
 
   def self.hushlogin
-    hl = Home / '.hushlogin'
-    system("touch #{hl}") unless hl.exist?
+    hushlogin = Home / '.hushlogin'
+    system "touch #{hushlogin}" unless hushlogin.exist?
   end
 end
 
 module Zsh
-  @sources = This * ['.zshrc', '.hidden']
+  Sources = This * ['.zshrc', '.hidden']
 
   def self.call
-    make_links(@sources, to: Home)
+    lnx Sources, to: Home
   end
 end
 
 module Emacs
-  @els = This / 'emacs'
-  @target = dir(Home / '.emacs.d')
+  Els = This / 'emacs'
+
+  Init = Els / 'init.el'
+  Themes = Els.glob('*-theme.el')
+  Scripts = Els.glob('*.el') - ([Init] + Themes)
+
+  Target = dir(Home / '.emacs.d')
 
   def self.init
-    linked(@els / 'init.el', to: @target)
+    ln Init, to: Target
   end
 
   def self.themes
-    make_links(@els.glob('*-theme.el'), to: @target)
+    lnx Themes, to: Target
   end
 
-  def self.call
-    init = self.init
-    themes = self.themes
-
-    processed = themes << init
-    elisp = dir(@target / 'elisp')
-    make_links(@els.glob('*.el') - processed, to: elisp)
-  end
-end
-
-module Scripts
-  @scripts = This / 'scripts'
-
-  def self.call
-    make_links(@scripts, to: Executables)
+  def self.scripts
+    lnx Scripts, to: Target / 'elisp'
   end
 end
 
 module Vim
-  @plugins = %w[
+  Plugins = %w[
 
     hrls/bullfinch
     vim-airline/vim-airline
@@ -132,19 +130,23 @@ module Vim
     chr4/nginx.vim
   ]
 
+  def self.rc
+    ln This / '.vimrc', to: Home
+  end
+
   def self.plugins
     # install https://github.com/tpope/vim-pathogen
     autoload_dir = dir(Home / '.vim' / 'autoload')
     pathogen = autoload_dir / 'pathogen.vim'
-    system("curl -LSso #{pathogen} https://tpo.pe/pathogen.vim")
+    system "curl -LSso #{pathogen} https://tpo.pe/pathogen.vim"
 
     bundle = dir(Home / '.vim' / 'bundle')
     FileUtils.cd(bundle, verbose: true)
-    @plugins.each { |plugin| github plugin }
+    Plugins.each { |plugin| github plugin }
   end
 
   def self.helptags
-    system("vim -es +Helptags +exit")
+    system "vim -es +Helptags +exit"
   end
 end
 
@@ -153,13 +155,19 @@ if __FILE__ == $PROGRAM_NAME
   Zsh.()
 
   Env.()
+  Env.configs
+  Env.extras
   Env.hushlogin
 
-  Emacs.()
-  Scripts.()
+  Emacs.init
+  Emacs.themes
+  Emacs.scripts
 
-  # Vim.plugins
-  # Vim.helptags
+  Vim.rc
+  Vim.plugins
+  Vim.helptags
+
+  lnx This / 'scripts', to: Executables
 else
   # Modules.*.for_each(Module.*)
   # TODO: prompt lists available modules and their commands

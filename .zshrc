@@ -1,14 +1,15 @@
 export LANG=en_US.utf8
 export LC_ALL=en_US.UTF-8 # macOS
 
-# XDG Base Directory Specification
-export XDG_CONFIG_HOME=$HOME/.config
+# XDG-like Base Directory Specification
+export CONFIG_HOME=$HOME/.config
+export DATA_HOME=$HOME/.local/var
 
 export WORDCHARS=${WORDCHARS/\/} # rm path separator
 
 # History
 export HISTSIZE=2000
-export HISTFILE=$HOME/.local/var/.zsh_history # TODO: replace by XDG path
+export HISTFILE=$DATA_HOME/.zsh_history
 export SAVEHIST=$HISTSIZE
 setopt hist_ignore_all_dups
 setopt hist_ignore_space
@@ -43,7 +44,7 @@ alias fd='fd --hidden --color=auto'
 if [[ $(whence -p rg) ]]; then
     # print -P %N
     # http://zsh.sourceforge.net/Doc/Release/Zsh-Modules.html#index-funcsourcetrace
-    export RIPGREP_CONFIG_PATH=$src/dots/.ripgreprc
+    export RIPGREP_CONFIG_PATH=$CONFIG_HOME/.ripgreprc
     alias grep=rg
     alias rg='rg --smart-case --hidden --color=auto'
     alias vrg='rg --vimgrep'
@@ -73,9 +74,9 @@ alias pyre='py -i'
 alias more='less'
 
 export LESS='--no-init --quit-if-one-screen --raw-control-chars --tabs=4'
-export LESSHISTFILE=$HOME/.local/var/.less_history
+export LESSHISTFILE=$DATA_HOME/.less_history
 
-export REDISCLI_HISTFILE=$HOME/.local/var/.rediscli_histfile
+export REDISCLI_HISTFILE=$DATA_HOME/.rediscli_histfile
 
 
 tabs -4
@@ -282,10 +283,10 @@ export FZF_COMPLETION_TRIGGER='**'
 
 case ${os} in
     macos)
-        if [[ ! -f ${XDG_CONFIG_HOME}/fzf/fzf.zsh ]]; then
+        if [[ ! -f ${CONFIG_HOME}/fzf/fzf.zsh ]]; then
             $(brew --prefix)/opt/fzf/install --xdg --key-bindings --completion --no-update-rc --no-bash --no-fish
         fi
-        source "${XDG_CONFIG_HOME}"/fzf/fzf.zsh
+        source "${CONFIG_HOME}"/fzf/fzf.zsh
         ;;
     linux)
         source /usr/share/fzf/completion.zsh
