@@ -3,6 +3,7 @@ from archlinux:latest
 run pacman --sync --noconfirm --refresh
 run pacman --sync --noconfirm \
     core/curl \
+    core/gcc \
     extra/zsh \
     extra/git \
     extra/ruby \
@@ -32,3 +33,4 @@ run curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs \
 
 run source ~/.cargo/env && rustc --version
 
+workdir /tmp
