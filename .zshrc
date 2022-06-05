@@ -8,7 +8,7 @@ export DATA_HOME=$HOME/.local/var
 export WORDCHARS=${WORDCHARS/\/} # rm path separator
 
 # History
-export HISTSIZE=2000
+export HISTSIZE=4000
 export HISTFILE=$DATA_HOME/.zsh_history
 export SAVEHIST=$HISTSIZE
 setopt hist_ignore_all_dups
@@ -21,8 +21,8 @@ PATH="$PATH:/usr/local/sbin"
 [[ -d "$HOME/.cargo/bin" ]] && PATH=$PATH:"$HOME/.cargo/bin"
 [[ -d "$HOME/.cabal/bin" ]] && PATH=$PATH:"$HOME/.cabal/bin"
 
-src=$HOME/src
-tmp=$HOME/tmp
+export src=$HOME/src
+export tmp=$HOME/tmp
 
 autoload -U colors && colors
 export LSCOLORS='Exfxcxdxbxegedabagacad'
@@ -33,13 +33,18 @@ if [[ $(whence -p bat) ]]; then
     export BAT_STYLE='plain,numbers,changes'
 fi
 
-alias cls='clear'
-alias which='which -a'
-alias ll='ls -oAFHGh'
-alias la='ls -AFG'
-alias a='ll'
-alias cp='cp -a'
-alias fd='fd --hidden --color=auto'
+alias cls='clear' # tmux was there
+alias which='whence -ac'
+alias ll='ls -oAhH' # TODO: maybe --color as linux compat and then reverse with 'a'
+alias l='ls -AhFG' # columns
+
+# Definitely most used alias
+# -o is new -l, just no group
+# -A as -a but no meta dirs . ..
+# -Fh some decorations
+# -G color last as 'which a' then zle insert under cursor
+alias a='ls -oAhFG'
+
 
 if [[ $(whence -p rg) ]]; then
     # print -P %N
@@ -52,18 +57,15 @@ fi
 
 alias cat=bat
 
-alias g=git
-alias gs='git s'
-alias gl='git l'
-alias gf='git f'
-alias grom='git rebase --interactive origin/master'
+alias more='less'
+alias cp='cp -a'
+alias fd='fd --hidden --color=auto'
 
 alias tags='ctags -R'
-
-alias s='pwd | pbcopy && echo $PWD in paste buffer'
+alias s='pwd | pbcopy && echo "pbpaste ->" $PWD'
 alias df='df -Hl'
 alias du='du -d 1 -ch' # limit depth, human-readable, total
-alias tp='titled ∆ htop'
+alias tp='titled ∆ htop --sort PERCENT_CPU'
 alias ips='ifconfig | grep inet' # todo: filter loopback / inet6
 alias pc='rsync -Ph' # -P same as --partial --progress
 alias md5sum='md5 -r'
@@ -71,7 +73,14 @@ alias ra='titled 🏹 ranger'
 alias py='python3 -B'
 alias pyre='py -i'
 
-alias more='less'
+# Git aliases and typos
+alias g=git
+alias gs='git s'
+alias gs.='git s .'
+alias gdf='git df'
+alias gdf.='git df .'
+alias gl='git l'
+alias gf='git f'
 
 export LESS='--no-init --quit-if-one-screen --raw-control-chars --tabs=4'
 export LESSHISTFILE=$DATA_HOME/.less_history
@@ -226,6 +235,7 @@ load tmux
 load docker; env_docker
 load rust
 load haskell
+load zty
 
 # load erlang
 # load envs
@@ -256,6 +266,7 @@ esac
 
 bindkey '^?' backward-delete-char
 bindkey '^J' fzf-cd-widget
+# TODO: FZF expand target dir when cursor right after path or prefill incomplete path
 
 # Post hooks ...
 [[ $SHLVL == 1 ]] && dir_title

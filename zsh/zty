@@ -1,6 +1,41 @@
 # -*- mode: shell-script; -*-
 
-function data() {
+# Scope - $PWD-related functions
+
+# Scope's
+# [foo]
+# [foo]/dir/[bar]
+#
+# Lazy, optional
+
+# TODO:
+# [ ] - unload fn's when leaving project sub-folder
+# [ ] - override existing scope when another scope found (check scope stack)
+
+# Absolute paths, not relative.
+
+
+# Like make without makefiles
+function f() {
+    if [[ ! -v scopes && -f .scope ]]; then
+        source .scope
+        typeset -ga scopes=($PWD)
+    fi
+
+    case $# in
+        0)
+            # TODO: print usage if default func is omitted
+            default ;;
+        *)
+            local func=$1
+            shift
+            ${func} $@
+            ;;
+    esac
+}
+
+
+function __data() {
     local ty=$1
     shift
 
@@ -14,3 +49,30 @@ function data() {
 
 }
 
+
+function detect-root() {
+    # if git => git rev-parse root
+    # otherwise traverse some folder upside till .env found
+    # eval .env
+}
+
+function new-scope() {
+    # Push new scope into scopes stack
+}
+
+function scope-detect-hook() {
+    # Ensure there is another scope already
+    # Check $PWD/.scope
+}
+
+function scope-unload() {
+    # Unload all inactive scopes
+    # drop any scope other than parent of $PWD
+}
+
+function scope-init() {
+    if [[ ! -f .scope ]]; then
+        echo '# -*- mode: shell-script; -*-' >> .scope
+    fi
+    cat .scope
+}

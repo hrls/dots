@@ -16,7 +16,7 @@
 (use-package exec-path-from-shell
   :if (memq window-system '(mac ns))
   :ensure
-  :config (exec-path-from-shell-initialize))
+  :init (exec-path-from-shell-initialize))
 
 (use-package which-key
   :ensure
@@ -67,9 +67,12 @@
   :bind (("C-s" . swiper)
          ("C-r" . swiper-isearch-thing-at-point)
          ("C-x C-f" . counsel-find-file)
-         ("s-b" . counsel-buffer-or-recentf)
+         ("C-x C-d" . counsel-dired)
+         ("s-e" . counsel-buffer-or-recentf)
          ("s-f" . counsel-fzf)
-         ("s-r" . hrls/counsel-rg))
+         ("s-r" . hrls/counsel-rg)
+         (:map dired-mode-map
+               ("C-x j" . counsel-dired-jump)))
   :config
   (defun hrls/counsel-rg ()
     ;; TODO:
@@ -114,11 +117,21 @@
 ;;  - [ ] tweak abbrev completions for company (SS expands into S.*S.*)
 (use-package rust-mode
   :ensure
+  :hook
+  (rust-mode .(lambda ()
+                ;; https://rust-lang.github.io/rustfmt/?version=master&search=#max_width
+                (set-fill-column 100)
+                (display-fill-column-indicator-mode)))
   :config
   ;; https://www.emacswiki.org/emacs/EmacsSyntaxTable
   (require 'misc)
   (modify-syntax-entry ?_ "w" rust-mode-syntax-table)
-  (setq flycheck-checker 'rust-clippy))
+  (setq flycheck-checker 'rust-clippy)
+  (defun hrls/clippy-check ()
+    (interactive "")
+    (if-let ((_wnd (get-buffer-window "*Cargo Clippy*")))
+        (print "todo") ; just restart clippy process, keep focus in current buffer
+      (cargo-process-clippy))))
 
 (use-package cargo
   :ensure
@@ -126,10 +139,15 @@
 
 
 (use-package haskell-mode
-  :ensure)
+  :bind (("C-c C-c" . haskell-check)
+         ("C-c C-o" . haskell-navigate-imports))
+  :config
+  (defun haskell-check-current (arg)
+    (interactive "f")
+    (user-error "TODO: haskell-check-current")))
 
 ;; LSP wars
-;; ;; https://emacs-lsp.github.io/lsp-mode/page/installation/#use-package
+;; https://emacs-lsp.github.io/lsp-mode/page/installation/#use-package
 ;;
 ;; https://robert.kra.hn/posts/rust-emacs-setup/
 ;; https://rust-analyzer.github.io/manual.html#emacs
@@ -143,6 +161,8 @@
 (use-package yaml-mode :ensure)
 (use-package dockerfile-mode :ensure)
 (use-package swift-mode :ensure)
+
+
 (use-package markdown-mode
   :ensure t
   :mode (("README\\.md\\'" . gfm-mode)
@@ -158,5 +178,9 @@
 ;; (use-package hydra)
 ;; (use-package deadgrep) ; nice w/ dangled frame
 
+;; (use-package delsel
+;;   :bind
+;;   (:map mode-specific-map
+;;         ("C-g" . minibuffer-keyboard-quit)))
 
 (provide 'my-packages)

@@ -1,4 +1,4 @@
-# vim: set ft=zsh:
+# -*- mode: shell-script; -*-
 
 cab() {
     if [[ $# == 0 ]]; then
@@ -10,24 +10,39 @@ cab() {
     local cmd=$1
     shift
 
+    # FIX: init makes lib and app dirs for any --lib or --exe
     case ${cmd} in
         'check') (cabal new-build --flags='no-code') ;;
         'lint') (hlint -g) ;;
-        'init') cabal init \
-            --version='0.0.0' \
-            --license='MIT' \
-            --lib # --exe
-            --tests ;;
+        'init')
+            # configure lib|exe|libandexe flags from cabal init
+            # TODO: test $1 against (lib|exe|libandexe) pattern
+            # local=$1
+            case $1 in
+                'lib') echo "--source-dir='lib'" ;;
+                'exe') echo "--application-dir='app'" ;;
+                *) echo 'TODO: bypass all to cabal init' ;;
+            esac
+
+            cabal init \
+                  --version='0.0.0' \
+                  --license='MIT' \
+                  --package-name=$(basename $PWD) \
+                  --source-dir='lib' \
+                  --application-dir='app' \
+                  $@ ;; # --lib | --exe | --libandexe
         'doc') echo 'not implemented yet' ;; # build deps docs
         'install') cabal install ${1} \
-            --installdir=$HOME/.cabal/bin \
-            --overwrite-policy=always ;;
-        'repl') case "${1}" in
-            '') (cabal new-repl) ;;
-            'exe') (cabal new-repl exe:$(basename $PWD)) ;;
-            'lib') (cabal new-repl lib:$(basename $PWD)) ;;
-            *) (cabal new-repl $@) ;;
-        esac ;;
+                         --installdir=$HOME/.cabal/bin \
+                         --overwrite-policy=always ;;
+        're'|'repl')
+            case "${1}" in
+                '') (cabal new-repl) ;;
+                'exe') (cabal new-repl exe:$(basename $PWD)) ;;
+                'lib') (cabal new-repl lib:$(basename $PWD)) ;;
+                *) (cabal new-repl $@) ;;
+            esac ;;
+        'r') cab run --offline --verbose=1 $@ ;; # --verbose=3
         *) (cabal "new-${cmd}" $@) ;; # or $*
     esac
 }

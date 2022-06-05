@@ -1,31 +1,6 @@
-# vim: set ft=zsh:
-
-function erl18() {
-    PATH="/usr/local/opt/erlang@18/bin:$PATH"
-}
-export MANPATH=$MANPATH:/usr/local/opt/erlang/lib/erlang/man
+# -*- mode: shell-script; -*-
 
 export ERL_FLAGS='+K true'
+export MANPATH=$MANPATH:/usr/local/opt/erlang/lib/erlang/man
 
-erlich () { grep --include=\*.{h,e}rl -RHne $1 . }
 alias erltags="ctags -R ./src ./deps/*/src"
-# alias erl_tags='find . -type f -iname "*.[he]rl" | etags -'
-
-ejabberdctl_args=(
-    start debug iexdebug live iexlive foreground
-    status
-    module_check module_install module_uninstall module_upgrade
-    modules_available modules_installed
-)
-compctl -k ejabberdctl_args ejabberdctl
-
-export EJABBERD_HOME=$HOME/.local/ejabberd
-export PATH=$EJABBERD_HOME/sbin:$PATH
-alias ej=ejabberdctl
-alias ejs='ej status'
-alias ejmc='ej module_check'
-alias ejma='ej modules_available'
-alias ejmi='ej module_install'
-alias ejmu='ej module_uninstall'
-alias ejmd='ej modules_installed'
-alias ejup='ej module_upgrade'

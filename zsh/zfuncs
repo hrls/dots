@@ -34,9 +34,9 @@ p() {
     fi
 }
 
-# notification title text
+# notify title text
 # TODO: customize icon and click action
-notification() {
+notify() {
     osascript -e "display notification \"$2\" with title \"$1\""
 }
 

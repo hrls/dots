@@ -9,18 +9,19 @@
 	autocrlf = input
 
 [alias]
-	f   = fetch --all --tags
+	f   = fetch --multiple
+	fa  = fetch --all --tags
 	p   = pull --ff-only
 	b   = branch
 	br  = branch --remote
 	bc  = checkout -b
 	c   = commit
 	co  = checkout
+	com = checkout MERGE_HEAD
 	df  = diff
 	dfs = diff --staged
 	r   = rebase --interactive
 	rc  = rebase --continue
-	rom = rebase --interactive origin/master
 	s   = status --show-stash
 	sl  = stash list
 	ss  = stash show
@@ -40,7 +41,7 @@
 	default = current
 
 [pull]
-	rebase = true
+	ff = only
 
 [color]
 	ui = auto

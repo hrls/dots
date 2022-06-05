@@ -15,6 +15,7 @@
 
 
 ;;; GUI
+;;; TODO: make window scrollable by touchpad on horizontal axis
 (set-default 'cursor-type 'hbar)
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
@@ -24,6 +25,9 @@
       scroll-margin 1
       scroll-conservatively 1001
       mouse-wheel-progressive-speed nil
+      ;; mouse-wheel-flip-direction t
+      ;; mouse-wheel-tilt-scroll t
+      ;; mouse-wheel-follow-mouse t
       mouse-wheel-scroll-amount  '(1 ((shift) . 0.1)))
 
 (setq use-dialog-box nil)
@@ -33,16 +37,19 @@
 ;;; Text
 (setq-default standard-indent 4
               tab-width 4
-              indent-tabs-mode nil)
+              indent-tabs-mode nil
+              truncate-lines t)
 
 (setq search-highlight t
       query-replace-highlight t
       kill-whole-line t)
 
+;; (toggle-truncate-lines 1) ;; word wrap off
 (column-number-mode t)
 (show-paren-mode t)
 (delete-selection-mode t)
 
+;;; TRAMP mode
 
 ;;; Dired
 (require 'dired)
@@ -104,9 +111,6 @@
 (global-set-key (kbd "C-*") #'unhighlight-regexp) ; TODO: no prompt if there is only one lighter
 (global-set-key (kbd "C-x i") #'ielm) ; TODO: in new selected frame
 
-
-;; (global-set-key (kbd "s-e") #'forward-sentence)
-;; (global-set-key (kbd "s-a") #'backward-sentence)
 (global-set-key (kbd "s-x") #'execute-extended-command)
 (global-set-key (kbd "s-/") #'comment-or-uncomment-region)
 (global-set-key (kbd "s-i") #'xref-find-definitions-other-window)
@@ -119,6 +123,7 @@
 ;; C-t
 ;; C-j
 ;; C-x f
+;; s-b for build
 
 
 ;;; Etc tweaks

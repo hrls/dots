@@ -28,6 +28,7 @@ end
 def ln(path, to:)
   path = Pathname.new(path) unless path.is_a?(Pathname)
   return unless path.exist?
+
   prefix = path.realpath.dirname.relative_path_from(to)
   FileUtils.ln_s(prefix / path.basename, to, force: true, verbose: true)
   path
@@ -45,7 +46,7 @@ This = Pathname.new(__FILE__).realpath.dirname
 Home = Pathname.new('~').expand_path
 # https://specifications.freedesktop.org/basedir-spec/basedir-spec-latest.html
 Config = dir(Home / '.config')
-Data = dir(Home / '.local' / 'var')
+DataDir = dir(Home / '.local' / 'var')
 Executables = dir(Home / '.local' / 'bin')
 
 
@@ -103,7 +104,7 @@ module Emacs
   end
 
   def self.scripts
-    lnx Scripts, to: Target / 'elisp'
+    lnx Scripts, to: dir(Target / 'elisp')
   end
 end
 

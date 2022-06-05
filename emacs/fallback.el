@@ -34,6 +34,7 @@
     (load-theme 'tron-legacy t)))
 
 (defun flatland-theme ()
+  (interactive)
   (use-package flatland-theme
     :config
     (custom-theme-set-faces

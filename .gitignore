@@ -1,5 +1,8 @@
 .git/
 
+# Emacs
+**/.\#*
+
 tags
 *.patch
 
@@ -51,3 +54,10 @@ Thumbs.db
 # IntelliJ IDEA
 .idea
 *.iml
+
+# Rust
+Cargo.lock
+
+# Node
+node_modules/
+package-lock.json

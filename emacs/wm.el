@@ -1,10 +1,13 @@
 (provide 'wm)
 
-(defun close-window-then-frame ()
+(defun hrls/cmd-w-kill ()
+  "Close window, or frame, or kill buffer"
   (interactive)
   (cond ((< 1 (length (window-list))) (delete-window))
         ((< 1 (length (frame-list))) (delete-frame))
-        (t (user-error "TODO: keep server running"))))
+        (t
+         (message "Buffer was killed by greedy W")
+         (kill-buffer))))
 
 (defun make-frame-at-center ()
   (interactive)
@@ -56,16 +59,14 @@
         (select-frame-set-input-focus $target-frame))))
 
 
-
-(global-set-key [C-f11] 'ns-do-hide-others)
-
-(global-set-key (kbd "s-w") 'close-window-then-frame)
+(global-set-key (kbd "s-w") 'hrls/cmd-w-kill)
 (global-set-key (kbd "s-n") 'make-frame-at-center)
+(global-set-key (kbd "s-<f11>") 'ns-do-hide-others)
 
 (global-set-key (kbd "s-1") (lambda () (interactive) (select-nth-visible-frame 1)))
 (global-set-key (kbd "s-2") (lambda () (interactive) (select-nth-visible-frame 2)))
 (global-set-key (kbd "s-3") (lambda () (interactive) (select-nth-visible-frame 3)))
-
+(global-set-key (kbd "s-4") (lambda () (interactive) (select-nth-visible-frame 4)))
 
 
 ;; TODO: save in custom.el

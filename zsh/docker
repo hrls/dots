@@ -1,13 +1,24 @@
-# vim: set ft=zsh:
-
-## |& is zsh only version of 2>&1
+# -*- mode: shell-script; -*-
 
 alias d=docker
-alias dm=docker-machine
 
-denv() { eval $(docker-machine env $1) }
+d_pw() {
+    local dir=$(basename $PWD)
+
+    docker run \
+           --interactive \
+           --tty \
+           --rm \
+           --volume $PWD:/${dir} \
+           --workdir /${dir} \
+           --ulimit nofile=50000:50000 \
+           --cpus 4 \
+           --memory $(bc <<< '8 * 1024^3') \
+           $*
+}
 
 alias d_run='docker run --interactive --tty --rm'
+
 d_gc() {
     docker system prune --force --all
     docker volume prune --force

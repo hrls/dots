@@ -32,4 +32,7 @@
   (previous-line)
   (indent-for-tab-command))
 
+;; *-mode: navigate vi-like, edit emacs way
+;;; Any mode C-g when edit active evil mode or mapped to current mode vi-like movements or keymap
+
 (provide 'suwayyah)

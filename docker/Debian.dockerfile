@@ -16,7 +16,7 @@ run ghc --version && cabal --version
 
 copy . /root/dots
 workdir /root/dots
-run ./infect
+run ./infect.rb
 
 # core utils
 run . /root/.cargo/env && cargo install bat fd-find ripgrep
