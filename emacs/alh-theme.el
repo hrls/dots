@@ -1,83 +1,89 @@
 (require 'autothemer)
 
+;; https://coolors.co/contrast-checker
+;; https://encycolorpedia.com
+
 ;; describe-face
 ;; describe-theme
 ;; list-faces-display
 
-
 ;; TODO:
-;; [ ] - emphasize keywords more with color (try light blue)
+;; [ ] - M-x mininuffer-prompt
 ;; [ ] - dim numbers for display-line-number-mode on inactive frames or windows
-;; [ ] - hl-line-mode affects only line numbers
-;; [ ] - tweak trailing whitespace face
+;; [ ] - Dark background
 
 (autothemer-deftheme
- alh "Particles and yellow pages"
+ alh "Particles and yellow pages. Purple and violet on antiquewhite"
 
- (
-  (((class color) (min-colors #xFFFFFF) (background light)))
-
-  ;; background colors candidates:
-  ;; RAL 9010 Pure white #f1ece1
-  ;; RAL 1013 Oyster white #e3d9c6 <- little saturation would help
-  ;; RAL 140-5 #f8e4c8 ; desaturated f3e3cd
-  ;; Yellow pages #f2e0c9 <- nice one, but pinkish
-  ;; Attempt n2 #e8dbbb
-
+ ((((class color) (min-colors #xFFFFFF) (background light)))
   ;; (load-theme 'alh t)
 
-  (pal/background "#f3e3cd")
+  (pal/bg   "#faebd7") ; antiquewhite
+  (pal/kw   "#872657") ; was 8f3d66 desaturated websafe #936, RAL 4006 Traffic purple
+  (pal/type "#162f65") ; current gh literal, was 484063 unknown color
 
-  ;; function name is grey bold
-  ;; str literal are plain blue, as current function name
+  (pal/constant     "#5b4799")
+  (pal/builtin      "#324b80")
+  (pal/preprocessor "#be3536")
 
-  (pal/var "#903373")
-  (pal/const "#6e6387") ; 794d3e
+  (pal/string  "#1313b0")
+  (pal/comment "#666666") ; 7011 Iron grey #52595d
+  (pal/docline "#2b3f98") ; unknown color
 
-  (pal/docline "#792423")
+  (pal/shadow "#666666")
 
-  (pal/black "#000000")
+  (pal/gh/str-literal     "#162f65")
+  (pal/gh/button-link     "#2e68d3") ; also used for some kws
+  (pal/gh/tritanopiad/red "#be3536")
+
+  ;; like 800080
+  (pal/grey        "#666666")
+  (pal/dark-sienna "#804224")
+  (pal/dark-orange "#cc7000")
+
+  (pal/okay "#6495ed")
+
   (pal/red   "#ff0000")
-  (pal/blue  "#0000ff")
+  (pal/blue  "#0000cd")
+  (pal/amber "#ffbf00")
+  (pal/black "#040404"))
 
-  ;; https://www.ralcolorchart.com/ral-classic
-  (pal/cobalt-blue      "#193153") ; RAL 5013 Cobalt blue
-  (pal/traffic-purple   "#903373") ; RAL 4006 Traffic purple
-  (pal/iron-grey        "#52595d") ; RAL 7011 Iron grey
-  (pal/basalt-grey      "#575d5e") ; RAL 7012 Basalt grey
-  (pal/anthracite-grey  "#383e42") ; RAL 7016 Anthracite grey
+ ((default (:foreground pal/black :background pal/bg))
+  (button  (:foreground pal/gh/button-link :underline t :weight 'bold))
+  (success (:foreground pal/okay :weight 'bold))
+  ;; (warning) is DarkOrange currently
+  (error   (:foreground pal/red :weight 'bold))
 
-  (pal/pearl-violet "#6e6387") ; RAL 4011 Pearl violet (almost good for bold italic kwords)
+  (fringe (:inherit 'default))
 
-  (pal/night-blue  "#222d5a") ; RAL 5022 Night blue (nice type face when just italic)
-  (pal/khaki-grey  "#745e3d") ; RAL 7008 Khaki grey (italic for text, bold for onewords)
-  (pal/pebble-grey "#b5b0a1") ; RAL 7032 Pebble grey (almost invisible)
-  )
-
- (
-  (default (:foreground pal/black :background pal/background))
-  (button  (:foreground pal/black :underline t :weight 'bold))
-  (error   (:foreground pal/red))
-
-  ;; :weight 'bold
-
-
-  (font-lock-constant-face (:foreground pal/const))
-
+  (font-lock-keyword-face       (:foreground pal/kw :weight 'bold))
+  (font-lock-type-face          (:foreground pal/type :weight 'bold))
+  (font-lock-function-name-face (:foreground pal/black))
   (font-lock-variable-name-face (:foreground pal/black))
-  (font-lock-doc-face     (:foreground pal/docline :italic t))
-  (font-lock-string-face (:foreground pal/blue)) ; TODO: relax it
 
+  (font-lock-string-face        (:foreground pal/string))
+  (font-lock-constant-face      (:foreground pal/constant :weight 'bold))
+  (font-lock-builtin-face       (:foreground pal/builtin :italic t))
+  (font-lock-preprocessor-face  (:foreground pal/preprocessor :italic t))
 
-  (font-lock-keyword-face (:foreground pal/traffic-purple :italic t :weight 'bold))
-  (font-lock-type-face    (:foreground pal/cobalt-blue)) ; TODO: make accent, like blue-ish
-  (font-lock-function-name-face (:foreground pal/cobalt-blue :weight 'bold))
+  (font-lock-comment-face       (:foreground pal/comment))
+  (font-lock-comment-delimiter-face (:inherit 'font-lock-comment-face :italic t))
+  (font-lock-doc-face           (:foreground pal/docline :italic t))
 
+  ;; (compilation-warning (:foreground pal/dark-orange :weight 'bold))
+  (compilation-line-number (:inherit 'button :foreground pal/black))
+  (compilation-column-number (:inherit 'button :foreground pal/shadow))
+  (compilation-mode-line-exit (:inherit 'compilation-info :foreground pal/okay :weight 'normal))
 
-  (font-lock-comment-face (:foreground pal/iron-grey :italic t))
+  (line-number-current-line (:inherit 'line-number :foreground pal/black :weight 'bold)) ; background reserved for dbg-mode
+  (show-paren-match (:background pal/amber))
+  (trailing-whitespace (:foreground pal/red :underline t))
 
   (dired-directory (:inherit 'font-lock-type-face))
+  (dired-symlink (:inherit 'font-lock-keyword-face :italic t :bold nil))
   (which-key-key-face (:inherit 'font-lock-constant-face :weight 'bold))
+
+  (rust-ampersand-face (:foreground pal/shadow))
   ))
 
 ;; https://github.com/jasonm23/autothemer#re-using-the-color-palette

@@ -17,6 +17,7 @@
 ;;; GUI
 ;;; TODO: make window scrollable by touchpad on horizontal axis
 (set-default 'cursor-type 'hbar)
+;; (set-face-font 'variable-pitch "Helvetica:size=13")
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
 (fringe-mode '(0 . 13))
@@ -25,8 +26,8 @@
       scroll-margin 1
       scroll-conservatively 1001
       mouse-wheel-progressive-speed nil
-      ;; mouse-wheel-flip-direction t
-      ;; mouse-wheel-tilt-scroll t
+      mouse-wheel-flip-direction t
+      mouse-wheel-tilt-scroll t
       ;; mouse-wheel-follow-mouse t
       mouse-wheel-scroll-amount  '(1 ((shift) . 0.1)))
 
@@ -98,7 +99,7 @@
 (require 'wm)
 (require 'omnitab)
 (require 'fallback)
-;; (load-theme 'alh t)
+(load-theme 'alh t)
 
 ;;; Bindings
 (global-set-key [?\t] #'omni-func)
