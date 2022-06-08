@@ -104,11 +104,11 @@
 (global-set-key [?\t] #'omni-func)
 ;; (setq tab-always-indent 'complete) ; one day w/ CAPF support
 
-(global-set-key (kbd "C-a") #'hrls/ctrl-a-move-beginning-of)
-(global-set-key (kbd "C-e") #'hrls/ctrl-e-move-end-of)
-(global-set-key (kbd "C-w") #'hrls/ctrl-w-kill)
-(global-set-key (kbd "C-8") #'highlight-symbol-at-point) ; TODO: hl selected text when region is active
-(global-set-key (kbd "C-*") #'unhighlight-regexp) ; TODO: no prompt if there is only one lighter
+(global-set-key (kbd "C-a") #'my/ctrl-a-move-beginning-of)
+(global-set-key (kbd "C-e") #'my/ctrl-e-move-end-of)
+(global-set-key (kbd "C-w") #'my/ctrl-w-kill)
+(global-set-key (kbd "C-8") #'my/highlight)
+(global-set-key (kbd "C-*") #'my/unhighlight)
 (global-set-key (kbd "C-x i") #'ielm) ; TODO: in new selected frame
 
 (global-set-key (kbd "s-x") #'execute-extended-command)
@@ -117,7 +117,7 @@
 
 
 (define-key prog-mode-map [s-mouse-1] #'xref-find-definitions-at-mouse)
-(define-key prog-mode-map [C-return] #'hrls/indent-and-return)
+(define-key prog-mode-map [C-return] #'my/indent-and-return)
 
 ;; Free bindings
 ;; C-t

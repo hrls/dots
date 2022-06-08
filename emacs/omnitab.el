@@ -8,7 +8,7 @@
   (cond
    ((use-region-p) (indent-for-tab-command))
    (t
-    (if (looking-at "\\>")
+    (if (looking-at "\\>") ; end of symbol
         (when (company-manual-begin)
           (if (= company-candidates-length 1)
               (company-complete-number 1)))

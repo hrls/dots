@@ -75,9 +75,10 @@
 
 
   (font-lock-comment-face (:foreground pal/iron-grey :italic t))
-  )
- )
 
+  (dired-directory (:inherit 'font-lock-type-face))
+  (which-key-key-face (:inherit 'font-lock-constant-face :weight 'bold))
+  ))
 
 ;; https://github.com/jasonm23/autothemer#re-using-the-color-palette
 ;; (define-advice autothemer-deftheme (:before (_ _ palette &rest _) defcolors)

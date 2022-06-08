@@ -70,11 +70,11 @@
          ("C-x C-d" . counsel-dired)
          ("s-e" . counsel-buffer-or-recentf)
          ("s-f" . counsel-fzf)
-         ("s-r" . hrls/counsel-rg)
+         ("s-r" . my/counsel/ripgrep)
          (:map dired-mode-map
                ("C-x j" . counsel-dired-jump)))
   :config
-  (defun hrls/counsel-rg ()
+  (defun my/counsel/ripgrep ()
     ;; TODO:
     ;; - $PWD or project root in prompt
     (interactive)
@@ -93,20 +93,22 @@
   :bind (:map company-active-map
               ("C-n" . company-select-next)
               ("C-p" . company-select-previous)
-              ([tab] . hrls/company-instant-or-cycle))
+              ("C-w" . my/ctrl-w-kill)
+              ([tab] . my/company/instant-or-cycle))
   :config
   (setq company-abort-manual-when-too-short t
         company-selection-wrap-around t
-        company-tooltip-minimum-width 27
+        company-tooltip-minimum-width 42
         company-tooltip-width-grow-only t
         company-tooltip-align-annotations t)
-  (defun hrls/company-instant-or-cycle ()
+  (defun my/company/instant-or-cycle ()
     (interactive)
     (if (and (company-tooltip-visible-p)
              (= company-candidates-length 1))
         (company-complete-number 1)
       ;; TODO: endless route '' 'Foo' 'Bar' 'Foo' ..., w/o empty lines
       (company-select-next))))
+
 
 (use-package flycheck :ensure)
 ;; :init (global-flycheck-mode)
@@ -127,7 +129,7 @@
   (require 'misc)
   (modify-syntax-entry ?_ "w" rust-mode-syntax-table)
   (setq flycheck-checker 'rust-clippy)
-  (defun hrls/clippy-check ()
+  (defun my/rust/clippy/check ()
     (interactive "")
     (if-let ((_wnd (get-buffer-window "*Cargo Clippy*")))
         (print "todo") ; just restart clippy process, keep focus in current buffer

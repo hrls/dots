@@ -1,6 +1,6 @@
 (provide 'wm)
 
-(defun hrls/cmd-w-kill ()
+(defun my/cmd-w-kill ()
   "Close window, or frame, or kill buffer"
   (interactive)
   (cond ((< 1 (length (window-list))) (delete-window))
@@ -59,7 +59,7 @@
         (select-frame-set-input-focus $target-frame))))
 
 
-(global-set-key (kbd "s-w") 'hrls/cmd-w-kill)
+(global-set-key (kbd "s-w") 'my/cmd-w-kill)
 (global-set-key (kbd "s-n") 'make-frame-at-center)
 (global-set-key (kbd "s-<f11>") 'ns-do-hide-others)
 
