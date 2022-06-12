@@ -69,7 +69,7 @@
          ("C-x C-f" . counsel-find-file)
          ("C-x C-d" . counsel-dired)
          ("s-e" . counsel-buffer-or-recentf)
-         ("s-f" . counsel-fzf)
+         ("s-f" . counsel-fzf) ;; TODO: sync with .zshrc or ignore .git
          ("s-r" . my/counsel/ripgrep)
          (:map dired-mode-map
                ("C-x j" . counsel-dired-jump)))
@@ -89,7 +89,7 @@
   :ensure
   :init (company-tng-configure-default)
   :hook (after-init . global-company-mode)
-  :delight '(:propertize " t* " face shadow)
+  :delight
   :bind (:map company-active-map
               ("C-n" . company-select-next)
               ("C-p" . company-select-previous)
@@ -110,39 +110,79 @@
       (company-select-next))))
 
 
-(use-package flycheck :ensure)
-;; :init (global-flycheck-mode)
-;; :hook (rust-mode . flycheck-mode)
+(use-package flycheck
+  :ensure
+  :hook (after-init . global-flycheck-mode)
+  :bind (("C-0" . flycheck-next-error)      ; C-)
+         ("C-9" . flycheck-previous-error)) ; C-(
+  :config
+  ;; TODO: limit of flycheck-help-echo-function output to one line
+  (setq
+   flycheck-check-syntax-automatically '(save mode-enabled idle-change)
+   flycheck-display-errors-function #'flycheck-display-error-messages-unless-error-list
+   flycheck-indication-mode 'right-fringe)
+
+  ;; https://www.flycheck.org/en/latest/user/error-reports.html#fringe-and-margin-icons
+  (when (fboundp 'define-fringe-bitmap)
+    ;; https://github.com/flycheck/flycheck/pull/1950
+    (defconst flycheck-fringe-bitmap-double-arrow-left
+      [27 54 108 216 108 54 27])
+    (defconst flycheck-fringe-bitmap-double-arrow-left-hi-res
+      [975 1950 3900 7800 15600 31200 31200 15600 7800 3900 1950 975])
+    (define-fringe-bitmap
+      'flycheck-fringe-bitmap-double-arrow-left
+      flycheck-fringe-bitmap-double-arrow-left)
+    (define-fringe-bitmap
+      'flycheck-fringe-bitmap-double-arrow-left-hi-res
+      flycheck-fringe-bitmap-double-arrow-left-hi-res
+      nil 16)
+    (flycheck-redefine-standard-error-levels
+     nil
+     (cons 'flycheck-fringe-bitmap-double-arrow-left
+           'flycheck-fringe-bitmap-double-arrow-left-hi-res)))
+
+  ;; https://www.flycheck.org/en/latest/user/error-list.html#tune-error-list-display
+  (add-to-list 'display-buffer-alist
+               `(,(rx bos "*Flycheck errors*" eos)
+                 (display-buffer-reuse-window
+                  display-buffer-in-side-window)
+                 (side . bottom)
+                 (reusable-frames . visible)
+                 (window-height . 0.33)))
+
+  ;; https://github.com/flycheck/flycheck-haskell
+  ;; https://github.com/flycheck/flycheck-rust
+  ;; TODO: modify 'rust checker for support checking buffers w/o saving to file
+  (setq flycheck-global-modes '(rust-mode haskell-mode))
+  (setq-default flycheck-disabled-checkers '(rust rust-cargo)))
 
 
 ;; TODO:
 ;;  - [ ] tweak abbrev completions for company (SS expands into S.*S.*)
 (use-package rust-mode
   :ensure
-  :hook
-  (rust-mode .(lambda ()
-                ;; https://rust-lang.github.io/rustfmt/?version=master&search=#max_width
-                (set-fill-column 100)
-                (display-fill-column-indicator-mode)))
+  :init
+  (defun my/rust-mode/hook ()
+    ;; https://rust-lang.github.io/rustfmt/?version=master&search=#max_width
+    (set-fill-column 100)
+    (display-fill-column-indicator-mode))
+  :hook (rust-mode . my/rust-mode/hook)
+  :bind (:map rust-mode-map
+              ("C-c c" . flycheck-buffer))
   :config
   ;; https://www.emacswiki.org/emacs/EmacsSyntaxTable
-  (require 'misc)
-  (modify-syntax-entry ?_ "w" rust-mode-syntax-table)
-  (setq flycheck-checker 'rust-clippy)
-  (defun my/rust/clippy/check ()
-    (interactive "")
-    (if-let ((_wnd (get-buffer-window "*Cargo Clippy*")))
-        (print "todo") ; just restart clippy process, keep focus in current buffer
-      (cargo-process-clippy))))
+  (modify-syntax-entry ?_ "w" rust-mode-syntax-table))
 
 (use-package cargo
   :ensure
   :hook (rust-mode . cargo-minor-mode))
 
-
 (use-package haskell-mode
-  :bind (("C-c C-c" . haskell-check)
-         ("C-c C-o" . haskell-navigate-imports))
+  :ensure
+  :bind (:map haskell-mode-map
+              ("C-c c" . flycheck-buffer) ; TODO: what about prog-mode
+              ("C-c C-c" . haskell-check)
+              ("C-c C-o" . haskell-navigate-imports))
   :config
   (defun haskell-check-current (arg)
     (interactive "f")
