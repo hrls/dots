@@ -13,14 +13,15 @@
 	fa  = fetch --all --tags
 	p   = pull --ff-only
 	b   = branch
-	br  = branch --remote
 	bc  = checkout -b
+	br  = branch --remote
 	c   = commit
 	co  = checkout
 	com = checkout MERGE_HEAD
 	df  = diff
 	dfs = diff --staged
-	r   = rebase --interactive
+	r   = rebase
+	ri  = rebase --interactive
 	rc  = rebase --continue
 	s   = status --show-stash
 	sl  = stash list
@@ -29,13 +30,11 @@
 	sub = submodule
 	url = remote get-url --all origin
 	append = commit --amend --no-edit
-	rob = !sh -c 'git push origin --delete $1' # rob branch
+	brd = !sh -c 'git push $1 --delete $2' # g brd origin unused
 	brm = !sh -c 'git branch --list --merged | grep --invert-match $(git branch --show-current) | xargs git branch --delete'
 
-	l   = log --decorate=short --oneline
-	ll  = log --decorate=short
-	lg  = log --pretty=format:'%h - %an, %ar : %s' --graph
-
+	l   = !sh -c 'git log --oneline --reverse --max-count=$(($(tput lines) / 2))' # limit output by half of term lines
+	ll  = log --reverse --pretty=tformat:'%C(reset)%C(yellow)%h%C(reset) - %C(blue)%an%C(reset): %s %C(dim)(%ar)%C(reset)' # TODO: %d ref name
 
 [push]
 	default = current
