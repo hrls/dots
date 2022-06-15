@@ -66,8 +66,12 @@
         projectile-completion-system 'ivy)
   :bind (("C-s" . swiper)
          ("C-r" . swiper-isearch-thing-at-point)
+         ("C-x b" . counsel-switch-buffer)
          ("C-x C-f" . counsel-find-file)
          ("C-x C-d" . counsel-dired)
+         ("C-h v" . counsel-describe-variable)
+         ("C-h f" . counsel-describe-function)
+         ("s-x" . counsel-M-x)
          ("s-e" . counsel-buffer-or-recentf)
          ("s-f" . counsel-fzf) ;; TODO: sync with .zshrc or ignore .git
          ("s-r" . my/counsel/ripgrep)
@@ -87,26 +91,37 @@
 
 (use-package company
   :ensure
-  :init (company-tng-configure-default)
+  :init
+  (company-tng-configure-default)
+  (custom-set-variables '(company-quick-access-modifier 'control))
   :hook (after-init . global-company-mode)
   :delight
   :bind (:map company-active-map
               ("C-n" . company-select-next)
               ("C-p" . company-select-previous)
               ("C-w" . my/ctrl-w-kill)
+              ("s-i" . company-show-location)
               ([tab] . my/company/instant-or-cycle))
   :config
-  (setq company-abort-manual-when-too-short t
+  (setq company-idle-delay 0.11
+        company-abort-manual-when-too-short t
         company-selection-wrap-around t
         company-tooltip-minimum-width 42
         company-tooltip-width-grow-only t
-        company-tooltip-align-annotations t)
+        company-tooltip-limit 16
+        company-tooltip-align-annotations t ; TODO: doesnt works
+        company-show-quick-access 'left
+        company-text-face-extra-attributes '(:slant italic)
+        )
   (defun my/company/instant-or-cycle ()
     (interactive)
     (if (and (company-tooltip-visible-p)
              (= company-candidates-length 1))
         (company-complete-number 1)
-      ;; TODO: endless route '' 'Foo' 'Bar' 'Foo' ..., w/o empty lines
+      ;; TODO:
+      ;; - [ ] comlete common before selecting first candidate
+      ;; - [ ] rotate candidates '' 'Foo' 'Bar' 'Foo' ...
+      ;;       and skip selecting of empty line on the end of candidates list
       (company-select-next))))
 
 
@@ -124,22 +139,16 @@
 
   ;; https://www.flycheck.org/en/latest/user/error-reports.html#fringe-and-margin-icons
   (when (fboundp 'define-fringe-bitmap)
-    ;; https://github.com/flycheck/flycheck/pull/1950
-    (defconst flycheck-fringe-bitmap-double-arrow-left
-      [27 54 108 216 108 54 27])
-    (defconst flycheck-fringe-bitmap-double-arrow-left-hi-res
-      [975 1950 3900 7800 15600 31200 31200 15600 7800 3900 1950 975])
     (define-fringe-bitmap
-      'flycheck-fringe-bitmap-double-arrow-left
-      flycheck-fringe-bitmap-double-arrow-left)
+      'flycheck-fringe-bitmap-dash (make-vector 2 #b11111111))
     (define-fringe-bitmap
-      'flycheck-fringe-bitmap-double-arrow-left-hi-res
-      flycheck-fringe-bitmap-double-arrow-left-hi-res
-      nil 16)
+      'flycheck-fringe-bitmap-dash-hi-res (make-vector 4 #b1111111111111111) nil 16)
+    (define-fringe-bitmap
+      'flycheck-fringe-bitmap-continuation [#b00000100] nil nil '(center repeat))
     (flycheck-redefine-standard-error-levels
      nil
-     (cons 'flycheck-fringe-bitmap-double-arrow-left
-           'flycheck-fringe-bitmap-double-arrow-left-hi-res)))
+     (cons 'flycheck-fringe-bitmap-dash
+           'flycheck-fringe-bitmap-dash-hi-res)))
 
   ;; https://www.flycheck.org/en/latest/user/error-list.html#tune-error-list-display
   (add-to-list 'display-buffer-alist
@@ -158,7 +167,7 @@
 
 
 ;; TODO:
-;;  - [ ] tweak abbrev completions for company (SS expands into S.*S.*)
+;;  - [ ] tweak abbrev completions (SS expands into \\S[a-z]*S[a-z]*)
 (use-package rust-mode
   :ensure
   :init
@@ -168,6 +177,7 @@
     (display-fill-column-indicator-mode))
   :hook (rust-mode . my/rust-mode/hook)
   :bind (:map rust-mode-map
+              ("s-b" . cargo-process-build)
               ("C-c c" . flycheck-buffer))
   :config
   ;; https://www.emacswiki.org/emacs/EmacsSyntaxTable
@@ -197,8 +207,10 @@
 ;; https://github.com/emacs-lsp/lsp-ivy
 ;; https://github.com/emacs-lsp/lsp-haskell
 
-(use-package eldoc :delight) ; TODO: useful with tweaks
-
+(use-package eldoc
+  :delight
+  :config
+  (setq eldoc-idle-delay 0))
 
 (use-package yaml-mode :ensure)
 (use-package dockerfile-mode :ensure)
@@ -211,6 +223,16 @@
          ("\\.md\\'" . markdown-mode)
          ("\\.markdown\\'" . markdown-mode))
   :init (setq markdown-command "multimarkdown"))
+
+
+(use-package help-mode
+  :bind (:map help-mode-map
+              ("b" . help-go-back)
+              ("f" . help-go-forward)
+              ("p" . previous-line)
+              ("n" . next-line)
+              ("s-i" . help-view-source)))
+
 
 
 ;; https://github.com/coldnew/eshell-autojump/issues/3

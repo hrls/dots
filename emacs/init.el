@@ -104,16 +104,19 @@
 (global-set-key [?\t] #'omni-func)
 ;; (setq tab-always-indent 'complete) ; one day w/ CAPF support
 
+(global-set-key (kbd "C-4") #'delete-other-windows) ; TODO: make hydra for windows commands
 (global-set-key (kbd "C-a") #'my/ctrl-a-move-beginning-of)
 (global-set-key (kbd "C-e") #'my/ctrl-e-move-end-of)
 (global-set-key (kbd "C-w") #'my/ctrl-w-kill)
+(global-set-key (kbd "C-t") #'my/ctrl-t)
 (global-set-key (kbd "C-8") #'my/highlight)
 (global-set-key (kbd "C-*") #'my/unhighlight)
 (global-set-key (kbd "C-x i") #'ielm) ; TODO: in new selected frame
+(global-set-key (kbd "C-x e") #'eshell)
 
-(global-set-key (kbd "s-x") #'execute-extended-command)
 (global-set-key (kbd "s-/") #'comment-or-uncomment-region)
-(global-set-key (kbd "s-i") #'xref-find-definitions-other-window)
+(global-set-key (kbd "s-i") #'xref-find-definitions)
+(global-set-key (kbd "s-I") #'xref-find-definitions-other-frame)
 
 
 (define-key prog-mode-map [s-mouse-1] #'xref-find-definitions-at-mouse)
@@ -124,13 +127,14 @@
 ;; C-j
 ;; C-x f
 ;; s-b for build
+;; s-{+/0/-} already duplicated as C-x C-{+/0/-}
 
 
 ;;; Etc tweaks
 (global-auto-revert-mode 1)
 
 (require 'saveplace)
-(setq-default save-place t)
+(save-place-mode 1)
 
 (require 'server)
 (unless (server-running-p) (server-start))
