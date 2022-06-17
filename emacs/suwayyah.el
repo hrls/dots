@@ -54,14 +54,11 @@
   (call-interactively #'unhighlight-regexp))
 
 
-(defun my/ctrl-t (_rbegin _rend)
-  (interactive "r")
-  (if (use-region-p)
-      (message "region is active")
-    (message "region isn't active"))
-  (message "begin %s" _rbegin)
-  (message "end %s" _rend))
-
+(defun my/ctrl-t ()
+  (interactive)
+  (message "point: %s" (point))
+  (print-company-variables (company-capture :ctrl-t))
+  )
 
 
 ;; *-mode: navigate vi-like, edit emacs way
