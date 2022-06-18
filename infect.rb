@@ -15,13 +15,39 @@ def dir(base, *subs)
   dir.realpath
 end
 
-# TODO: relax context as current cwd only
-def github(repo)
+# TODO:
+# - relax context as current cwd only
+# - switch back from some branch to master / main when branch: nil
+# - save updates into stash
+def github(repo, branch: nil)
   local = Pathname.new(repo.split('/').last)
-  if (local / '.git').exist?
-    system "git -C #{local.realpath} pull"
+
+  unless (local / '.git').exist?
+    git_clone = "git clone https://github.com/#{repo}"
+    git_clone << " --branch #{branch}" unless branch.nil?
+    return system git_clone
+  end
+
+  git = -> (sub, *mods) {
+    command = "git -C #{local.realpath} #{sub}"
+    if mods.any? :stdout
+      stdout = `#{command}`
+      stdout if $?.success? or throw :fail, command
+    else
+      system command
+    end
+  }
+
+  git.call('fetch --all')
+  current = git.call('branch --show-current', :stdout).strip
+
+  # TODO: check refs, local branch must track remote one
+  if branch.nil? || current == branch
+    git.call('pull')
   else
-    system "git clone https://github.com/#{repo}"
+    warn "current branch is #{current}, switching to #{branch}"
+    git.call("checkout #{branch}")
+    git.call("pull")
   end
 end
 
@@ -106,6 +132,13 @@ module Emacs
   def self.scripts
     lnx Scripts, to: dir(Target / 'elisp')
   end
+
+  def self.patches
+    FileUtils.cd(dir(Target / 'mods'), verbose: true)
+
+    # https://github.com/flycheck/flycheck/pull/1948
+    github "hrls/flycheck", branch: "fix/find-cargo-subcommand"
+  end
 end
 
 module Vim
@@ -163,6 +196,7 @@ if __FILE__ == $PROGRAM_NAME
   Emacs.init
   Emacs.themes
   Emacs.scripts
+  Emacs.patches
 
   Vim.rc
   Vim.plugins

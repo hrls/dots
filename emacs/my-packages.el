@@ -126,7 +126,7 @@
 
 
 (use-package flycheck
-  :ensure
+  :load-path "~/.emacs.d/mods/flycheck"
   :hook (after-init . global-flycheck-mode)
   :bind (("C-0" . flycheck-next-error)      ; C-)
          ("C-9" . flycheck-previous-error)) ; C-(
