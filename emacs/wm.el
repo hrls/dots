@@ -1,13 +1,21 @@
 (provide 'wm)
 
+;; https://www.masteringemacs.org/article/demystifying-emacs-window-manager
+
 (defun my/cmd-w-kill ()
   "Close window, or frame, or kill buffer"
   (interactive)
   (cond ((< 1 (length (window-list))) (delete-window))
         ((< 1 (length (frame-list))) (delete-frame))
         (t
-         (message "Buffer was killed by greedy W")
-         (kill-buffer))))
+         (kill-buffer)
+         (if (not (get-buffer "*Messages*"))
+             (progn
+               (message "GC, cause there no more to do")
+               (garbage-collect))
+           (message "Buffer was killed by greedy W")))))
+
+
 
 (defun make-frame-at-center ()
   (interactive)
@@ -61,6 +69,7 @@
 
 (global-set-key (kbd "s-w") 'my/cmd-w-kill)
 (global-set-key (kbd "s-n") 'make-frame-at-center)
+(global-set-key (kbd "s-N") (lambda () (interactive) (message "free binding")))
 (global-set-key (kbd "s-<f11>") 'ns-do-hide-others)
 
 (global-set-key (kbd "s-1") (lambda () (interactive) (select-nth-visible-frame 1)))
@@ -68,10 +77,13 @@
 (global-set-key (kbd "s-3") (lambda () (interactive) (select-nth-visible-frame 3)))
 (global-set-key (kbd "s-4") (lambda () (interactive) (select-nth-visible-frame 4)))
 
+(setq split-width-threshold nil) ; disables side-panel buffers
+
 
 ;; TODO: save in custom.el
 ;; defcustom wm-initial-frame-alist
 ;; setq initial-frame-alist wm-initial-frame-alist
+;; - make window title easy readable for instant jump
 
 (defun wm-save-selected-frame-as-initial ()
   (interactive)

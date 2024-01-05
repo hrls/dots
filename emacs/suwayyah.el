@@ -20,6 +20,8 @@
   ;;     (forward-paragraph)))
 
 (defun my/ctrl-w-kill ()
+  ;; TODO:
+  ;; when (company--active-p) -> delete word from completion candidate (ingore kill ring)
   (interactive)
   (call-interactively
    (if (use-region-p) #'kill-region #'backward-kill-word)))
@@ -41,6 +43,8 @@
       (let ((_region (buffer-substring-no-properties _rbegin _rend)))
         (highlight-phrase (rx (literal _region)))
         (deactivate-mark))
+    ;; TODO: hl word when no symbol at point
+    ;; http://xahlee.info/emacs/emacs/elisp_thing-at-point.html
     (call-interactively #'highlight-symbol-at-point)))
 
 (defun my/unhighlight ()
@@ -54,14 +58,18 @@
   (call-interactively #'unhighlight-regexp))
 
 
-(defun my/ctrl-t (_rbegin _rend)
+(defun my/ctrl-t (beg end)
   (interactive "r")
-  (if (use-region-p)
-      (message "region is active")
-    (message "region isn't active"))
-  (message "begin %s" _rbegin)
-  (message "end %s" _rend))
-
+  ;; "Reverse characters between BEG and END."
+  ;; (let ((region (buffer-substring beg end)))
+  ;;   (delete-region beg end)
+  ;;   (insert (nreverse region)))
+  (message "looking at symbol %s" (looking-at "\\_>"))
+  ;; (message "buffer local file %s" (buffer-file-name))
+  ;; (message "flycheck reported %s" (flycheck-buffer))
+  ;; (message "fringe bitmaps: %s" (fringe-bitmaps-at-pos))
+  (print-company-variables (company-capture :manual))
+  )
 
 
 ;; *-mode: navigate vi-like, edit emacs way

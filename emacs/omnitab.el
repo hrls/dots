@@ -171,6 +171,7 @@
 
   (setq company-require-match nil
         company-selection-default nil
+        company-idle-delay 0
 
         company-frontends '(comp-ttt-frontend
                             ;; company-pseudo-tooltip-unless-just-one-frontend

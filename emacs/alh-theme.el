@@ -3,12 +3,14 @@
 ;; https://coolors.co/contrast-checker
 ;; https://encycolorpedia.com
 
+;; list-colors-display
 ;; describe-face
 ;; describe-theme
 ;; list-faces-display
 
 ;; TODO:
 ;; [ ] - M-x mininuffer-prompt
+;; [ ] - eshell
 ;; [ ] - dim numbers for display-line-number-mode on inactive frames or windows
 ;; [ ] - Dark background
 
@@ -26,11 +28,12 @@
   (pal/builtin      "#324b80")
   (pal/preprocessor "#be3536")
 
-  (pal/string  "#1313b0")
+  (pal/string  "#1313b0") ; #1313b0 4169e1
   (pal/comment "#666666") ; 7011 Iron grey #52595d
   (pal/docline "#2b3f98") ; unknown color
 
   (pal/shadow "#666666")
+  (pal/phantom "#8b7765")
 
   (pal/gh/str-literal     "#162f65")
   (pal/gh/button-link     "#2e68d3") ; also used for some kws
@@ -43,7 +46,7 @@
 
   (pal/okay "#6495ed")
 
-  (pal/red   "#ff0000")
+  (pal/red   "#ff3b30") ; system red
   (pal/blue  "#0000cd")
   (pal/amber "#ffbf00")
   (pal/black "#040404"))
@@ -82,6 +85,8 @@
   (dired-directory (:inherit 'font-lock-type-face))
   (dired-symlink (:inherit 'font-lock-keyword-face :italic t :bold nil))
   (which-key-key-face (:inherit 'font-lock-constant-face :weight 'bold))
+
+  (company-preview (:background pal/bg :foreground pal/phantom))
 
   (rust-ampersand-face (:foreground pal/shadow))
   ))

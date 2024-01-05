@@ -17,7 +17,7 @@
 ;;; GUI
 ;;; TODO: make window scrollable by touchpad on horizontal axis
 (set-default 'cursor-type 'hbar)
-;; (set-face-font 'variable-pitch "Helvetica:size=13")
+(set-face-font 'variable-pitch "Georgia:size=15") ;; Helvetica Neue:size=15 Verdana:size=14
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
 (fringe-mode '(0 . 13))
@@ -34,10 +34,20 @@
 (setq use-dialog-box nil)
 (defalias 'yes-or-no-p 'y-or-n-p)
 
+;; NeXTSTEP
+(when (string-equal system-type "darwin")
+  (setq
+   ns-use-native-fullscreen nil
+   ns-alternate-modifier 'meta
+   ns-right-alternate-modifier 'meta))
+
 
 ;;; Text
 (setq-default standard-indent 4
               tab-width 4
+              c-basic-offset 4
+              sgml-basic-offset 4
+              css-indent-offset 2
               indent-tabs-mode nil
               truncate-lines t)
 
@@ -45,7 +55,7 @@
       query-replace-highlight t
       kill-whole-line t)
 
-;; (toggle-truncate-lines 1) ;; word wrap off
+(toggle-word-wrap) ;; when (toggle-truncate-lines)
 (column-number-mode t)
 (show-paren-mode t)
 (delete-selection-mode t)
@@ -63,7 +73,7 @@
   "Like \\[dired-jump] (dired-jump) but in other window." t)
 (define-key global-map "\C-x\C-j" 'dired-jump)
 (define-key global-map "\C-x4\C-j" 'dired-jump-other-window)
-
+(define-key dired-mode-map (kbd "<mouse-2>") 'dired-mouse-find-file)
 
 ;;; Windows
 ;;; https://www.gnu.org/software/emacs/manual/html_node/emacs/Windows.html
@@ -88,7 +98,8 @@
 (defun prog-mode-tweaks ()
   (setq display-line-numbers-width 3
         show-trailing-whitespace t)
-  (display-line-numbers-mode))
+  (display-line-numbers-mode)
+  (toggle-truncate-lines 1))
 
 (add-hook 'prog-mode-hook 'prog-mode-tweaks)
 
@@ -115,13 +126,20 @@
 (global-set-key (kbd "C-x i") #'ielm) ; TODO: in new selected frame
 (global-set-key (kbd "C-x e") #'eshell)
 
-(global-set-key (kbd "s-/") #'comment-or-uncomment-region)
+;; Command is new Meta
+(global-set-key (kbd "s-/") #'comment-or-uncomment-region) ; comment-dwim
 (global-set-key (kbd "s-i") #'xref-find-definitions)
 (global-set-key (kbd "s-I") #'xref-find-definitions-other-frame)
+;; https://www.emacswiki.org/emacs/NavigatingParentheses
+(global-set-key (kbd "C-s-n") #'forward-list)
+(global-set-key (kbd "C-s-p") #'backward-list)
 
 
 (define-key prog-mode-map [s-mouse-1] #'xref-find-definitions-at-mouse)
 (define-key prog-mode-map [C-return] #'my/indent-and-return)
+
+(global-unset-key (kbd "C-<wheel-down>"))
+(global-unset-key (kbd "C-<wheel-up>"))
 
 ;; Free bindings
 ;; C-t
