@@ -12,8 +12,9 @@ d_pw() {
            --volume $PWD:/${dir} \
            --workdir /${dir} \
            --ulimit nofile=50000:50000 \
-           --cpus 4 \
+           --cpus 3 \
            --memory $(bc <<< '8 * 1024^3') \
+           --publish-all \
            $*
 }
 

@@ -9,6 +9,7 @@
 	autocrlf = input
 
 [alias]
+	t   = tag
 	f   = fetch --multiple
 	fa  = fetch --all --tags
 	p   = pull --ff-only
@@ -19,6 +20,7 @@
 	co  = checkout
 	com = checkout MERGE_HEAD
 	df  = diff
+	ds  = diff --stat
 	dfs = diff --staged
 	r   = rebase
 	ri  = rebase --interactive
@@ -31,9 +33,9 @@
 	url = remote get-url --all origin
 	append = commit --amend --no-edit
 	brd = !sh -c 'git push $1 --delete $2' # g brd origin unused
-	brm = !sh -c 'git branch --list --merged | grep --invert-match $(git branch --show-current) | xargs git branch --delete'
+	brm = !sh -c 'git branch --list --merged | grep --invert-match $(git branch --show-current) | xargs -I _ git branch --delete _'
 
-	l   = !sh -c 'git log --oneline --reverse --max-count=$(($(tput lines) / 2))' # limit output by half of term lines
+	l   = log --reverse --oneline # --max-count=$(($(tput lines) / 2)) ; limit output by half of term lines
 	ll  = log --reverse --pretty=tformat:'%C(reset)%C(yellow)%h%C(reset) - %C(blue)%an%C(reset): %s %C(dim)(%ar)%C(reset)' # TODO: %d ref name
 
 [push]

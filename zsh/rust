@@ -6,7 +6,7 @@ alias car=cargo
 alias ca='car ca'
 alias std='open -a Safari $(rustup doc --std --path)'
 alias rsdoc='cargo doc --no-deps --open'
-alias tomls='fd --type file --extension toml'
+alias -g tomls='$(fd --type file --extension toml)'
 
 # TODO: cargo list | tail -n +2 | awk '{print $1}' -
 cargo_cmds=(
