@@ -23,7 +23,7 @@ def github(repo, branch: nil)
   local = Pathname.new(repo.split('/').last)
 
   unless (local / '.git').exist?
-    git_clone = "git clone https://github.com/#{repo}"
+    git_clone = "git clone git@github.com:#{repo}.git"
     git_clone << " --branch #{branch}" unless branch.nil?
     return system git_clone
   end
@@ -112,6 +112,16 @@ module Zsh
   end
 end
 
+module Nvim
+  Src = This / 'nvim'
+
+  Target = dir(Config / 'nvim')
+
+  def self.rc
+    lnx Src, to: Target
+  end
+end
+
 module Emacs
   Els = This / 'emacs'
 
@@ -186,23 +196,25 @@ end
 
 
 if __FILE__ == $PROGRAM_NAME
-  Zsh.()
+  # Zsh.()
 
-  Env.()
-  Env.configs
-  Env.extras
-  Env.hushlogin
+  # Env.()
+  # Env.configs
+  # Env.extras
+  # Env.hushlogin
 
-  Emacs.init
-  Emacs.themes
-  Emacs.scripts
-  Emacs.patches
+  # Emacs.init
+  # Emacs.themes
+  # Emacs.scripts
+  # Emacs.patches
 
-  Vim.rc
-  Vim.plugins
-  Vim.helptags
+  # Vim.rc
+  # Vim.plugins
+  # Vim.helptags
+  
+  Nvim.rc
 
-  lnx This / 'scripts', to: Executables
+  # lnx This / 'scripts', to: Executables
 else
   # Modules.*.for_each(Module.*)
   # TODO: prompt lists available modules and their commands

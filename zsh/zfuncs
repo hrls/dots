@@ -1,4 +1,4 @@
-# -*- mode: shell-script; -*-
+# vim: set ft=zsh:
 
 ## tips
 ## unless ... todo
@@ -61,7 +61,7 @@ function topall() {
     print $tpids
 }
 
-function list_colors() {
+function lscolors() {
 	for color in $(seq 0 255)
 	do
 		for style in "38;5"

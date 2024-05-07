@@ -1,26 +1,29 @@
-# -*- mode: shell-script; -*-
+# vim: set ft=zsh:
 
 alias d=docker
 
-d_pw() {
+dre() {
     local dir=$(basename $PWD)
 
     docker run \
-           --interactive \
-           --tty \
-           --rm \
-           --volume $PWD:/${dir} \
-           --workdir /${dir} \
-           --ulimit nofile=50000:50000 \
-           --cpus 3 \
-           --memory $(bc <<< '8 * 1024^3') \
-           --publish-all \
-           $*
+        --interactive \
+        --tty \
+        --rm \
+        --hostname ${dir} \
+        --volume $PWD:/${dir} \
+        --workdir /${dir} \
+        --cpus 3 \
+        --memory $(bc <<< '6 * 1024^3') \
+        --ulimit nofile=50000:50000 \
+        $*
+    # --publish port:port image
 }
 
-alias d_run='docker run --interactive --tty --rm'
+drun() {
+    docker run --interactive --tty --rm $*
+}
 
-d_gc() {
+dgc() {
     docker system prune --force --all
     docker volume prune --force
 }

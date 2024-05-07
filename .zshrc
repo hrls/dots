@@ -4,6 +4,7 @@ export LC_ALL=en_US.UTF-8 # macOS
 # XDG-like Base Directory Specification
 export CONFIG_HOME=$HOME/.config
 export DATA_HOME=$HOME/.local/var
+# /Users/hrls/Library/Application Support
 
 export WORDCHARS=${WORDCHARS/\/} # rm path separator
 
@@ -25,8 +26,11 @@ export src=$HOME/src
 export tmp=$HOME/tmp
 
 autoload -U colors && colors
-export LSCOLORS='Exfxcxdxbxegedabagacad'
+# https://geoff.greer.fm/lscolors/
+export LSCOLORS='exfxCxCxBxgxdxbhbheheh'
 export CLICOLOR_FORCE=true
+BLK="04" CHR="04" DIR="04" EXE="00" REG="00" HARDLINK="00" SYMLINK="06" MISSING="00" ORPHAN="01" FIFO="0F" SOCK="0F" OTHER="02"
+export NNN_FCOLORS="$BLK$CHR$DIR$EXE$REG$HARDLINK$SYMLINK$MISSING$ORPHAN$FIFO$SOCK$OTHER"
 
 if [[ $(whence -p bat) ]]; then
     export BAT_THEME='1337'
@@ -69,11 +73,11 @@ alias tp='titled ∆ htop --sort PERCENT_CPU'
 alias ips='ifconfig | grep inet' # todo: filter loopback / inet6
 alias pc='rsync -Ph' # -P same as --partial --progress
 alias md5sum='md5 -r'
-alias ra='titled 🏹 ranger'
 alias py='python3 -B'
 alias pyre='py -i'
 
 # Git aliases and typos
+# NOTE: do not expand aliases defined in .gitconfig
 alias g=git
 alias gs='git s'
 alias gs.='git s .'
@@ -141,16 +145,20 @@ titled() {
 chpwd_functions=(${chpwd_functions[@]} 'dir_title')
 
 function git_head() {
-    local ref_head=`git symbolic-ref HEAD 2>/dev/null | cut -d / -f 3-`
+    # TODO: dim [tag, head] marks
+    # TODO: make a few calls as possible
+    local ref_head=`git symbolic-ref --quiet --short HEAD 2>/dev/null`
     if [[ $ref_head != '' ]]; then
-        echo " $ref_head"
+        echo ' '$ref_head
     else
-        tag=`git describe --exact-match HEAD 2>/dev/null`
-        if [[ $? == 0 ]]; then
-            echo " tag: $tag"
+        local tag=`git describe --exact-match HEAD 2>/dev/null`
+        if [[ $? == 0 && $tag != '' ]]; then
+            echo -n ' tag' $tag
         else
-            hc=`git rev-parse --short HEAD 2>/dev/null`
-            if [[ $? == 0 ]]; then echo " head: $hc"; fi
+            local head=`git rev-parse --short HEAD 2>/dev/null`
+            if [[ $? == 0 && $head != '' ]]; then
+                echo -n ' head' $head
+            fi
         fi
     fi
 }
@@ -182,10 +190,14 @@ function git_nstashes() {
 
 if [[ $TERM != 'dumb' ]]; then
     bindkey -e
-    # todo: custom root prompt
-    # todo: prepend or rprompt user@host %{\e[38;5;249m%}%n%{\e[38;5;75m%}@%{\e[38;5;249m%}%m
+
+    # delimiters: ? λ
+    # TODO:
+    # - replace endl symbol for nnn terminal (${nnn} or $NNNLVL vars)
+    # - custom root prompt #
+    # - prepend or rprompt user@host %{\e[38;5;249m%}%n%{\e[38;5;75m%}@%{\e[38;5;249m%}%m
     setopt prompt_subst
-    PROMPT=$'$(nonlocal_prefix)%{\e[38;5;195m%}%~%{\e[38;5;222m%}$(git_head)%{\e[38;5;176m%} λ %{\e[0m%}'
+    PROMPT=$'$(nonlocal_prefix)%{\e[38;5;195m%}%~%{\e[38;5;222m%}$(git_head)%{\e[38;5;176m%} 𝔣 %{\e[0m%}'
 
     # http://pawelgoscicki.com/archives/2012/09/vi-mode-indicator-in-zsh-prompt/
     vim_ins_mode="%{$fg[cyan]%}~%{$reset_color%}"
@@ -208,8 +220,11 @@ if [[ $TERM != 'dumb' ]]; then
         return $(( 128 + $1 ))
     }
 
+    # TODO: _ ₍₋₁₎ , _ 𝔦
+    # the only viable option to show return code:
+    #   inlined postfix for the new prompt and clear it on first keypress
     non_null_retval() {
-        retval=$?
+        local retval=$?
         [[ $retval != 0 ]] && echo " =$retval"
     }
     # RPROMPT='$(non_null_retval) ${vim_mode}'
@@ -218,9 +233,7 @@ if [[ $TERM != 'dumb' ]]; then
 fi
 
 
-function load() {
-    source "$HOME/.zsh/$1"
-}
+function load() { source "$HOME/.zsh/$1" }
 
 # fpath+=~/.hidden/zsh
 # todo: fpath / autoload / source
@@ -245,18 +258,13 @@ load zty
 case `uname -s` in
     Darwin)
         export os='macos'
-        # TODO: switch back to Terminal.app if new frame was killed w/o switching
-        #   fallback to alternate-editor crashes external $EDITOR call such as 'git commit'
-        export EDITOR="emacsclient --create-frame --alternate-editor='open -a Emacs'"
+        export EDITOR='nvim'
 
-        # TODO: '| e -' read from stdin
-        e() {
-            case $# in
-                0) (eval "$EDITOR --no-wait .") ;;
-                # TODO: emacsclient cant handle multiple files at once, try for loop
-                *) (eval "$EDITOR --no-wait $@") ;;
-            esac
-        }
+        # Smooth [e]dit
+        # 'echo pipe | e -' read from stdin
+        e() { eval "$EDITOR $@" }
+        ew() { echo 'unimplemented: steal active window from another editor instance' }
+
         ;;
     Linux)
         export os='linux'
@@ -285,6 +293,11 @@ load-dot-env() {
 add-zsh-hook chpwd load-dot-env
 
 # Batteries +[===]
+
+# https://github.com/jarun/nnn
+# TODO: respect LSCOLORS scheme
+alias ra='titled 🗡️ nnn -HoU'
+
 
 ## FZF
 ## https://github.com/junegunn/fzf#settings
