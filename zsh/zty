@@ -1,4 +1,4 @@
-# -*- mode: shell-script; -*-
+# vim: set ft=zsh:
 
 # Scope - $PWD-related functions
 
@@ -76,3 +76,17 @@ function scope-init() {
     fi
     cat .scope
 }
+
+
+autoload -U add-zsh-hook
+
+load-dot-env() {
+    # TODO: exit when leaves dir in ${current_env}
+    if [[ -f .env && -r .env ]]; then
+        # TODO: launch new session and source .env inside
+        source .env && current_env=$PWD && echo "env loaded"
+    fi
+}
+
+# TODO: new tab in Terminal.app doesn't load .env
+add-zsh-hook chpwd load-dot-env

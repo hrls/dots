@@ -1,38 +1,21 @@
-# -*- mode: shell-script; -*-
+# vim: set ft=zsh:
 
 export RUST_BACKTRACE=1
 
+alias c=cargo
 alias car=cargo
-alias ca='car ca'
-alias std='open -a Safari $(rustup doc --std --path)'
-alias rsdoc='cargo doc --no-deps --open'
+alias ca='cargo clippy --all'
+
+alias rsstd='open -a Safari $(rustup doc --std --path)'
+alias rsdoc='cargo doc --open' # --no-deps
+
 alias tomls='fd --type file --extension toml'
 
-# TODO: cargo list | tail -n +2 | awk '{print $1}' -
-cargo_cmds=(
-    clean generate-lockfile
-    check build run test bench
-    fmt doc
-    new init
-    update search install uninstall
-    clippy
-    add rm upgrade
-    watch
-)
-compctl -k cargo_cmds cargo
-
-
-rustup_cmds=(
-    show update default toolchain target component override
-    run which doc man self set completions help
-)
-compctl -k rustup_cmds rustup
-
+# TODO:
+# https://rust-lang.github.io/rustup/installation/index.html#enable-tab-completion-for-bash-fish-zsh-or-powershell
+# rustup completions zsh > ~/.zfunc/_rustup
+# XXX: this script launch `rustc --print sysroot`
+# rustup completions zsh cargo > ~/.zfunc/_cargo
 
 # RUST_SRC_PATH=$(rustc --print sysroot)/lib/rustlib/src/rust/src
 
-# rustup completions
-# cargo
-#
-# TODO: init complete list based on 'bin help --help' output
-#       cron this task and log when new arg token is available

@@ -1,65 +1,28 @@
-# -*- mode: shell-script; -*-
+# vim: set ft=zsh:
 
 alias d=docker
 
-d_pw() {
+alias drun='docker run --interactive --tty --rm'
+
+dre() {
     local dir=$(basename $PWD)
 
     docker run \
-           --interactive \
-           --tty \
-           --rm \
-           --volume $PWD:/${dir} \
-           --workdir /${dir} \
-           --ulimit nofile=50000:50000 \
-           --cpus 4 \
-           --memory $(bc <<< '8 * 1024^3') \
-           $*
+        --interactive \
+        --tty \
+        --rm \
+        --hostname ${dir} \
+        --volume $PWD:/${dir} \
+        --workdir /${dir} \
+        --cpus 4 \
+        --memory $(bc <<< '12 * 1024^3') \
+        --ulimit nofile=50000:50000 \
+        $*
 }
 
-alias d_run='docker run --interactive --tty --rm'
-
-d_gc() {
-    docker system prune --force --all
-    docker volume prune --force
-}
 
 env_docker() {
     docker_bins='/Applications/Docker.app/Contents/Resources/bin'
     [[ -d ${docker_bins} ]] && export PATH=${docker_bins}:$PATH
 }
 
-docker_cmds=(
-    container
-    image
-    network
-    system
-    volume
-
-    build
-    commit
-    exec
-    images
-    import
-    info
-    inspect
-    kill
-    login
-    logs
-    ps
-    push
-    rename
-    restart
-    rm
-    rmi
-    run
-    save
-    start
-    stats
-    stop
-    tag
-    top
-    update
-    wait
-)
-compctl -k docker_cmds docker

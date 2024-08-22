@@ -170,7 +170,7 @@ function load() { source "$HOME/.zsh/$1" }
 
 load zfuncs
 load tmux
-load docker; env_docker
+load docker # env_docker
 load rust
 load haskell
 # load zty # TODO: incomplete af

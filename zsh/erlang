@@ -1,6 +1,8 @@
-# -*- mode: shell-script; -*-
+# vim: set ft=zsh:
 
 export ERL_FLAGS='+K true'
-export MANPATH=$MANPATH:/usr/local/opt/erlang/lib/erlang/man
+
+# TODO: $(brew --prefix) or use 'erl -man'
+export MANPATH="$MANPATH:/usr/local/opt/erlang/lib/erlang/man"
 
 alias erltags="ctags -R ./src ./deps/*/src"

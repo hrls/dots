@@ -1,4 +1,4 @@
-# -*- mode: shell-script; -*-
+# vim: set ft=zsh:
 
 ## tips
 ## unless ... todo
@@ -55,12 +55,6 @@ function ret() {
     return $ret_code
 }
 
-function topall() {
-    print "not implented yet"
-    tpids=$(ps ax | grep "$1")
-    print $tpids
-}
-
 function list_colors() {
 	for color in $(seq 0 255)
 	do
@@ -76,10 +70,14 @@ function list_colors() {
 
 # TODO: include
 function list_shared() {
-    zsfs='/usr/local/share/zsh/site-functions'
+    zsfs="$(brew --prefix)/share/zsh/site-functions"
     if [[ -d $zsfs ]]; then
         for zsf in $(ls $zsfs); do
             echo $zsf
         done
     fi
+}
+
+rosetta() {
+    ps -p `fuser /usr/libexec/rosetta/runtime | sed -e 's/.*: //' | sed -e 's/ /,/g'`
 }
