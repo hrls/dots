@@ -1,0 +1,18 @@
+#!/usr/bin/env zsh
+
+# Sublime Merge external editor wrapper
+#
+# Use the following in Preferences - Editor
+# - Editor: path to this script
+# - Editor Argument Format: ${file} ${line} ${col}
+
+# TODO:
+# - [ ] make it usable as external tab editor for nnn
+
+set -ue
+
+local nvim="nvim $1 +'call cursor($2, $3)'"
+
+osascript \
+    -e 'tell application "Terminal" to activate' \
+    -e "tell application \"Terminal\" to do script \"${nvim}\""
