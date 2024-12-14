@@ -184,6 +184,12 @@ module Vim
   end
 end
 
+module Nvim
+  def self.call
+    ln This / 'nvim', to: Config
+  end
+end
+
 
 if __FILE__ == $PROGRAM_NAME
   Zsh.()
@@ -193,14 +199,7 @@ if __FILE__ == $PROGRAM_NAME
   Env.extras
   Env.hushlogin
 
-  Emacs.init
-  Emacs.themes
-  Emacs.scripts
-  Emacs.patches
-
-  Vim.rc
-  Vim.plugins
-  Vim.helptags
+  Nvim.()
 
   lnx This / 'scripts', to: Executables
 else
