@@ -7,6 +7,14 @@ function git_info()
     return { refname = refname, root = root }
 end
 
+vim.api.nvim_create_user_command(
+  'Cdr', -- should it be buffer local command or not?
+  function()
+    local gi = git_info() -- TODO: check if root exists
+    vim.api.nvim_set_current_dir(gi.root)
+  end,
+  { desc = 'Set current dir to Git root' })
+
 local function statusline()
     local gi = git_info()
     local root = gi.root -- TODO: de-normalize this path to show ~
@@ -17,7 +25,6 @@ local function statusline()
         root, refname, '%F'
     )
 end
-
 
 vim.opt.statusline = statusline()
 

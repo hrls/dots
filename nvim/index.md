@@ -9,32 +9,30 @@ lua for scripting
 - Discussion of JavaScript vs Lua <https://github.com/vim/vim/pull/5198#issuecomment-554693754>
 - Discussion Python embedding <https://lobste.rs/s/pnuak4/mercurial_s_journey_reflections_on#c_zshdwy>
 
-### Bindings
-C-c do not fire `au InsertLeave`
-C-d in normal mode is free to use 
-
-### prog-mode
+## prog-mode
 tune words :h word-motions
-
+### source nav
+Jump to local - using Telescope as fuzzy viewer, query tree-sitter and preview / jump-to
 
 ### Status bar
 - [ ] show the file full path
-- [ ] show background tasks (there is ALE cargo task at least)
+- [ ] show background tasks (there is ALE cargo task at least, :tags scanning)
 
 
 ### j-style navigation for envi
-C-] j to subj
-C-0 j back
-C-t j back (returns back after jumping to :h x)
+`C-]` j to subj
+`C-0` j back
+`C-t` j back (returns back after jumping to :h x)
+`gO` table of contents (used in help filetype). Maybe this one can be re-used as go to import or local file definition.
+
+### Bindings
+C-c do not fire `au InsertLeave`
+C-d in normal mode is free to use 
 
 ### Benchmarks
 ```sh
 time nvim --startuptime startup.log -c exit
 ```
-
-# Navigation 
-`gO` table of contents (used in help filetype).
-Maybe this one can be re-used as go to import or local file definition.
 
 # rel/path/to/
 Usually there are few locations (nested implied):
@@ -55,7 +53,3 @@ System sources: bundle name? TODO
 
 ## Tricks to remember
 `C-f` when `:` or `/` is active
-
-## Bindings to..
-`s-d` in visual mode (like `s-y`) cut into system pasteboard
-

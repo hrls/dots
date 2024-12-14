@@ -6,13 +6,17 @@ set notermguicolors
 
 set smoothscroll
 set mousescroll=ver:1,hor:1 " the same as C-e/y
+set scrolloff=1
+set sidescrolloff=3
 set nowrap
 set number
 set cursorline
+" set list
+" set listchars+=trail:_ " TODO: little bit too much for newline expanded tab
 
 " dialogs
 set confirm
-set shortmess=aOTI
+set shortmess=oOTIc
 
 " tabs, but spaces
 set smartindent
@@ -24,12 +28,14 @@ set shiftwidth=4
 " swiper
 " TODO: show the preview window
 set incsearch
+set inccommand=split
 set hlsearch
 set ignorecase
 set smartcase
 set shortmess+=s
 " C-g/t for next/prev match when search pattern edit is active
 
+set showtabline=2
 set laststatus=2
 set statusline=%F
 " set statusline+=%#LineNr#
@@ -38,7 +44,8 @@ set statusline+=%{StatuslineGit()}
 set noshowmode " cursor indicates mode
 set ruler
 set wildmenu
-set wildchar=<tab>
+set wildchar=<Tab>
+set wildoptions=pum " TODO: fuzzy works for :set wld but not for :h wld
 
 set splitbelow
 set splitright
@@ -75,7 +82,7 @@ endfunction
 " C-h (dup of Backspace) is ready to use
 nnoremap / /\v
 nnoremap ? ?\v
-nnoremap <C-s> :write<Enter>
+nnoremap <C-s> :write<CR>
 imap <C-s> <Esc>/
 
 " jump around wrapped text
@@ -85,17 +92,21 @@ nnoremap k gk
 " copy to system clipboard (default mapping on Windows is redo)
 " TODO: yY should acts like 'copy the whole line into pasteboard'
 " state('o') operator pending is can be used for this catch
-vnoremap Y "+y 
+vnoremap Y "+y
 vnoremap D "+d
 
-noremap <leader>8 :nohlsearch<Enter>
+noremap <Esc> :nohlsearch<CR><Esc>
 " :let @/ = "" " to clear the last used search pattern
 
 " help pages have useful map `gO` for table of contents
 
 " Window management
-" Num C-S-6 switches to buffer #Num
-noremap <leader>4 <C-w>o
+" TODO: Num C-S-6 switches to buffer #Num
+noremap <C-h> <C-w>h
+noremap <C-j> <C-w>j
+noremap <C-k> <C-w>k
+noremap <C-l> <C-w>l
+noremap <C-w>t :tabnew<CR>
 
 
 " Project-related (git, find path)
@@ -103,7 +114,11 @@ set wildignore+=*/.git/*
 
 set autochdir
 
-" TODO: netrw should set title
+" TODO:
+" - [ ] netrw should set Terminal title
+" FIXME:
+" - [ ] sometimes using :Explore reports :pwd to one level above \
+"   and therefore Enter to edit creates new empty buffer for file under cursor
 let g:netrw_keepdir = 0
 
 " TODO: doesnt works but as idea for future impl

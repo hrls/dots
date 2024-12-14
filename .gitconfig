@@ -9,7 +9,7 @@
 	autocrlf = input
 
 [alias]
-	f   = fetch --multiple
+	f   = fetch --all --multiple
 	fa  = fetch --all --tags
 	p   = pull --ff-only
 	b   = branch
@@ -23,9 +23,10 @@
 	r   = rebase
 	ri  = rebase --interactive
 	rc  = rebase --continue
-	s   = status --show-stash
+
+    s   = status --show-stash
+	ss  = show --diff-merges=on 
 	sl  = stash list
-	ss  = stash show
 
 	sub = submodule
 	url = remote get-url --all origin
