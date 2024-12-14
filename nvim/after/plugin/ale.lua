@@ -1,0 +1,3 @@
+-- TODO:
+-- [ ] clear all errors on buffer save until linter returns to prevent outdated errors when linter is active
+-- [ ] show preview window when linting process is active
