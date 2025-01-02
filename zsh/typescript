@@ -1,0 +1,5 @@
+# vim: set ft=zsh:
+
+alias ts-node-repl='npx ts-node --interactive' # --eval "export {};"';
+
+export TS_NODE_REPL_HISTORY="${DATA_HOME}/ts-node/repl_history"

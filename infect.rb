@@ -194,12 +194,14 @@ end
 if __FILE__ == $PROGRAM_NAME
   Zsh.()
 
+=begin
   Env.()
   Env.configs
   Env.extras
   Env.hushlogin
 
   Nvim.()
+=end
 
   lnx This / 'scripts', to: Executables
 else

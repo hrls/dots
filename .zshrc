@@ -172,6 +172,8 @@ load zfuncs
 load tmux
 load docker # env_docker
 load rust
+load typescript
+load solana
 load haskell
 # load zty # TODO: incomplete af
 
