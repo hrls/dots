@@ -8,7 +8,7 @@ export DATA_HOME=$HOME/.local/var
 WORDCHARS=${WORDCHARS/\/} # rm path separator
 
 # History
-HISTFILE=$DATA_HOME/.zsh_history
+HISTFILE=$HOME/.local/var/.zsh_history
 SAVEHIST=4000
 setopt inc_append_history
 setopt hist_ignore_all_dups
@@ -190,4 +190,12 @@ bindkey '^?' backward-delete-char
 # Post hooks ...
 [[ $SHLVL == 1 ]] && dir_title
 
-[[ -f ~/.private ]] && source ~/.private
+[[ -f ~/.private ]] && source ~/.private # EOF
+
+# bun completions
+[ -s "/Users/hrls/.bun/_bun" ] && source "/Users/hrls/.bun/_bun"
+
+# Added by LM Studio CLI (lms)
+export PATH="$PATH:/Users/hrls/.lmstudio/bin"
+# End of LM Studio CLI section
+

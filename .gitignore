@@ -1,4 +1,11 @@
+.claude/
+
 .git/
+.cache/
+
+run
+makefile
+.env
 
 # Emacs
 **/.\#*
@@ -6,8 +13,6 @@
 tags
 *.patch
 
-.env
-makefile
 
 # Compiled
 build/

@@ -59,3 +59,11 @@ vim.api.nvim_create_autocmd("InsertCharPre", {
     end
 })
 
+--[[
+ttt = {}
+ttt.Comlete = function()
+  local line = vim.fn.getline('.')
+  local column = vim.fn.col('.') - 1
+  return vim.fn['complete'](col, {'option1', 'option2', 'option3'})
+end
+]]

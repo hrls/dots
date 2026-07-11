@@ -95,8 +95,8 @@ module Env
   end
 
   def self.extras
-    ln This / '.psqlrc', to: Home
-    ln This / '.tcshrc', to: Home
+    # ln This / '.psqlrc', to: Home
+    # ln This / '.tcshrc', to: Home
   end
 
   def self.hushlogin
@@ -198,6 +198,10 @@ if __FILE__ == $PROGRAM_NAME
   Env.configs
   Env.extras
   Env.hushlogin
+
+  Emacs.init
+  Emacs.scripts
+  Emacs.themes
 
   Nvim.()
 

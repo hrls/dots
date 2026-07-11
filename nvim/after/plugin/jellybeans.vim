@@ -3,14 +3,15 @@
 
 let g:jellybeans_use_term_italics = 1
 
-colorscheme jellybeans
-
+" colorscheme jellybeans
 
 highlight clear CursorLine
 highlight Delimiter ctermfg=darkgrey
 highlight PmenuSel ctermbg=blue
 
-" TODO: highlight matched parens line (see :h pi_paren.txt match-parens)
+" TODO:
+" - [ ] invert cursor in normal mode, grey/green symbols on grey are almost unreadable
+" - [ ] highlight matched parens line (see :h pi_paren.txt match-parens)
 
 " Inactive windows
 highlight NormalNC ctermfg=grey

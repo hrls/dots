@@ -1,13 +1,14 @@
 # vim: set ft=zsh:
 
 export RUST_BACKTRACE=1
+export CARGO_NET_GIT_FETCH_WITH_CLI=true
 
 alias c=cargo
 alias car=cargo
 alias ca='cargo clippy --all'
 
 alias rsstd='open -a Safari $(rustup doc --std --path)'
-alias rsdoc='cargo doc --open' # --no-deps
+alias rsdoc='cargo doc --all --open'
 
 alias tomls='fd --type file --extension toml'
 

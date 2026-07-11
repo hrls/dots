@@ -1,3 +1,4 @@
+# vim: set ft=zsh:
 # -*- mode: shell-script; -*-
 
 cab() {
@@ -11,16 +12,25 @@ cab() {
     shift
 
     # FIX: init makes lib and app dirs for any --lib or --exe
-    case ${cmd} in
-        'check') (cabal new-build --flags='no-code') ;;
-        'lint') (hlint -g) ;;
-        'init')
+    case $cmd in
+        r) cab run --offline --verbose=1 $@ ;; # --verbose=3
+        check) cabal new-build --flags='no-code' ;;
+        lint) hlint -g ;;
+
+        re|repl)
+            case $1 in
+                exe) (cabal new-repl exe:$(basename $PWD)) ;;
+                lib) (cabal new-repl lib:$(basename $PWD)) ;;
+                *) (cabal new-repl $@) ;;
+            esac ;;
+
+        init)
             # configure lib|exe|libandexe flags from cabal init
             # TODO: test $1 against (lib|exe|libandexe) pattern
             # local=$1
             case $1 in
-                'lib') echo "--source-dir='lib'" ;;
-                'exe') echo "--application-dir='app'" ;;
+                lib) echo "--source-dir='lib'" ;;
+                exe) echo "--application-dir='app'" ;;
                 *) echo 'TODO: bypass all to cabal init' ;;
             esac
 
@@ -31,24 +41,20 @@ cab() {
                   --source-dir='lib' \
                   --application-dir='app' \
                   $@ ;; # --lib | --exe | --libandexe
-        'doc') echo 'not implemented yet' ;; # build deps docs
-        'install') cabal install ${1} \
-                         --installdir=$HOME/.cabal/bin \
-                         --overwrite-policy=always ;;
-        're'|'repl')
-            case "${1}" in
-                '') (cabal new-repl) ;;
-                'exe') (cabal new-repl exe:$(basename $PWD)) ;;
-                'lib') (cabal new-repl lib:$(basename $PWD)) ;;
-                *) (cabal new-repl $@) ;;
-            esac ;;
-        'r') cab run --offline --verbose=1 $@ ;; # --verbose=3
-        *) (cabal "new-${cmd}" $@) ;; # or $*
+        install)
+            cabal install ${1} \
+                --installdir=$HOME/.cabal/bin \
+                --overwrite-policy=always ;;
+
+        doc)
+            echo 'not implemented yet' ;; # build deps docs
+        *) 
+            shift
+            cabal "new-${cmd}" $@ # or $*
+            ;;
     esac
 }
 
-stack_args=(new build clean path exec ghci repl)
-compctl -k stack_args stack
 
 # stack
 # alias sr='stack ghci'

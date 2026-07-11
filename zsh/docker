@@ -3,6 +3,8 @@
 alias d=docker
 
 alias drun='docker run --interactive --tty --rm'
+alias dr=drun
+alias drr='drun debian:repl'
 
 dre() {
     local dir=$(basename $PWD)
@@ -14,10 +16,27 @@ dre() {
         --hostname ${dir} \
         --volume $PWD:/${dir} \
         --workdir /${dir} \
-        --cpus 4 \
+        --cpus 10 \
         --memory $(bc <<< '12 * 1024^3') \
         --ulimit nofile=50000:50000 \
         $*
+}
+
+dssh() {
+    local target=$1
+
+    local config="
+        Host github.com
+          AddKeysToAgent yes
+          IdentityFile ~/.ssh/id_ed25519
+    "
+
+    docker exec --user root $target mkdir -p /root/.ssh
+    docker exec --user root $target sh -c -- "echo '$config' > /root/.ssh/config"
+    docker cp $HOME/.ssh/id_ed25519 $target:/root/.ssh
+    docker exec --user root $target chown root -R /root/.ssh
+    docker exec --user root $target chmod 600 -R /root/.ssh
+    docker exec --user root $target ssh -T -o StrictHostKeyChecking=no git@github.com
 }
 
 

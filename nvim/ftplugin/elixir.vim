@@ -1,1 +1,1 @@
-autocmd FileType elixir TSBufEnable highlight | TSBufEnable indent 
+" autocmd FileType elixir TSBufEnable highlight | TSBufEnable indent 

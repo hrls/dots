@@ -1,12 +1,8 @@
 -- https://neovim.io/doc/user/intro.html#keycodes
 
-vim.g.mapleader = ' '
-
 -- nmap 0 looks like free binding
 
 -- local normal = { 'Q' = 'q', 'q' = dwim_window_exit }
-
-vim.keymap.set('n', '<leader>j', vim.cmd.Ex)
 
 vim.keymap.set('n', 'Q', 'q')
 
@@ -18,7 +14,10 @@ vim.keymap.set('n', 'q', function()
 end, { expr = true })
 
 
+
 -- insert mode 's-enter' make newline above 'C-o s-O'
 -- vim.keymap.set('i', '<S-CR>', '<Esc>O')
 
 -- :help menu
+--
+-- https://vi.stackexchange.com/questions/42235/lowercase-user-commands

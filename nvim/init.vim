@@ -1,9 +1,15 @@
 " https://learnvimscriptthehardway.stevelosh.com
 
-" disables 24-bit colors (Terminal.app doesn't support them)
+" TTY settings
 " TODO: sync value with 0.10 updates
-set notermguicolors
+set notermguicolors " disables 24-bit colors (Terminal.app doesn't support them)
 
+" Mices and Trackballs
+" TODO: enable Trackpad horizontal scrolling in normal and visual mode
+set mouse=nvi " nvi is default
+" TODO: disable scrolling in edit mode
+" imap <ScrollWheelUp> <Nop>
+" imap <ScrollWheelDown> <Nop>
 set smoothscroll
 set mousescroll=ver:1,hor:1 " the same as C-e/y
 set scrolloff=1
@@ -56,6 +62,10 @@ set noswapfile
 
 set novisualbell
 
+if !has('nvim')
+    " TODO: keep all vanilla vim options here or save them into separate file
+endif
+
 set guicursor=i-r-c-ci-cr:hor25
 autocmd VimLeave,VimSuspend * set guicursor=a:hor25-blinkon1 " restore system cursor
 
@@ -85,17 +95,25 @@ nnoremap ? ?\v
 nnoremap <C-s> :write<CR>
 imap <C-s> <Esc>/
 
+nmap <C-f> :FZF<CR>
+
 " jump around wrapped text
-nnoremap j gj
-nnoremap k gk
+nnoremap <silent> j gj
+nnoremap <silent> k gk
+" nnoremap j :silent! normal! gj<CR>
+" nnoremap k :silent! normal! gk<CR>
 
 " copy to system clipboard (default mapping on Windows is redo)
 " TODO: yY should acts like 'copy the whole line into pasteboard'
 " state('o') operator pending is can be used for this catch
+nnoremap Y "+y
 vnoremap Y "+y
+nnoremap D "+d
 vnoremap D "+d
 
-noremap <Esc> :nohlsearch<CR><Esc>
+" nnoremap <unique> t :echo 't is free'<CR>
+
+noremap <silent> <Esc> :nohlsearch<CR><Esc>
 " :let @/ = "" " to clear the last used search pattern
 
 " help pages have useful map `gO` for table of contents
@@ -111,6 +129,11 @@ noremap <C-w>t :tabnew<CR>
 
 " Project-related (git, find path)
 set wildignore+=*/.git/*
+
+" https://github.com/echasnovski/mini.nvim/issues/5
+" https://github.com/neovim/neovim/pull/20633
+set complete-=t
+set shortmess+=C
 
 set autochdir
 
@@ -132,6 +155,13 @@ autocmd TermOpen * setlocal nonumber | startinsert
 " TODO: echo works in terminal but not in nvim
 autocmd VimLeave * silent !echo -ne "\e[3 q"
 
+" persist folds/view for markdown files
+augroup MarkdownView
+    autocmd!
+    autocmd BufWinLeave *.md mkview
+    autocmd BufWinEnter *.md silent! loadview
+augroup END
+
 
 lua require('my')
 
@@ -146,4 +176,11 @@ lua require('my')
 
 
 runtime packages.vim
+
+colorscheme alh " jellybeans
+" colorscheme jellybeans
+" lua require("nvim-tree").setup()
+runtime lua/init.lua
 runtime lua/git.lua
+runtime lua/leader.lua
+

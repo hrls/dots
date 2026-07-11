@@ -16,6 +16,8 @@
 " Idle detection
 " https://neovim.io/doc/user/options.html#'updatetime'
 " https://neovim.io/doc/user/windows.html#CursorHold-example
+"
+" :Pwtab - open new terminal tab with :pwd as $PWD
 
 let s:triggers = ['.'] " TODO: re-use delimiters from filetype
 
@@ -47,3 +49,14 @@ augroup end
 
 
 " autocmd BufWritePost <sfile> ++once source <sfile>
+
+" see :h 565
+function! CleverTab()
+    if strpart( getline('.'), 0, col('.')-1 ) =~ '^\s*$'
+        return "\<Tab>"
+    else
+        return "\<C-N>"
+    endif
+endfunction
+inoremap <Tab> <C-R>=CleverTab()<CR>
+

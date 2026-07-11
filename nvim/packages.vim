@@ -14,12 +14,24 @@ Plug 'nvim-lua/plenary.nvim'
 " Plug 'nvim-lua/popup.nvim'
 
 Plug 'nanotech/jellybeans.vim' " colorscheme
+Plug 'rakr/vim-two-firewatch' " colorscheme
+Plug 'guns/xterm-color-table.vim' " :XtermColorTable
+
+Plug 'stevearc/oil.nvim'
+
+" Plug 'MunifTanjim/nui.nvim'
+" Plug 'nvim-neo-tree/neo-tree.nvim'
+
+" Plug 'preservim/nerdtree'
+" Plug 'nvim-tree/nvim-tree.lua'
+" Plug 'nvim-tree/nvim-web-devicons'
 
 " TODO: re-use builtin treesitter
 " - [ ] as this one have some error when navigating internal documentation 
 " Plug 'nvim-treesitter/nvim-treesitter', { 'tag': 'v0.9.2', 'do': ':TSUpdate' }
 
-Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.8' }
+Plug 'nvim-telescope/telescope.nvim'
+" Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.8' }
 " Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 Plug 'dense-analysis/ale'
@@ -32,3 +44,4 @@ Plug 'dense-analysis/ale'
 
 call plug#end()
 
+set rtp+=/opt/homebrew/opt/fzf

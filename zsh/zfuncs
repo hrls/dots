@@ -81,3 +81,10 @@ function list_shared() {
 rosetta() {
     ps -p `fuser /usr/libexec/rosetta/runtime | sed -e 's/.*: //' | sed -e 's/ /,/g'`
 }
+
+
+
+# TODO: automate listing and prepare completion once
+# or use default completion installed with some of packages from brew
+# stack_args=(new build clean path exec ghci repl)
+# compctl -k stack_args stack
