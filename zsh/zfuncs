@@ -83,3 +83,7 @@ function list_shared() {
         done
     fi
 }
+
+function cpu_temp() {
+    sudo powermetrics --samplers smc | grep -i "CPU die temperature"
+}
