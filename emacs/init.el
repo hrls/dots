@@ -38,6 +38,7 @@
 ;;; Text
 (setq-default standard-indent 4
               tab-width 4
+              c-basic-offset 4
               indent-tabs-mode nil
               truncate-lines t)
 

@@ -87,58 +87,19 @@ export LESSHISTFILE=$DATA_HOME/.less_history
 
 export REDISCLI_HISTFILE=$DATA_HOME/.rediscli_histfile
 
-
 tabs -4
-# man 1 zshmisc
 
+# NOTE: man 1 zshmisc
 
 # setopt menucomplete
 # zstyle ':completion:*' menu select=1 _complete _ignored _approximate
 
-t() { export custom_title=$@ && title }
-dt() { export custom_title=`basename $PWD` && title }
+# autoload -U compinit && compinit
+# zstyle ':completion:*descriptions' format '%U%B%d%b%u' # todo: tweak
+# zstyle ':completion:*warnings' format 'no matches: %d%b'
 
-# TODO: change tmux title
-# http://www.refining-linux.org/archives/42/ZSH-Gem-8-Hook-function-chpwd/
-title() {
-    if (( $+custom_title ))
-    then print -Pn "\033];${custom_title}\a"
-    else print -Pn "\033];$@\a"
-    fi
-}
+# autoload -U promptinit && promptinit # todo: prompt -l
 
-dir_title() {
-    # todo: check for 'probe' only too
-    if [[ $HOST != 'wx' && $HOST != 'wx.local' ]]; then
-        local host_pre="$HOST : "
-    fi
-    if [[ $PWD == $HOME ]]; then
-        if (( $+host_pre ))
-        then title "${host_pre}~"
-        else title '~'
-        fi
-    else
-        local pwd_name=`basename $PWD`
-        case ${pwd_name} in
-            dots)
-                title "${host_pre}…" ;;
-            *)
-                if (( $+host_pre ))
-                then title "${host_pre}${pwd_name}"
-                else title "${pwd_name}"
-                fi
-        esac
-    fi
-}
-
-# TODO: resolve recursive calls (alias foo=titled f foo)
-# new: 'titled ∆ top' add hooks precmd and set title
-titled() {
-    title $1 && eval ${@:2}; dir_title
-}
-
-# http://www.faqs.org/docs/Linux-mini/Xterm-Title.html#ss4.1
-chpwd_functions=(${chpwd_functions[@]} 'dir_title')
 
 function git_head() {
     local ref_head=`git symbolic-ref HEAD 2>/dev/null | cut -d / -f 3-`
@@ -176,9 +137,28 @@ function nonlocal_prefix() {
     echo ${prefix}
 }
 
-function git_nstashes() {
-    local n_stashes=`git stash list | wc -l`
-}
+# TODO: fpath / autoload / source
+# fpath+=~/.hidden/zsh
+function load() { source "$HOME/.zsh/$1" }
+
+
+load zfuncs
+load titles
+load tmux
+load docker; env_docker
+load rust
+load haskell
+load zty
+
+# load erlang
+# load envs
+# env_postgres
+
+[[ -f ~/.private ]] && source ~/.private
+
+# http://www.faqs.org/docs/Linux-mini/Xterm-Title.html#ss4.1
+chpwd_functions=(${chpwd_functions[@]} 'dir_title')
+
 
 if [[ $TERM != 'dumb' ]]; then
     bindkey -e
@@ -217,29 +197,6 @@ if [[ $TERM != 'dumb' ]]; then
     # http://www.howtobuildsoftware.com/index.php/how-do/1Em/zsh-zsh-behavior-on-enter
 fi
 
-
-function load() {
-    source "$HOME/.zsh/$1"
-}
-
-# fpath+=~/.hidden/zsh
-# todo: fpath / autoload / source
-
-# autoload -U compinit && compinit
-# zstyle ':completion:*descriptions' format '%U%B%d%b%u' # todo: tweak
-# zstyle ':completion:*warnings' format 'no matches: %d%b'
-# autoload -U promptinit && promptinit # todo: prompt -l
-
-load zfuncs
-load tmux
-load docker; env_docker
-load rust
-load haskell
-load zty
-
-# load erlang
-# load envs
-# env_postgres
 
 
 case `uname -s` in
@@ -329,4 +286,4 @@ _fzf_comprun() {
 
 [ -f /usr/local/etc/profile.d/autojump.sh ] && source /usr/local/etc/profile.d/autojump.sh
 
-[[ -f ~/.private ]] && source ~/.private
+

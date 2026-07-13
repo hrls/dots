@@ -1,0 +1,47 @@
+# -*- mode: shell-script; -*-
+
+function git_head() {
+    local ref_head=`git symbolic-ref HEAD 2>/dev/null | cut -d / -f 3-`
+    if [[ $ref_head != '' ]]; then
+        echo " $ref_head"
+    else
+        tag=`git describe --exact-match HEAD 2>/dev/null`
+        if [[ $? == 0 ]]; then
+            echo " tag: $tag"
+        else
+            hc=`git rev-parse --short HEAD 2>/dev/null`
+            if [[ $? == 0 ]]; then echo " head: $hc"; fi
+        fi
+    fi
+}
+
+function git_nstashes() {
+    local n_stashes=`git stash list | wc -l`
+}
+
+
+# Forms user@host prefix for non-local environments.
+# - empty for local env
+# - hostname when username is hrls
+# - full logname@hostname pair otherwise: ssh session, docker
+function nonlocal_prefix() {
+    local prefix=''
+    if [[ $LOGNAME != 'hrls' ]]; then
+        prefix+="$LOGNAME" # TODO: colorize
+    fi
+    # TODO: comment line
+    if [[ -n ${prefix} || -v SSH_CONNECTION  ]]; then
+        if [[ -n ${prefix} ]]; then
+            prefix+='@'
+        fi
+        prefix+="$HOSTNAME"
+    fi
+    if [[ -n ${prefix} ]]; then
+        prefix+=' '
+    fi
+    echo ${prefix}
+}
+
+
+# http://www.faqs.org/docs/Linux-mini/Xterm-Title.html#ss4.1
+chpwd_functions=(${chpwd_functions[@]} 'dir_title')

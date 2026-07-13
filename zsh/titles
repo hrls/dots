@@ -1,0 +1,53 @@
+# -*- mode: shell-script; -*-
+
+function set_title() {
+    export custom_title=$@
+    title
+}
+
+# TODO: change tmux title
+# http://www.refining-linux.org/archives/42/ZSH-Gem-8-Hook-function-chpwd/
+title() {
+    if (( $+custom_title ))
+    then print -Pn "\033];${custom_title}\a"
+    else print -Pn "\033];$@\a"
+    fi
+}
+
+dir_title() {
+    # TODO: define / override title function
+    #   for capturing evaluation context closure-like
+    if [[ ! -v __local ]]; then
+        local host_pre="$HOST : "
+    fi
+
+    # TODO: strip well known prefix path like $src or $tmp
+
+    if [[ $PWD == $HOME ]]; then
+        if (( $+host_pre ))
+        then title "${host_pre}~"
+        else title '~'
+        fi
+    else
+        local pwd_name=`basename $PWD`
+        case ${pwd_name} in
+            dots)
+                title "${host_pre}…" ;;
+            *)
+                if (( $+host_pre ))
+                then title "${host_pre}${pwd_name}"
+                else title "${pwd_name}"
+                fi
+        esac
+    fi
+}
+
+
+t()  { set_title $@ }
+dt() { set_title $(basename $PWD) }
+
+# TODO: resolve recursive calls (alias foo=titled f foo)
+# new: 'titled ∆ top' add hooks precmd and set title
+titled() {
+    title $1 && eval ${@:2}; dir_title
+}
