@@ -22,10 +22,12 @@ local function split2()
     vim.cmd('aboveleft ' .. height .. 'split')
 
     -- upper: keep the original view, so lnum - 1 ends up hidden under the
-    -- statusline bar; park the cursor mid-view so scrolloff doesn't shift
-    -- the view when the window is entered
+    -- statusline bar; park the cursor on the lowest visible line, with
+    -- window-local scrolloff zeroed (it overrides the global padding, they
+    -- don't stack) so entering the window doesn't shift the view
     local top = math.max(lnum - height - 1, 1)
-    vim.fn.winrestview({ topline = top, lnum = top + math.floor((height - 1) / 2), col = 0 })
+    vim.wo.scrolloff = 0
+    vim.fn.winrestview({ topline = top, lnum = top + height - 1, col = 0 })
 
     -- lower: cursor line at the very top
     vim.api.nvim_set_current_win(win)

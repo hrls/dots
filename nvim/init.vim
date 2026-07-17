@@ -12,7 +12,6 @@ set mouse=nvi " nvi is default
 " imap <ScrollWheelDown> <Nop>
 set smoothscroll
 set mousescroll=ver:1,hor:1 " the same as C-e/y
-set scrolloff=1
 set sidescrolloff=3
 set nowrap
 set number
