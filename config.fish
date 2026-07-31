@@ -55,6 +55,7 @@ if status is-interactive
     alias g git
     alias e nvim
     alias car cargo
+    alias carc 'cargo clippy'
     alias t 'nnn -HoUC'
     # alias unset 'set -e'
 
