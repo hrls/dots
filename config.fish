@@ -8,15 +8,30 @@ end
 # Usage:
 #   title my project   set the title to "my project"
 #   dt                 set the title to the current dir basename
-#   set -e custom_title  clear the title (falls back to shortened pwd)
+#   set -e custom_title  clear the title (falls back to auto)
+# Auto: inside ~/src show the project root basename (~/src/foo/bar -> foo);
+# dirs in $title_ns_dirs are namespaces, so ~/src/debridge/api/x -> api.
+# Elsewhere fall back to shortened pwd.
 # Note: fish calls fish_title before each prompt and wraps the output in the
 # OSC set-title escape itself, so we just echo the text (no raw escapes).
+# TODO: make src working the same way as there are no differences
+set -g title_ns_dirs debridge
+
 function fish_title
     if set -q custom_title[1]
         echo -- $custom_title
-    else
-        echo -- (prompt_pwd)
+        return
     end
+    if string match -q "$src/*" -- $PWD
+        set -l parts (string split / -- (string replace -- "$src/" '' $PWD))
+        if contains -- $parts[1] $title_ns_dirs; and set -q parts[2]
+            echo -- $parts[2]
+        else
+            echo -- $parts[1]
+        end
+        return
+    end
+    echo -- (prompt_pwd)
 end
 
 function title
